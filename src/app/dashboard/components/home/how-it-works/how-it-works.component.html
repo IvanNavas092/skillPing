@@ -1,0 +1,25 @@
+<section class="bg-[#fdfeff] w-full">
+    <div class="max-w-[1300px] w-full mx-auto px-4 py-20">
+        <div class=" flex flex-col gap-16">
+            <div class="flex flex-col gap-5 w-full text-center">
+                <h1 class="text-4xl font-bold ">¿Cómo funciona SkillSwap?</h1>
+                <p class="text-gray-500 text-lg">
+                    Nuestra plataforma te permite intercambiar conocimientos y habilidades
+                    con otras personas de <br> manera sencilla y sin costos.
+                </p>
+            </div>
+            <div class="grid grid-cols-4 gap-8 place-items-center">
+                <div *ngFor="let section of sections"
+                    class="p-6  rounded-xl bg-white hover:shadow-md w-72 h-64 border transition-all duration-300 ease-in-out">
+
+                    <div class="w-12 h-12 bg-blue-100 rounded flex items-center justify-center mb-4">
+                        <lucide-icon [name]="section.icon" class="text-blue-500 w-6 h-6"></lucide-icon>
+                    </div>
+
+                    <h5 class="text-lg font-semibold text-gray-800 mb-2">{{ section.title }}</h5>
+                    <p class="text-gray-600">{{ section.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

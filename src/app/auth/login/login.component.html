@@ -1,0 +1,65 @@
+<div class="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+    <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
+        <div class="text-center">
+            <img class="mx-auto h-10 w-auto" src="assets/favicon.ico" alt="Your Company">
+            <h2 class="mt-4 text-2xl font-bold text-gray-900">¡Bienvenido de nuevo!</h2>
+        </div>
+
+        <div class="mt-8">
+            <form [formGroup]="loginForm" class="space-y-6">
+                <!-- Campos del formulario usando ng-container para reutilizar estructura -->
+                <ng-container *ngFor="let field of formFields">
+                    <div>
+                        <div class="flex items-center justify-between"
+                            *ngIf="field.id === 'password'; ">
+                            <label [for]="field.id" class="block text-sm font-medium text-gray-700">
+                                {{field.label}}
+                            </label>
+                            <div class="text-sm">
+                                <a href="#" class="font-medium text-blue-500 hover:text-blue-600">¿Ha olvidado su
+                                    contraseña?</a>
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="mt-1">
+                            <input [id]="field.id" [name]="field.id" [type]="field.type"
+                                [formControlName]="field.controlName" class="input-style">
+
+                            <!-- Validaciones dinámicas -->
+                            <div *ngIf="loginForm.get(field.id)?.invalid && loginForm.get(field.id)?.touched"
+                                class="mt-1">
+                                <p *ngIf="loginForm.get(field.id)?.errors?.['required']" class="text-red-500 text-sm">
+                                    Este campo es requerido.
+                                </p>
+                                <p *ngIf="loginForm.get(field.id)?.errors?.['email']" class="text-red-500 text-sm">
+                                    El correo electrónico no es válido.
+                                </p>
+                                <p *ngIf="loginForm.get(field.id)?.errors?.['minlength']"
+                                    class="text-red-500 text-sm">
+                                    La contraseña debe tener al menos 8 caracteres.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div>
+                    <button type="submit" [disabled]="loginForm.invalid" class="btn-primary">
+                        Iniciar sesión
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-600">
+                    ¿No eres miembro?
+                    <a href="#" routerLink="/registro" class="font-medium text-blue-500 hover:text-blue-600">
+                        Crear una cuenta gratuita
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

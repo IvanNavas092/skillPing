@@ -1,0 +1,90 @@
+<div #formContainer class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Regístrate en nuestra plataforma
+    </h2>
+    <p class="mt-2 text-center text-sm text-gray-600">
+      Paso {{ currentStep }} de {{ totalSteps }}
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+
+      <!-- Paso 1: Información básica -->
+      <form *ngIf="currentStep === 1" [formGroup]="registerForm" class="space-y-6">
+        <ng-container *ngFor="let field of formFields">
+
+          <div>
+            <label [for]="field.id" class="block text-sm font-medium text-gray-700">
+              {{ field.label }}
+            </label>
+
+            <input [id]="field.id" [formControlName]="field.controlName" [type]="field.type" class="input-style">
+
+            <!-- Validaciones -->
+            <div *ngIf="registerForm.get(field.controlName)?.invalid && registerForm.get(field.controlName)?.touched" class="mt-1">
+              <ng-container *ngFor="let validation of field.validations">
+
+                <p *ngIf="registerForm.get(field.controlName)?.errors?.[validation.type]" class="text-red-500 text-sm">
+                  {{validation.message}}
+                </p>
+
+              </ng-container>
+        
+            </div>
+          </div>
+
+        </ng-container>
+          
+        
+
+        <div>
+          <button type="button" 
+            (click)="nextStep()" 
+            class="btn-primary"
+            [disabled]="registerForm.invalid">
+              Siguiente
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Paso 2 y 3: Skills -->
+      <ng-container *ngIf="currentStep === 2 || currentStep === 3">
+        <div class="space-y-6">
+          <h3 class="text-lg font-medium text-gray-900">
+            {{ currentStep === 2 ? '¿Qué habilidades tienes?' : '¿Qué habilidades te interesan?' }}
+          </h3>
+          <p class="text-sm text-gray-500">
+            {{ currentStep === 2 ? 'Selecciona las tecnologías que dominas' : 'Selecciona las tecnologías que quieres aprender' }}
+          </p>
+
+          <div class="flex flex-wrap gap-2">
+            <button *ngFor="let skill of allSkills" 
+                    type="button"
+                    (click)="toggleSkill(skill.name, currentStep === 2 ? selectedSkills : interestedSkills)"
+                    [class]="isSkillSelected(skill.name, currentStep === 2 ? selectedSkills : interestedSkills) ? 
+                            (currentStep === 2 ? 'btn-skill-selected' : 'btn-interest-selected') : 'btn-skill'">
+              {{ skill.name }}
+            </button>
+          </div>
+
+          <div class="flex justify-between">
+            <button type="button" (click)="prevStep()" class="btn-secondary">
+              Anterior
+            </button>
+            <button type="button" 
+                    (click)="currentStep === 3 ? onSubmit() : nextStep()"
+                    class="btn-primary"
+                    [disabled]="registerForm.invalid">
+              {{ currentStep === 3 ? 'Completar registro' : 'Siguiente' }}
+            </button>
+          </div>
+
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
