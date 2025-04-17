@@ -1,18 +1,20 @@
-import { Block } from '@angular/compiler';
-import { Component, ElementRef, OnInit, ViewChild,  } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/core/models/Category';
 import { Skill } from 'src/app/core/models/skill';
 import { ApiService } from 'src/app/core/services/api.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['../style/styles_login_register.css']
 })
 export class RegisterComponent implements OnInit {
   currentStep = 1;
   totalSteps = 3;
+  errorMessage!: string;
 
   @ViewChild('formContainer') formContainer!: ElementRef
 
@@ -20,16 +22,16 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
   // Lista de skills disponibles
-  allSkills : Skill[] = [];
+  allSkills: Skill[] = [];
   allCategories: Category[] = [];
 
   // Skills seleccionadas
-  selectedSkills: string[] = [];
-  interestedSkills: string[] = [];
+  knownSkills: number[] = [];
+  skillsToLearn: number[] = [];
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private apiService: ApiService, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
+      full_name: ['', Validators.required],
       username: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -37,22 +39,26 @@ export class RegisterComponent implements OnInit {
   }
 
   formFields = [
-    { id: 'name', label: 'Nombre completo', controlName: 'name', type: 'text' },
-    { id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text',
+    { id: 'full_name', label: 'Nombre completo', controlName: 'full_name', type: 'text', placeholder: 'Nombre Apellido' },
+    {
+      id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text', placeholder: 'ejemplo01',
       validations: [
-        {type: 'required', message: 'Este campo es obligatorio'},
-        {type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres'}
-      ] },
-    { id: 'email', label: 'Email', controlName: 'email', type: 'email',
-      validations: [
-        {type: 'required', message: 'Este campo es obligatorio'},
-        {type: 'email', message: 'El correo debe ser válido'}
+        { type: 'required', message: 'Este campo es obligatorio' },
+        { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
-    { id: 'password', label: 'Contraseña', controlName: 'password', type: 'password',
+    {
+      id: 'email', label: 'Email', controlName: 'email', type: 'email', placeholder: 'ejemplo@gmail.com',
       validations: [
-        {type: 'required', message: 'Este campo es obligatorio'},
-        {type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres'}
+        { type: 'required', message: 'Este campo es obligatorio' },
+        { type: 'email', message: 'El correo debe ser válido' }
+      ]
+    },
+    {
+      id: 'password', label: 'Contraseña', controlName: 'password', type: 'password', placeholder: '********',
+      validations: [
+        { type: 'required', message: 'Este campo es obligatorio' },
+        { type: 'minlength', message: 'La contraseña debe tener al menos 8 caracteres' }
       ]
     }
   ];
@@ -61,6 +67,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.getSkills();
     this.getCategories();
+    console.log(this.registerForm)
   }
 
   // Navegación entre pasos
@@ -79,32 +86,34 @@ export class RegisterComponent implements OnInit {
   }
 
   // Seleccionar skill
-  toggleSkill(skill: string, list: string[]) {
-    const index = list.indexOf(skill);
+  toggleSkill(skillId: number, list: number[]) {
+    const index = list.indexOf(skillId);
     // si no esta en la lista, lo agrega
     if (index === -1) {
-      list.push(skill);
+      list.push(skillId);
       // si esta en la lista, lo elimina
     } else {
       list.splice(index, 1);
     }
 
-    this.selectedSkills = list;
+    this.knownSkills = list;
   }
 
-  // Verificar si una skill esta seleccionado
-  isSkillSelected(skill: string, list: string[]): boolean {
-    return list.includes(skill);
+
+  // Verificar si una skill esta seleccionada
+  isSkillSelected(skillId: number, list: number[]): boolean {
+    return list.includes(skillId);
   }
 
   // Recoger las skills
   getSkills() {
     this.apiService.getSkills().subscribe((data) => {
       this.allSkills = data;
+      console.log('Skills:', this.allSkills);
     });
   }
 
-    // Recoger las categorías
+  // Recoger las categorías
   getCategories() {
     this.apiService.getCategories().subscribe((data) => {
       this.allCategories = data;
@@ -121,15 +130,45 @@ export class RegisterComponent implements OnInit {
   // Envío del formulario
   onSubmit() {
     if (this.registerForm.valid) {
-      const formData = {
+      const userData = {
         ...this.registerForm.value,
-        skills: this.selectedSkills,
-        interestedSkills: this.interestedSkills
-      };
-      console.log('Datos del formulario:', formData);
-      // Aquí iría tu llamada al servicio de registro
+        skills: this.knownSkills,
+        interests: this.skillsToLearn
+      }
+
+      console.log('Datos de registro:', userData);
+      this.authService.register(userData).subscribe({
+        next: () => {
+          console.log('Registro exitoso');
+          this.router.navigate(['/login']);
+        },
+        error: (error: any) => {
+          this.handleError(error);
+        }
+      })
+
     }
   }
 
 
+
+
+  handleError(error: any) {
+    console.log('Error completo ->', error);
+    if (error.error) {
+      if (error.error.username)
+        this.errorMessage = `Usuario: ${error.error.username.join(', ')}`;
+      else if (error.error.email)
+        this.errorMessage = `Email: ${error.error.email.join(', ')}`;
+      else
+        this.errorMessage = 'Error en el registro. Por favor intente nuevamente.';
+
+    }
+    else {
+      this.errorMessage = 'Error de conexión con el servidor';
+    }
+  }
+
 }
+
+

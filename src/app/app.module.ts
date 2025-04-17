@@ -9,23 +9,24 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/module/dashboard.module';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
+import { SearchComponent } from './dashboard/components/explore/search/search.component';
+import { FiltersComponent } from './dashboard/components/explore/filters/filters.component';
+import { UserListComponent } from './dashboard/components/explore/user-list/user-list.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-
-    
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SharedModule,
-    DashboardModule,
-    CoreModule,
-    AuthModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      SharedModule,
+      DashboardModule,
+      CoreModule,
+      AuthModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }

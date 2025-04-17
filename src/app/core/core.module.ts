@@ -5,18 +5,18 @@ import { ApiService } from './services/api.service';
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    HttpClientModule
-    
-  ],
-  exports:[
-    HttpClientModule
-  ],
-  providers: [
-    ApiService
-  ]
+   declarations: [],
+   imports: [
+      CommonModule,
+      HttpClientModule
+
+   ],
+   exports: [
+      HttpClientModule
+   ],
+   providers: [
+      ApiService
+   ]
 })
 
 export class CoreModule { }

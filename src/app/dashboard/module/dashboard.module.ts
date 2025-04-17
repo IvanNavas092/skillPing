@@ -13,34 +13,43 @@ import { CategoriesSectionComponent } from '../components/home/categories-sectio
 import { ApiService } from 'src/app/core/services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ExploreComponent } from '../pages/explore/explore.component';
+import * as Aos from 'aos';
+import { SearchComponent } from '../components/explore/search/search.component';
+import { FiltersComponent } from '../components/explore/filters/filters.component';
+import { UserListComponent } from '../components/explore/user-list/user-list.component';
 
 // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    // pages
-    HomeComponent,
-    ExploreComponent,
+   declarations: [
+      DashboardComponent,
+
+      // pages
+      HomeComponent,
+      ExploreComponent,
 
 
-    // components
-    HeroComponent,
-    HowItWorksComponent,
-    StepsSectionComponent,
-    CategoriesSectionComponent,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    DashboardRoutingModule,
-    LucideAngularModule.pick({MoveRight, Tag, Search, Users, MessageCircle, CheckCheck}),
-    HttpClientModule
-  ],
-  exports: [
+      // components
+      HeroComponent,
+      HowItWorksComponent,
+      StepsSectionComponent,
+      CategoriesSectionComponent,
+      SearchComponent,
+      FiltersComponent,
+      UserListComponent,
+   ],
+   imports: [
+      CommonModule,
+      RouterModule,
+      DashboardRoutingModule,
+      HttpClientModule,
+      LucideAngularModule.pick({ MoveRight, Tag, Search, Users, MessageCircle, CheckCheck }),
+      
+   ],
+   exports: [
 
-  ],
-  providers:[
-    ApiService
-  ]
+   ],
+   providers: [
+      ApiService
+   ]
 })
 export class DashboardModule { }

@@ -6,18 +6,19 @@ import { RegisterComponent } from './auth/register/register.component';
 
 
 const routes: Routes = [
-  { path: 'dashboard',
-    loadChildren: () =>
-      import('./dashboard/module/dashboard.module').then(m => m.DashboardModule)
-  },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegisterComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+   {
+      path: 'dashboard',
+      loadChildren: () =>
+         import('./dashboard/module/dashboard.module').then(m => m.DashboardModule)
+   },
+   { path: 'login', component: LoginComponent },
+   { path: 'registro', component: RegisterComponent },
+   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forRoot(routes)],
+   exports: [RouterModule]
 })
 export class AppRoutingModule { }

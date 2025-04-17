@@ -5,15 +5,15 @@ import { Skill } from '../models/skill';
 
 @Injectable()
 export class ApiService {
-  UrlCategory = 'http://127.0.0.1:8000/marketplace/categories/';
-  urlSkills = 'http://127.0.0.1:8000/marketplace/skills/';
-  constructor(private http: HttpClient) { }
+   UrlCategory = 'http://127.0.0.1:8000/api/categories/';
+   urlSkills = 'http://127.0.0.1:8000/api/skills/';
+   constructor(private http: HttpClient) { }
 
-  getCategories() {
-    return this.http.get<Category[]>(this.UrlCategory);
-  }
-  getSkills() {
-    return this.http.get<Skill[]>(this.urlSkills);
-  }
+   getCategories() {
+      return this.http.get<Category[]>(this.UrlCategory);
+   }
+   getSkills() {
+      return this.http.get<Skill[]>(this.urlSkills);
+   }
 
 }

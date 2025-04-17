@@ -1,28 +1,54 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['../style/styles_login_register.css']
 })
-export class LoginComponent   {
+export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage!: string;
+  passwordVisible: boolean = false;
 
   formFields = [
-    { id: 'name', label: 'Nombre completo', controlName: 'name', type: 'text' },
-    { id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text' },
-    { id: 'email', label: 'Email', controlName: 'email', type: 'email' },
-    { id: 'password', label: 'Contraseña', controlName: 'password', type: 'password' }
+    { id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text', placeholder: 'Introduce tu Usuario' },
+    { id: 'password', label: 'Contraseña', controlName: 'password', type: 'password', placeholder: 'Introduce tu Contraseña' }
   ];
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(6)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
 
+  // Envío del formulario
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const { username, password } = this.loginForm.value; //desestructurar el form
 
+      this.authService.login(username, password).subscribe({
+        next: (response) => {
+          console.log('Login exitoso', response);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (e) => {
+          this.errorMessage = 'Usuario o contraseña incorrectos';
+          console.log('Error en el login', e);
+        }
+      });
+    }
+  }
+
+  togglePassword() {
+    this.passwordVisible = !this.passwordVisible;
+    console.log(this.passwordVisible);
+  }
 }
+
+
+
