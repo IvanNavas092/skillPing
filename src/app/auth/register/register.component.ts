@@ -85,18 +85,23 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // Seleccionar skill
+  // Seleccionar skill (con límite de 3)
   toggleSkill(skillId: number, list: number[]) {
     const index = list.indexOf(skillId);
-    // si no esta en la lista, lo agrega
-    if (index === -1) {
-      list.push(skillId);
-      // si esta en la lista, lo elimina
-    } else {
+
+    // Si ya está seleccionada, la quitamos
+    if (index !== -1) {
       list.splice(index, 1);
     }
-
-    this.knownSkills = list;
+    // Si no está seleccionada y hay menos de 3, la agregamos
+    else if (list.length < 3) {
+      list.push(skillId);
+    }
+    // Si ya hay 3 seleccionadas, mostramos mensaje (opcional)
+    else {
+      this.errorMessage = 'Máximo 3 habilidades permitidas';
+      setTimeout(() => this.errorMessage = '', 3000); // Mensaje desaparece después de 3 segundos
+    }
   }
 
 

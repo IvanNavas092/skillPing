@@ -50,12 +50,12 @@
     <ul class="hidden lg:flex lg:gap-x-12 bg-white">
       <!-- INICIO -->
       <li>
-        <a href="#" class="font-medium text-gray-900">Inicio</a>
+        <a href="#" class="font-semibold text-gray-900">Inicio</a>
       </li>
 
       <!-- EVENTOS -->
       <li class="relative group">
-        <a routerLink="/dashboard/explorar" class="font-medium text-gray-900 flex items-center">
+        <a routerLink="/dashboard/explorar" class="font-semibold text-gray-900 flex items-center">
           Explorar
           <!-- icono -->
           <svg
@@ -82,7 +82,7 @@
           >
             <div class="flex items-center">
               <lucide-icon name="tag" class="w-4 mr-2"></lucide-icon>
-              <span class="text-sm font-medium text-gray-900">{{ categorie.name }}</span>
+              <span class="text-sm font-semibold text-gray-900">{{ categorie.name }}</span>
             </div>
             <p class="text-gray-900 text-sm">{{ categorie.description }}</p>
           </a>
@@ -91,24 +91,24 @@
             class="text-gray-900 text-sm font-semibold flex gap-2 hover:underline hover:text-blue-500"
           >
             Ver todas las categorías
-            <lucide-icon class="text-blue-500" name="move-right"></lucide-icon>
+            <lucide-icon class="text-blue-500 font-semibold" name="move-right"></lucide-icon>
           </a>
         </div>
       </li>
 
       <li>
         <!-- SOBRE NOSOTROS -->
-        <a href="#" class="font-medium text-gray-900 lg:gap-0">Sobre nosotros</a>
+        <a href="#" class="font-semibold text-gray-900 lg:gap-0">Sobre nosotros</a>
       </li>
     </ul>
 
-    <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-2">
-      <a
+    <div class=" lg:flex lg:flex-1 lg:justify-end gap-2 flex items-center">
+      <button
         routerLink="/login"
         class="bg-white hover:bg-gray-100 border text-black cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold"
       >
         Iniciar Sesión
-      </a>
+      </button>
 
       <button
         routerLink="/registro"
