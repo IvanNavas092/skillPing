@@ -6,29 +6,29 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 // Icons
-import { LucideAngularModule, Tag, MoveRight } from 'lucide-angular';
+import { LucideAngularModule, Tag, MoveRight, User, MessageCircle } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
 
 
 
 
 @NgModule({
-   declarations: [
-      HeaderComponent,
-      FooterComponent
+  declarations: [
+    HeaderComponent,
+    FooterComponent
 
-   ],
-   imports: [
-      CommonModule,
-      LucideAngularModule.pick({ Tag, MoveRight }),
-      RouterModule
-   ],
-   exports: [
-      HeaderComponent,
-      FooterComponent,
-      LucideAngularModule
+  ],
+  imports: [
+    CommonModule,
+    LucideAngularModule.pick({ Tag, MoveRight, User, MessageCircle }),
+    RouterModule
+  ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    LucideAngularModule
 
-   ]
+  ]
 
 
 })

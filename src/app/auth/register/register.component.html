@@ -164,9 +164,7 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="text-sm text-red-600 ">{{
-                errorMessage
-              }}</span>
+              <span class="text-sm text-red-600">{{ errorMessage }}</span>
             </div>
 
             <!-- buttons for choose skills -->
@@ -176,26 +174,17 @@
                 type="button"
                 (click)="toggleSkill(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)"
                 class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border"
-                [class.border-blue-500]="
-                  isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
-                [class.bg-blue-50]="
-                  isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
-                [class.text-blue-600]="
-                  isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
-                [class.border-gray-300]="
-                  !isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
-                [class.text-gray-700]="
-                  !isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
-                [class.hover:border-blue-400]="
-                  !isSkillSelected(skill.id, currentStep === 2 ? knownSkills : skillsToLearn)
-                "
+                [ngClass]="{
+                  'skill-btn': true,
+                  'skill-btn-selected': isSkillSelected(skill.id),
+                  'skill-btn-normal': !isSkillSelected(skill.id) && !isSkillDisabled(skill.id),
+                  'skill-btn-disabled': isSkillDisabled(skill.id)
+                }"
+                [disabled]="isSkillDisabled(skill.id)"
               >
                 {{ skill.name }}
+                <span *ngIf="isSkillDisabled(skill.id)" class="ml-1 text-xs">(ya seleccionada)</span>
+
               </button>
             </div>
 

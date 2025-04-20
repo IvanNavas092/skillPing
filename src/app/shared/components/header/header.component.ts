@@ -1,20 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  showButtons: boolean = false;
   // Diccionario con las categorías
   categories = [
-    { name: "Pop", description: "Disfruta del Pop al máximo!" },
-    { name: "Hip-Hop", description: "Siente el Hip-Hop como tú sabes!" },
-    { name: "Rock", description: "Vida de rock como la canción de Milo J!" },
-    { name: "Latino", description: "Descubre las últimas novedades!" }
+    { name: "Idiomas", description: "¡Aprende a hablar al máximo!" },
+    { name: "Tecnología", description: "¡Perfecto para aprender a programar!" },
+    { name: "Marketing", description: "¿Te apetece montar tu empresa?" },
+    { name: "Música", description: "¡Aprende lo que hacen tus artistas favoritos!" }
   ];
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
+
+  ngOnInit(): void {
+    this.authService.loggedIn$.subscribe((state) =>{
+      this.showButtons = state;
+    })
+  }
+
+
 
 
 

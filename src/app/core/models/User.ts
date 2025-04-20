@@ -7,7 +7,7 @@ export interface User {
   email: string;
   password: string;
   description: string;
-  avatar: string;
+  avatar_option: string;
   skills: Skill[];
   interests: Skill[];
   rating_count : number // cantidad de ratings

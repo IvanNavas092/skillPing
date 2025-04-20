@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, ElementRef, OnInit, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,6 +29,8 @@ export class RegisterComponent implements OnInit {
   // Skills seleccionadas
   knownSkills: number[] = [];
   skillsToLearn: number[] = [];
+
+  selectedSkillsInStep2: number[] = [];
 
   constructor(private fb: FormBuilder, private apiService: ApiService, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -72,6 +75,11 @@ export class RegisterComponent implements OnInit {
 
   // Navegación entre pasos
   nextStep() {
+    // al pasar al paso 2, se deshabilitan las habilidades ya conocidas
+    if (this.currentStep === 2) {
+      this.selectedSkillsInStep2 = [...this.knownSkills]
+
+    }
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
       this.scrollToTop();
@@ -87,27 +95,41 @@ export class RegisterComponent implements OnInit {
 
   // Seleccionar skill (con límite de 3)
   toggleSkill(skillId: number, list: number[]) {
-    const index = list.indexOf(skillId);
 
-    // Si ya está seleccionada, la quitamos
+    // en el paso 3 no dejar seleccionar las habilidades ya conocidas
+    if (this.currentStep === 3 && this.selectedSkillsInStep2.includes(skillId)) {
+      this.errorMessage = 'Esta habilidad ya fue seleccionada en el paso anterior';
+      setTimeout(() => this.errorMessage = '', 3000);
+
+    }
+
+    const index = list.indexOf(skillId); // Index del skill en el listado
+    // si ya está seleccionada, la quitamos
     if (index !== -1) {
       list.splice(index, 1);
     }
-    // Si no está seleccionada y hay menos de 3, la agregamos
+    // si no está seleccionada y hay menos de 3, la agregamos
     else if (list.length < 3) {
       list.push(skillId);
     }
-    // Si ya hay 3 seleccionadas, mostramos mensaje (opcional)
     else {
-      this.errorMessage = 'Máximo 3 habilidades permitidas';
-      setTimeout(() => this.errorMessage = '', 3000); // Mensaje desaparece después de 3 segundos
+      this.errorMessage = 'Máximo 3 habilidades';
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   }
 
 
   // Verificar si una skill esta seleccionada
-  isSkillSelected(skillId: number, list: number[]): boolean {
-    return list.includes(skillId);
+  isSkillSelected(skillId: number): boolean {
+    if (this.currentStep === 2) {
+      return this.knownSkills.includes(skillId);
+    }
+    else {
+      return this.skillsToLearn.includes(skillId);
+    }
+  }
+  isSkillDisabled(skillId: number): boolean {
+    return this.currentStep ===3 && this.selectedSkillsInStep2.includes(skillId);
   }
 
   // Recoger las skills

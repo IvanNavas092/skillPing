@@ -1,11 +1,10 @@
 <div class="flex gap-2">
-   <button 
-      class="py-1 px-2 border text-sm rounded-full font-medium"
-      *ngFor="let category of categories"
-      (click)="toggleFilter(category)"
-      [ngClass]="category.status ? 'bg-blue-500 text-white' : 'bg-white text-black'"
-   >
-
-      {{category.name}}
-   </button>
+  <button
+    class="py-1 px-2 border text-sm rounded-full font-medium"
+    *ngFor="let category of categories"
+    (click)="toggleFilter(category)"
+    [ngClass]="selectedFilter === category ? 'bg-blue-500 text-white' : 'bg-white text-black'"
+  >
+    {{ category.name }}
+  </button>
 </div>

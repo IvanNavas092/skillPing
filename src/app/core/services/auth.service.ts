@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User, UserResponse } from '../models/User';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -15,6 +15,9 @@ export class AuthService {
   private tokenKey = 'auth-token';
   private userKey = 'auth-user';
   private storage = sessionStorage;
+  isLoggedIn = new BehaviorSubject<boolean>(false);
+
+  loggedIn$ = this.isLoggedIn.asObservable();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -38,10 +41,12 @@ export class AuthService {
     return this.http.post<UserResponse>(this.loginUrl, { username, password }).pipe(
       tap(response => { // Tap para que no modifique el response
         this.storeAuthData(response);
+        this.isLoggedIn.next(true);
       })
     );
-
   }
+
+
 
   storeAuthData(data: UserResponse) {
     // datos de views.py django
@@ -53,6 +58,7 @@ export class AuthService {
   logout() {
     this.storage.removeItem(this.tokenKey);
     this.storage.removeItem(this.userKey);
+    this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
 
@@ -68,5 +74,7 @@ export class AuthService {
   getToken() {
     return this.storage.getItem(this.tokenKey);
   }
+
+
 
 }

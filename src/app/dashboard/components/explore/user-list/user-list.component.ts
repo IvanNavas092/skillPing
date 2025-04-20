@@ -15,6 +15,7 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getUsers().subscribe((data) => {
       this.users = data;
+      this.users.sort((a, b) => b.rating_count - a.rating_count);
     })
   }
 }

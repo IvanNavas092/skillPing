@@ -1,25 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Category } from 'src/app/core/models/Category';
 import { ApiService } from 'src/app/core/services/api.service';
 @Component({
-   selector: 'app-filters',
-   templateUrl: './filters.component.html',
-   styleUrls: ['./filters.component.css']
+  selector: 'app-filters',
+  templateUrl: './filters.component.html',
+  styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-   constructor(private apiService: ApiService) { }
-   FilterActive : any = null
-   categories: any[] = [];
+  constructor(private apiService: ApiService) { }
 
-   ngOnInit(): void {
-      this.apiService.getCategories().subscribe(data => {
-         this.categories = data;
-      });
-   }
+  selectedFilter: Category | null = null;
+  categories: any[] = [];
 
-   toggleFilter(category: any) {
-      category.status = !category.status;
-      this.FilterActive = category;
-      console.log(this.FilterActive);
-   }
+  @Output() categorieActive = new EventEmitter<Category | null>();
+
+
+  ngOnInit(): void {
+    this.apiService.getCategories().subscribe(data => {
+      this.categories = data;
+    });
+  }
+
+  toggleFilter(category: Category) {
+    if (this.selectedFilter === category) {
+      this.selectedFilter = null;
+    }
+    else {
+      this.selectedFilter = category;
+      this.categorieActive.emit(category);
+    }
+  }
 
 }
