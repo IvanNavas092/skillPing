@@ -1,6 +1,7 @@
 # 🌐 SkillPing - The Collaborative Skills Marketplace 🤝✨
 
-[Logo](https://github.com/user-attachments/assets/8dd1319b-7cf7-4711-b15a-07b672ea83e3)
+![image](https://github.com/user-attachments/assets/d2b7f499-b84a-4249-a1b3-7e62040f6618)
+
 
 ---
 
