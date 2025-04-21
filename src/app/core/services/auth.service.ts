@@ -12,8 +12,7 @@ export class AuthService {
 
   // login
   loginUrl = 'http://localhost:8000/api/login/';
-  private tokenKey = 'auth-token';
-  private userKey = 'auth-user';
+  
   private storage = sessionStorage;
   isLoggedIn = new BehaviorSubject<boolean>(false);
 
@@ -51,28 +50,28 @@ export class AuthService {
   storeAuthData(data: UserResponse) {
     // datos de views.py django
     // Quiero que guarde en sessionStorage los datos del user que se ha logueado
-    this.storage.setItem(this.tokenKey, data.access_token)
-    this.storage.setItem(this.userKey, JSON.stringify(data.user));
+    this.storage.setItem('auth-token', data.access_token)
+    this.storage.setItem('auth-user', JSON.stringify(data.user));
   }
 
   logout() {
-    this.storage.removeItem(this.tokenKey);
-    this.storage.removeItem(this.userKey);
+    this.storage.removeItem('auth-token');
+    this.storage.removeItem('auth-user');
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
-    return !!this.storage.getItem(this.tokenKey);
+    return !!this.storage.getItem('auth-token');
   }
 
   getCurrentUser() {
-    const user = this.storage.getItem(this.userKey);
+    const user = this.storage.getItem('auth-user');
     return user ? JSON.parse(user) : null;
   }
 
   getToken() {
-    return this.storage.getItem(this.tokenKey);
+    return this.storage.getItem('auth-token');
   }
 
 

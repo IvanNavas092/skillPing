@@ -6,6 +6,9 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  edad: number;
+  disponibilidad: string;
+  sexo: string;
   description: string;
   avatar_option: string;
   skills: Skill[];

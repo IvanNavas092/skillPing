@@ -12,12 +12,12 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileComponent } from './dashboard/pages/profile/profile.component';
 import { PublicModule } from './public/home/module/public.module';
 import { AboutComponent } from './public/about/about.component';
+import { UserDetailComponent } from './dashboard/pages/user-detail/user-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
     AboutComponent,
   ],
   imports: [
