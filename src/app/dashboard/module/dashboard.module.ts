@@ -14,7 +14,7 @@ import { FiltersComponent } from '../components/explore/filters/filters.componen
 import { UserListComponent } from '../components/explore/user-list/user-list.component';
 import {  ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from '../pages/profile/profile.component';
-
+import { ChatComponent } from '../pages/chat/chat.component';
 // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { ProfileComponent } from '../pages/profile/profile.component';
     SearchComponent,
     FiltersComponent,
     UserListComponent,
+    ChatComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,16 @@ import { ProfileComponent } from '../pages/profile/profile.component';
 
   ],
   exports: [
+    DashboardComponent,
+    // pages
+    ExploreComponent,
+    ProfileComponent,
+    ChatComponent,
+    UserListComponent,
 
+    // components
+    SearchComponent,
+    FiltersComponent,
   ],
   providers: [
     ApiService

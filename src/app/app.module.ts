@@ -9,11 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/module/dashboard.module';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
-import { ProfileComponent } from './dashboard/pages/profile/profile.component';
 import { PublicModule } from './public/home/module/public.module';
 import { AboutComponent } from './public/about/about.component';
-import { UserDetailComponent } from './dashboard/pages/user-detail/user-detail.component';
-
 
 @NgModule({
   declarations: [

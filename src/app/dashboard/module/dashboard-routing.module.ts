@@ -4,6 +4,7 @@ import { DashboardComponent } from '../dashboard.component';
 import { ExploreComponent } from '../pages/explore/explore.component';
 import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
+import { ChatComponent } from '../pages/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
       { path: 'explorar', component: ExploreComponent },
       { path: 'explorar/:id', component: UserDetailComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'chat', component: ChatComponent },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' }
     ]
   }

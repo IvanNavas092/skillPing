@@ -10,7 +10,12 @@
           xmlns="http://www.w3.org/2000/svg"
         >
           <!-- Nodo central -->
-          <circle cx="24" cy="24" r="4" fill="currentColor" />
+          <circle
+            cx="24"
+            cy="24"
+            r="4"
+            fill="currentColor"
+          />
 
           <!-- Curvas de expansión -->
           <path
@@ -50,12 +55,19 @@
     <ul class="hidden lg:flex lg:gap-x-12 bg-white">
       <!-- INICIO -->
       <li>
-        <a href="#" class="font-semibold text-gray-900">Inicio</a>
+        <a
+          href="#"
+          class="font-semibold text-gray-900"
+          >Inicio</a
+        >
       </li>
 
       <!-- EVENTOS -->
       <li class="relative group">
-        <a routerLink="/dashboard/explorar" class="font-semibold text-gray-900 flex items-center">
+        <a
+          routerLink="/dashboard/explorar"
+          class="font-semibold text-gray-900 flex items-center"
+        >
           Explorar
           <!-- icono -->
           <svg
@@ -66,7 +78,11 @@
             stroke="currentColor"
             class="size-3 ml-1 transition-transform transform group-hover:rotate-180"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
           </svg>
         </a>
 
@@ -81,7 +97,10 @@
             href=""
           >
             <div class="flex items-center">
-              <lucide-icon name="tag" class="w-4 mr-2"></lucide-icon>
+              <lucide-icon
+                name="tag"
+                class="w-4 mr-2"
+              ></lucide-icon>
               <span class="text-sm font-semibold text-gray-900">{{ categorie.name }}</span>
             </div>
             <p class="text-gray-900 text-sm">{{ categorie.description }}</p>
@@ -91,31 +110,50 @@
             class="text-gray-900 text-sm font-semibold flex gap-2 hover:underline hover:text-blue-500"
           >
             Ver todas las categorías
-            <lucide-icon class="text-blue-500 font-semibold" name="move-right"></lucide-icon>
+            <lucide-icon
+              class="text-blue-500 font-semibold"
+              name="move-right"
+            ></lucide-icon>
           </a>
         </div>
       </li>
 
       <li>
         <!-- SOBRE NOSOTROS -->
-        <a href="#" routerLink="/sobre-nosotros" class="font-semibold text-gray-900 ">Sobre nosotros</a>
+        <a
+          href="#"
+          routerLink="/sobre-nosotros"
+          class="font-semibold text-gray-900"
+          >Sobre nosotros</a
+        >
       </li>
     </ul>
 
-    <div class=" lg:flex lg:flex-1 lg:justify-end gap-2 flex items-center">
-      <div 
+    <div class="lg:flex lg:flex-1 lg:justify-end gap-2 flex items-center">
+      <div
         *ngIf="showButtons"
-        class="flex gap-6 mr-5">
+        class="flex gap-6 mr-5"
+      >
         <!-- button chat -->
-        <button class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-full py-2 px-4  font-semibold">
-          <lucide-icon name="message-circle" class="w-5 h-5"></lucide-icon>
+        <button
+          routerLink="/dashboard/chat"
+          class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-full py-2 px-4 font-semibold"
+        >
+          <lucide-icon
+            name="message-circle"
+            class="w-5 h-5"
+          ></lucide-icon>
         </button>
 
         <!-- button profile -->
-        <button 
-          class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-3xl py-2 px-4  font-semibold"
-          routerLink="/dashboard/profile">
-          <lucide-icon name="User" class="w-5 h-5"></lucide-icon>
+        <button
+          class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-3xl py-2 px-4 font-semibold"
+          routerLink="/dashboard/profile"
+        >
+          <lucide-icon
+            name="User"
+            class="w-5 h-5"
+          ></lucide-icon>
         </button>
       </div>
       <button
@@ -142,7 +180,10 @@
       class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
     >
       <div class="flex items-center justify-between">
-        <a href="#" class="-m-1.5 p-1.5">
+        <a
+          href="#"
+          class="-m-1.5 p-1.5"
+        >
           <svg
             class="w-10 h-10 text-blue-500"
             viewBox="0 0 24 24"
@@ -158,8 +199,16 @@
             />
           </svg>
         </a>
-        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-          <svg class="size-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <button
+          type="button"
+          class="-m-2.5 rounded-md p-2.5 text-gray-700"
+        >
+          <svg
+            class="size-6"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
             <path d="M6 18 18 6M6 6l12 12" />
           </svg>
         </button>
