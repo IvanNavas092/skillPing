@@ -18,6 +18,9 @@ export class ProfileComponent implements OnInit {
   KnownSkills : any[] = [];
   SkillsToLearn : any[] = [];
 
+  // avatars
+  selectedAvatar: Avatar | undefined;
+
   constructor(private fb: FormBuilder, private apiService: ApiService) { }
   allSkills: Skill[] = [];
 
@@ -88,10 +91,10 @@ export class ProfileComponent implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('auth-user') || '{}');
 
     this.avatars = [
-      { id: 1, name: 'Héctor', img: '/assets/avatar/hector_avatar.webp' },
-      { id: 2, name: 'Manuel', img: '/assets/avatar/manu_avatar.webp' },
-      { id: 3, name: 'Ana', img: '/assets/avatar/ana_avatar.webp' },
-      { id: 4, name: 'Ingrid', img: '/assets/avatar/ingrid_avatar.webp' },
+      { id: 1, name: 'Héctor', img: '/assets/avatar/hector_avatar.webp', selected: false },
+      { id: 2, name: 'Manuel', img: '/assets/avatar/manu_avatar.webp', selected: false },
+      { id: 3, name: 'Ana', img: '/assets/avatar/ana_avatar.webp', selected: false },
+      { id: 4, name: 'Ingrid', img: '/assets/avatar/ingrid_avatar.webp', selected: false },
     ]
 
     this.formProfile = this.fb.group({
@@ -108,8 +111,8 @@ export class ProfileComponent implements OnInit {
       
     })
     this.patchForm(this.user);
-    this.getSkillsUser(this.user);
     this.getSkills(); 
+    this.getSkillsUser(this.user);
 
   }
 
@@ -127,6 +130,20 @@ export class ProfileComponent implements OnInit {
       console.log(this.SkillsToLearn);
     }
     console.log('aprender', this.KnownSkills,'enseñar', this.SkillsToLearn);
+  }
+
+  // funcion para seleccionar avatar
+  toggleAvatar(avatar: Avatar) {
+    avatar.selected = !avatar.selected;
+    this.selectedAvatar = avatar;
+    console.log(this.selectedAvatar);
+  }
+
+  // verifica si el avatar es seleccionado
+  avatarIsSelected(avatar: Avatar) {
+    if (avatar.selected) {
+      this.selectedAvatar = avatar;
+    }
   }
 
   onSubmit() {

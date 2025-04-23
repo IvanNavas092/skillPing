@@ -14,8 +14,9 @@
         <h1 class="text-2xl font-bold mb-2 px-7">Elige tu avatar</h1>
         <div class="grid grid-cols-4 justify-items-center">
           <ng-container *ngFor="let avatar of avatars">
-            <div
-              class="flex flex-col rounded border border-gray-300 items-center justify-center p-2 w-full max-w-60 mb-2"
+            <button (click)="toggleAvatar(avatar)"
+              class="flex flex-col rounded border border-gray-300 items-center justify-center p-2 w-full max-w-60 mb-2
+              focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             >
               <img
                 [src]="avatar.img"
@@ -23,7 +24,7 @@
                 class="w-16 h-16 rounded-full object-cover border-2 border-blue-100"
               />
               <p class="text-sm font-semibold mt-2">{{ avatar.name }}</p>
-            </div>
+            </button>
           </ng-container>
         </div>
       </div>
@@ -62,11 +63,13 @@
               </label>
 
               <!-- selects -->
-              <select
-                
-                class="style-select"
-              >
-                <option selected disabled>Cambiar habilidades</option>
+              <select class="style-select">
+                <option
+                  selected
+                  disabled
+                >
+                  Cambiar habilidades
+                </option>
                 <option
                   *ngFor="let skill of allSkills"
                   [value]="skill.name"
@@ -76,7 +79,7 @@
               </select>
 
               <!-- mostrar skills de usuario debajo -->
-              <div *ngIf="field.label === 'skills'">
+              <div *ngIf="field.label === 'Habilidades'" ngClass="mt-2 gap-2 flex">
                 <ng-container *ngFor="let skill of KnownSkills">
                   <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">
                     {{ skill }}
@@ -84,20 +87,24 @@
                 </ng-container>
               </div>
 
-              <!-- validaciones -->
-              
-              <div *ngIf="field.label === 'interests'">
+              <div *ngIf="field.label === 'Intereses'" class="mt-2 gap-2 flex">
                 <ng-container *ngFor="let skill of SkillsToLearn">
                   <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded-full text-xs font-medium">
                     {{ skill }}
                   </span>
                 </ng-container>
               </div>
-              
-            </div>
 
-          
+            </div>
           </ng-container>
+        </div>
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition mt-4 mr-7"
+          >
+            Guardar cambios
+          </button>
         </div>
       </form>
     </div>
