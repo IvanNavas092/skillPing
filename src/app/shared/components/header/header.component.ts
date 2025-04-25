@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  showButtons: boolean = false;
+  isLoggedIn: boolean = false;
   // Diccionario con las categorías
   categories = [
     { name: "Idiomas", description: "¡Aprende a hablar al máximo!" },
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.loggedIn$.subscribe((state) =>{
-      this.showButtons = state;
+      this.isLoggedIn = state;
     })
   }
 
