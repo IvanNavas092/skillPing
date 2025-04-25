@@ -2,20 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
-
+import { ChatService } from './services/chat.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
    declarations: [],
    imports: [
       CommonModule,
-      HttpClientModule
+      HttpClientModule,
 
    ],
    exports: [
-      HttpClientModule
+      HttpClientModule,
    ],
    providers: [
-      ApiService
+      ApiService,
+      ChatService,
+      AuthService,
+      
    ]
 })
 
