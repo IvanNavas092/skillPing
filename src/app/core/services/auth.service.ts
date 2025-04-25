@@ -70,6 +70,7 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
+
   getToken() {
     return this.storage.getItem('auth-token');
   }

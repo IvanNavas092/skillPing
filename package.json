@@ -21,6 +21,7 @@
     "@midudev/tailwind-animations": "^0.2.0",
     "aos": "^2.3.4",
     "lucide-angular": "^0.487.0",
+    "pusher-js": "^8.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
