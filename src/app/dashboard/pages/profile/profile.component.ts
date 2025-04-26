@@ -91,10 +91,10 @@ export class ProfileComponent implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('auth-user') || '{}');
 
     this.avatars = [
-      { id: 1, name: 'Héctor', img: '/assets/avatar/hector_avatar.webp', selected: false },
-      { id: 2, name: 'Manuel', img: '/assets/avatar/manu_avatar.webp', selected: false },
-      { id: 3, name: 'Ana', img: '/assets/avatar/ana_avatar.webp', selected: false },
-      { id: 4, name: 'Ingrid', img: '/assets/avatar/ingrid_avatar.webp', selected: false },
+      { id: 1, name: 'Héctor', img: '/assets/avatar/man_avatar_1.png', selected: false },
+      { id: 2, name: 'Manuel', img: '/assets/avatar/man_avatar_2.png', selected: false },
+      { id: 3, name: 'Ana', img: '/assets/avatar/woman_avatar_3.png', selected: false },
+      { id: 4, name: 'Ingrid', img: '/assets/avatar/woman_avatar_2.png', selected: false },
     ]
 
     this.formProfile = this.fb.group({
