@@ -13,8 +13,14 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   sendPrivateMessage(sender: string, message: string, receptor: string): Observable<any> {
-    return this.http.post(this.url, {
+    return this.http.post(`${this.url}/send`, {
       sender, message, receptor
+    });
+  }
+
+  getChatHistory(user1: string, user2: string): Observable<any> {
+    return this.http.get(`${this.url}/history`, {
+      params: { user1, user2 }
     });
   }
 }

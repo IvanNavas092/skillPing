@@ -108,7 +108,6 @@ export class ProfileComponent implements OnInit {
       description: ['', Validators.required],
       skills: ['', Validators.required],
       interests: ['', Validators.required]
-      
     })
     this.patchForm(this.user);
     this.getSkills(); 

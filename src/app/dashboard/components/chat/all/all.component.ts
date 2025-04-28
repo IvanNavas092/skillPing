@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import Pusher from 'pusher-js';
 import { ChatService } from 'src/app/core/services/chat.service';
-import { message } from 'src/app/core/models/chat-message';
+import { Message } from 'src/app/core/models/chat-message';
 import { ApiService } from 'src/app/core/services/api.service';
 import { User } from 'src/app/core/models/User';
 
@@ -18,7 +18,7 @@ export class allComponent implements OnInit {
   selectedUser! : User;
 
   message = ''
-  messages : message[] = [];
+  messages : Message[] = [];
   receptor: string = '';
   pusher! : Pusher;
 
@@ -56,7 +56,7 @@ export class allComponent implements OnInit {
 
   selectUser(user: User) {
     this.selectedUser = user;
-    this.messages = [];
+    this.loadHistory(this.currentUser.username, this.selectedUser.username);
 
     // unsuscribe all previous channels
     this.pusher.allChannels().forEach(channel => {
@@ -68,7 +68,7 @@ export class allComponent implements OnInit {
     // suscribe the channel
     const channel = this.pusher.subscribe(channelName);
 
-    channel.bind('new-message', (data: message) => {
+    channel.bind('new-message', (data: Message) => {
       this.messages.push({
         sender: data.sender,
         message: data.message,
@@ -83,6 +83,15 @@ export class allComponent implements OnInit {
   getChannelName(user1: string, user2: string): string {
     const users = [user1, user2].sort();
     return `room-chat-${users[0]}_${users[1]}`;
+  }
+
+  loadHistory(user1: string, user2: string) {
+    this.chatService.getChatHistory(user1, user2).subscribe((data: Message[]) => {
+      this.messages = data.map(msg => ({
+        ...msg,
+        isMe: msg.sender === this.currentUser.username,
+      }));
+    })
   }
 
 
