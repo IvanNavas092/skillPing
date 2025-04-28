@@ -173,8 +173,9 @@
       </button>
 
       <button
+        (click)="logout()"
         *ngIf="isLoggedIn"
-        routerLink="/registro"
+        routerLink="/login"
         class="bg-white hover:bg-gray-100 border text-black cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold"
       >
         Cerrar sesión
