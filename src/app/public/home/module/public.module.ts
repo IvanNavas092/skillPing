@@ -9,6 +9,9 @@ import { HeroComponent } from '../components/hero/hero.component';
 import { HowItWorksComponent } from '../components/how-it-works/how-it-works.component';
 import { StepsSectionComponent } from '../components/steps-section/steps-section.component';
 import { CategoriesSectionComponent } from '../components/categories-section/categories-section.component';
+import { WorksCardComponent } from '../components/how-it-works/works-card/works-card.component';
+import { StepCardComponent } from '../components/steps-section/step-card/step-card.component';
+import { CategoryCardComponent } from '../components/categories-section/category-card/category-card.component';
 
 
 
@@ -20,15 +23,32 @@ import { CategoriesSectionComponent } from '../components/categories-section/cat
     StepsSectionComponent,
     CategoriesSectionComponent,
 
+    // sub components (How-it-works)
+    WorksCardComponent,
+    // sub components (Steps-Section)
+    StepCardComponent,
+    // sub components (Categories-Section)
+    CategoryCardComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     LucideAngularModule.pick({ MoveRight, Tag, Search, Users, MessageCircle, CheckCheck }),
     HttpClientModule,
-
   ],
   exports: [
+    HomeComponent,
+    HeroComponent,
+    HowItWorksComponent,
+    StepsSectionComponent,
+    CategoriesSectionComponent,
+
+    // sub components (How-it-works)
+    WorksCardComponent,
+    // sub components (Steps-Section)
+    StepCardComponent,
+    // sub components (Categories-Section)
+    CategoryCardComponent,
   ],
   providers: [
     ApiService,

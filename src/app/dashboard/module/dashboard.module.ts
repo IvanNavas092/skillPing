@@ -44,16 +44,17 @@ import { ChatComponent } from '../pages/chat/chat.component';
   ],
   exports: [
     DashboardComponent,
+
     // pages
     ExploreComponent,
     ProfileComponent,
-    allComponent,
-    UserListComponent,
+    ChatComponent,
 
     // components
     SearchComponent,
     FiltersComponent,
-    ChatComponent
+    UserListComponent,
+    allComponent,
   ],
   providers: [
     ApiService

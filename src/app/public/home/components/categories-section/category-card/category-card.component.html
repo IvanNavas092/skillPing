@@ -1,0 +1,15 @@
+
+  <!-- Icon -->
+  <a class="flex items-center gap-4  border p-3 rounded-xl bg-white hover:shadow-md w-72 h-20  transition-all duration-200 ease-in-out">
+    <p
+      class="p-3 rounded-full"
+      [ngClass]="color"
+    >
+      {{ category.icon }}
+    </p>
+    <!-- Text -->
+    <div>
+      <h5 class="text-md font-semibold text-gray-800">{{ category.name }}</h5>
+      <p class="text-gray-600 text-sm">{{ category.description }}</p>
+    </div>
+  </a>

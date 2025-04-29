@@ -1,4 +1,8 @@
-<section class="bg-[#f9fafb] w-full" data-aos="fade-up" data-aos-duration="500">
+<section
+  class="bg-[#f9fafb] w-full"
+  data-aos="fade-up"
+  data-aos-duration="500"
+>
   <div class="max-w-7xl w-full mx-auto px-4 py-20">
     <div class="flex flex-col gap-16">
       <div class="flex flex-col gap-5 w-full text-center">
@@ -8,14 +12,10 @@
         </p>
       </div>
       <div class="grid grid-cols-4 gap-8 place-items-center">
-        <div
-          *ngFor="let section of sections"
-          class="p-6 rounded-xl bg-white hover:shadow-md w-72 h-60 border transition-all duration-200 ease-in-out"
-        >
-          <h2 class="text-blue-100 text-4xl mb-4 font-bold">{{ section.number }}</h2>
-          <h5 class="text-lg font-semibold text-gray-800 mb-2">{{ section.title }}</h5>
-          <p class="text-gray-600">{{ section.description }}</p>
-        </div>
+        <app-step-card
+          *ngFor="let step of steps"
+          [step]="step"
+        ></app-step-card>
       </div>
     </div>
   </div>
