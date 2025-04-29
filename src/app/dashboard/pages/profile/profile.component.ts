@@ -146,15 +146,11 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.user);
     if (this.formProfile.value) {
-      this.user.full_name = this.formProfile.value.full_name;
-      this.user.username = this.formProfile.value.username;
-      this.user.email = this.formProfile.value.email;
-      this.user.password = this.formProfile.value.password;
-      this.user.edad = this.formProfile.value.edad; 
-      this.user.avatar_option = this.selectedAvatar;
+      this.user = this.formProfile.value;
     }
+    console.log(this.user);
+
   }
 
 
