@@ -6,7 +6,7 @@
     <!-- Cabecera con avatar e información básica -->
     <div class="flex items-start gap-4 mb-4">
       <img
-        [src]="'assets/avatar/default_avatar.png'"
+        [src]="user.avatar_option?.img ? user.avatar_option?.img : 'assets/avatar/default_avatar.png'"
         alt="Avatar de {{ user.full_name }}"
         class="w-16 h-16 rounded-full object-cover border-2 border-blue-100"
       />
