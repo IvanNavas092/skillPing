@@ -1,3 +1,4 @@
+import { Avatar } from "./avatar";
 import { Skill } from "./skill";
 
 export interface User {
@@ -10,7 +11,7 @@ export interface User {
   disponibilidad: string;
   sexo: string;
   description: string;
-  avatar_option: string;
+  avatar_option?: Avatar;
   skills: Skill[];
   interests: Skill[];
   rating_count : number // cantidad de ratings
