@@ -28,7 +28,14 @@ export class AuthService {
       email: user.email,
       password: user.password,
       skills: user.skills, // ID
-      interests: user.interests // ID
+      interests: user.interests, // ID
+      // extras
+      avatar: user.avatar_option?.id,
+      description: user.description,
+      age: user.age,
+      disponibility: user.disponibility,
+      gender: user.gender,
+
     }
     return this.http.post<User>(this.registerUrl, registrationData);
 

@@ -4,6 +4,8 @@ import { Avatar } from 'src/app/core/models/avatar';
 import { User } from 'src/app/core/models/User';
 import { ApiService } from 'src/app/core/services/api.service';
 import { Skill } from 'src/app/core/models/skill';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -15,13 +17,18 @@ export class ProfileComponent implements OnInit {
   formProfile!: FormGroup;
 
   // User skills
-  KnownSkills : any[] = [];
-  SkillsToLearn : any[] = [];
+  KnownSkills: any[] = [];
+  SkillsToLearn: any[] = [];
 
   // avatars
   selectedAvatar: Avatar | undefined;
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) { }
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService, 
+    private authService: AuthService,
+    private router: Router
+  ) { }
   allSkills: Skill[] = [];
 
   getSkills() {
@@ -77,11 +84,11 @@ export class ProfileComponent implements OnInit {
     { id: 'sexo', label: 'Sexo', controlName: 'sexo', type: 'text', placeholder: 'Ejemplo: Masculino' },
     { id: 'description', label: 'Descripción', controlName: 'description', type: 'text', placeholder: 'Ejemplo: Soy un usuario', },
   ]
-  
-  selectFields =[
+
+  selectFields = [
     { label: 'Habilidades' },
     { label: 'Intereses' },
-    
+
   ]
 
 
@@ -110,7 +117,7 @@ export class ProfileComponent implements OnInit {
       interests: ['', Validators.required]
     })
     this.patchForm(this.user);
-    this.getSkills(); 
+    this.getSkills();
     this.getSkillsUser(this.user);
 
   }
@@ -128,7 +135,7 @@ export class ProfileComponent implements OnInit {
       this.SkillsToLearn = user.interests.map(skill => skill.name)
       console.log(this.SkillsToLearn);
     }
-    console.log('aprender', this.KnownSkills,'enseñar', this.SkillsToLearn);
+    console.log('aprender', this.KnownSkills, 'enseñar', this.SkillsToLearn);
   }
 
   // funcion para seleccionar avatar
@@ -145,9 +152,13 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  // TODO: Error 401 Unauthorized
   onSubmit() {
-    if (this.formProfile.value) {
-      this.user = this.formProfile.value;
+    if (this.formProfile.valid) {
+      this.authService.register(this.user).subscribe((data) => {
+        console.log(data);
+        this.router.navigate(['/dashboard']);
+      });
     }
     console.log(this.user);
 
