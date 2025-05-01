@@ -11,7 +11,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/home/module/public.module';
 import { AboutComponent } from './public/about/about.component';
-import { CategoryCardComponent } from './public/home/components/categories-section/category-card/category-card.component';
+import { SearchChatComponent } from './dashboard/components/chat/search-chat/search-chat.component';
 
 @NgModule({
   declarations: [

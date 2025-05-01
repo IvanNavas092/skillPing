@@ -9,12 +9,14 @@ import { User } from 'src/app/core/models/User';
 @Component({
   selector: 'app-all',
   templateUrl: './all.component.html',
+  styleUrls: ['./style.css']
 })
 export class allComponent implements OnInit {
-
+  
+  search = '';
   currentUser = this.authService.getCurrentUser();
-
-  users : User[] = [];
+  allUsers : User[] = [];
+  usersFiltered : User[] = [];
   selectedUser! : User;
 
   message = ''
@@ -22,13 +24,13 @@ export class allComponent implements OnInit {
   receptor: string = '';
   pusher! : Pusher;
 
-  isSending = false;
   errorMessage = '';
   constructor(private authService: AuthService, private chatService: ChatService, private apiService: ApiService) { }
   
   ngOnInit(): void {
     this.getUsers();
     this.initializePusher();
+    
 
     // depuration
     console.log('username', this.currentUser.username);
@@ -49,8 +51,9 @@ export class allComponent implements OnInit {
   // take the users without the current user
   getUsers() {
     this.apiService.getUsers().subscribe((data) => {
-      this.users = data.filter((user: any) =>
+      this.allUsers = data.filter((user: User) =>
         user.id !== this.currentUser.id && user.username !== 'admin');
+      this.usersFiltered = [...this.allUsers];
     })
   }
 
@@ -96,7 +99,7 @@ export class allComponent implements OnInit {
 
 
 
-  // sendMessage
+  // send message to the selected user
   sendMessage() {
     if (!this.message || !this.selectUser) return;
 
@@ -110,15 +113,28 @@ export class allComponent implements OnInit {
       next: (data) => {
         console.log('message sent');
         this.message = '';
-        this.isSending = false;
-        
       },
       error: (e) => {
         console.log('error sending message')
         this.errorMessage = e.message;
-        this.isSending = false;
       }
     })
+  }
+
+  onSearch(value: string) {
+    this.search = value.toLowerCase().trim();
+
+    if (!this.search) { 
+      this.usersFiltered = [...this.allUsers];
+    }
+    else {
+      this.usersFiltered = this.allUsers.filter(user =>
+        user.username.toLowerCase().includes(value.toLowerCase()));
+      console.log(this.usersFiltered);
+      console.log(this.search);
+    }
+    console.log("USUARIO TODOS" + this.allUsers.length);
+    console.log("USUARIO FILTRADOS" +this.usersFiltered.length);
   }
 
 

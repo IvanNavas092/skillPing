@@ -12,10 +12,11 @@ import { ExploreComponent } from '../pages/explore/explore.component';
 import { SearchComponent } from '../components/explore/search/search.component';
 import { FiltersComponent } from '../components/explore/filters/filters.component';
 import { UserListComponent } from '../components/explore/user-list/user-list.component';
-import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { allComponent } from '../components/chat/all/all.component';
 import { ChatComponent } from '../pages/chat/chat.component';
+import { SearchChatComponent } from '../components/chat/search-chat/search-chat.component';
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ChatComponent } from '../pages/chat/chat.component';
     FiltersComponent,
     UserListComponent,
     allComponent,
+    SearchChatComponent
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { ChatComponent } from '../pages/chat/chat.component';
     FiltersComponent,
     UserListComponent,
     allComponent,
+    SearchChatComponent,
   ],
   providers: [
     ApiService

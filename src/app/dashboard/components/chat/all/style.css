@@ -1,0 +1,9 @@
+/* varbales */
+
+.msg-me {
+  @apply bg-indigo-500 text-white;
+}
+
+.msg-other {
+  @apply bg-white text-gray-800;
+}
