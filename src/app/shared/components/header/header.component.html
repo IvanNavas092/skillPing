@@ -92,18 +92,18 @@
         >
           <!-- Menú de subcategorías -->
           <a
-            *ngFor="let categorie of categories"
+            *ngFor="let category of categories"
             class="w-full lg:w-48 h-24 bg-gray-100 p-4 rounded-md flex flex-col justify-center hover:bg-gray-200"
-            href=""
+            (click)="goToExploreWithCategory(category.name)"
           >
             <div class="flex items-center">
               <lucide-icon
                 name="tag"
                 class="w-4 mr-2"
               ></lucide-icon>
-              <span class="text-sm font-semibold text-gray-900">{{ categorie.name }}</span>
+              <span class="text-sm font-semibold text-gray-900">{{ category.name }}</span>
             </div>
-            <p class="text-gray-900 text-sm">{{ categorie.description }}</p>
+            <p class="text-gray-900 text-sm">{{ category.description }}</p>
           </a>
           <a
             href=""

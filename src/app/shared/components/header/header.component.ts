@@ -1,6 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { Category } from 'src/app/core/models/Category';
 import { AuthService } from 'src/app/core/services/auth.service';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
     { name: "Música", description: "¡Aprende lo que hacen tus artistas favoritos!" }
   ];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
@@ -24,6 +25,11 @@ export class HeaderComponent implements OnInit {
     this.authService.loggedIn$.subscribe((state) =>{
       this.isLoggedIn = state;
     })
+  }
+
+  goToExploreWithCategory(categoryName: string) {
+    this.router.navigate(['dashboard/explorar/categoria', categoryName],
+    )
   }
 
   logout() {

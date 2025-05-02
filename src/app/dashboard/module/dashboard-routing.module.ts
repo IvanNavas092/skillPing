@@ -11,7 +11,8 @@ const routes: Routes = [
     path: '', component: DashboardComponent,
     children: [
       { path: 'explorar', component: ExploreComponent },
-      { path: 'explorar/:id', component: UserDetailComponent },
+      { path: 'explorar/categoria/:categoryName', component: ExploreComponent },
+      { path: 'explorar/usuario/:id', component: UserDetailComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'chat', component: ChatComponent },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' }
