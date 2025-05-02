@@ -17,6 +17,8 @@ import { ProfileComponent } from '../pages/profile/profile.component';
 import { allComponent } from '../components/chat/all/all.component';
 import { ChatComponent } from '../pages/chat/chat.component';
 import { SearchChatComponent } from '../components/chat/search-chat/search-chat.component';
+import { UserCardComponent } from '../components/explore/user-list/user-card/user-card.component';
+import { PublicModule } from "../../public/home/module/public.module";
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { SearchChatComponent } from '../components/chat/search-chat/search-chat.
     FiltersComponent,
     UserListComponent,
     allComponent,
-    SearchChatComponent
+    SearchChatComponent,
+    UserCardComponent,
   ],
   imports: [
     CommonModule,
@@ -42,8 +45,8 @@ import { SearchChatComponent } from '../components/chat/search-chat/search-chat.
     DashboardRoutingModule,
     HttpClientModule,
     LucideAngularModule.pick({ Search }),
-
-  ],
+    PublicModule
+],
   exports: [
     DashboardComponent,
 
@@ -58,6 +61,7 @@ import { SearchChatComponent } from '../components/chat/search-chat/search-chat.
     UserListComponent,
     allComponent,
     SearchChatComponent,
+    UserCardComponent,
   ],
   providers: [
     ApiService

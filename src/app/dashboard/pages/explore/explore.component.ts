@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent {
+  filterActive: any;
+  search: any;
 
 }

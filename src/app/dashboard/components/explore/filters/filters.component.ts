@@ -24,6 +24,7 @@ export class FiltersComponent {
   toggleFilter(category: Category) {
     if (this.selectedFilter === category) {
       this.selectedFilter = null;
+      this.categorieActive.emit(null);
     }
     else {
       this.selectedFilter = category;

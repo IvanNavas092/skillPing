@@ -133,6 +133,7 @@ export class allComponent implements OnInit {
       console.log(this.usersFiltered);
       console.log(this.search);
     }
+    // depuration
     console.log("USUARIO TODOS" + this.allUsers.length);
     console.log("USUARIO FILTRADOS" +this.usersFiltered.length);
   }

@@ -2,13 +2,12 @@
   <div class="max-w-7xl w-full flex-col mt-24">
     <h1 class="text-3xl font-bold">Explora habilidades</h1>
     <div class="w-full p-4 bg-white rounded-lg border-2 mt-5">
-      <app-search></app-search>
+      <app-search (searchChange)="search = $event"></app-search>
       <h1 class="text-1xl font-medium mt-3 mb-2">Categorías</h1>
-
-      <app-filters></app-filters>
+      <app-filters (categorieActive)="filterActive = $event"></app-filters>
     </div>
-    <div class="mt-5">
-      <app-user-list></app-user-list>
+    <div class="mt-5 mb-10">
+      <app-user-list [filterActive]="filterActive" [search]="search"></app-user-list>
     </div>
   </div>
 </div>

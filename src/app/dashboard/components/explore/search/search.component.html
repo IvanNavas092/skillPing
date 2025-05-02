@@ -1,10 +1,16 @@
 <div class="relative">
-   <input 
-      type="text"
-      class="w-full p-2 pl-9 rounded-3xl border border-gray-300 focus:border-blue-500 focus:outline-none text-sm"
-      placeholder="Busca habilidad o usuario...">
+  <input
+    type="text"
+    class="w-full p-2 pl-9 rounded-3xl border border-gray-300 focus:border-blue-500 focus:outline-none text-sm"
+    placeholder="Busca habilidad o usuario..."
+    [(ngModel)]="search"
+    (ngModelChange)="onSearch($event)"
+  />
 
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-         <lucide-icon name="search" class="text-gray-500 w-4 h-4"></lucide-icon>
-      </div>
+  <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+    <lucide-icon
+      name="search"
+      class="text-gray-500 w-4 h-4"
+    ></lucide-icon>
+  </div>
 </div>
