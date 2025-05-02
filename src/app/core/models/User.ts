@@ -7,17 +7,18 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  skills: Skill[]; // ID
+  interests: Skill[]; // ID
+  skills_details?: Skill[];  // for read  (with names)
+  interests_details?: Skill[]; // for read (with names)
+  // Extras
   age: number;
-  disponibility: string;
   gender: string;
   description: string;
+  location: string;
   avatar_option?: Avatar;
-  skills: Skill[];
-  interests: Skill[];
   rating_count : number // cantidad de ratings
   average_rating : number // media de ratings
-  skills_details?: Skill[];  // Para lectura (con nombres)
-  interests_details?: Skill[]; // Para lectura (con nombres)
 }
 
 export interface UserResponse {

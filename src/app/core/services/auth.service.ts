@@ -33,7 +33,7 @@ export class AuthService {
       avatar: user.avatar_option?.id,
       description: user.description,
       age: user.age,
-      disponibility: user.disponibility,
+      disponibility: user.location,
       gender: user.gender,
 
     }

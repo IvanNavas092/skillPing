@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/home/module/public.module';
 import { AboutComponent } from './public/about/about.component';
 import { SearchChatComponent } from './dashboard/components/chat/search-chat/search-chat.component';
+import { UserCardComponent } from './dashboard/components/explore/user-list/user-card/user-card.component';
 
 @NgModule({
   declarations: [
