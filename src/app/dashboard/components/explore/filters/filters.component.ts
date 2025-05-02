@@ -12,7 +12,7 @@ export class FiltersComponent {
   selectedFilter: Category | null = null;
   categories: any[] = [];
 
-  @Output() categorieActive = new EventEmitter<Category | null>();
+  @Output() categorieActive = new EventEmitter<string | null>();
 
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class FiltersComponent {
     }
     else {
       this.selectedFilter = category;
-      this.categorieActive.emit(category);
+      this.categorieActive.emit(category.name);
     }
   }
 

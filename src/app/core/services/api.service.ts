@@ -22,12 +22,8 @@ export class ApiService {
     return this.http.get<User[]>('http://127.0.0.1:8000/api/users/');
   }
 
-  getUsersByFilterCategorie(categoryActive: Category | string) {
-    const categoryName = typeof categoryActive === 'string' 
-      ? categoryActive 
-      : categoryActive.name;
-    
-    return this.http.get<User[]>(`${this.apiUrl}/users/by-category/${categoryName}`);
+  getUsersByFilterCategorie(categoryActive: string) {
+    return this.http.get<User[]>(`${this.apiUrl}/users/by-category/${categoryActive}`);
   }
 
   getCountries() {

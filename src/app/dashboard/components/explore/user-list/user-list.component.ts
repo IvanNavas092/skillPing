@@ -5,6 +5,7 @@ import { User } from 'src/app/core/models/User';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -13,15 +14,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserListComponent implements OnInit, OnChanges {
 
-  @Input() filterActive!: Category;
+  @Input() filterActive!: string;
   @Input() search!: string;
   currentUser = this.getCurrentUser();
   allUsers: User[] = [];
   usersFiltered: User[] = [];
 
   activeCategoryFromRoute: string | null = '';
-
-  constructor(private apiService: ApiService, private authService: AuthService, private router: ActivatedRoute) { }
+  usersLoaded = false; // flag to check if users are loaded
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService,
+    private router: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -29,41 +34,62 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['filterActive'] || changes['search'])
+    if (this.usersLoaded && changes['filterActive'] || changes['search'])
       this.filterUsers();
+      // when filterActive is choosed, is null the activeCategoryFromRoute
+      this.activeCategoryFromRoute = null;
   }
 
   setupRouteListener(): void {
     this.router.paramMap.subscribe(params => {
       this.activeCategoryFromRoute = params.get('categoryName');
-      this.filterUsers();
+      // if users are loaded, filter them
+      if (this.usersLoaded) {
+        this.filterUsers();
+      }
     });
+  }
+
+
+
+  loadUsers() {
+    this.apiService.getUsers().subscribe((data) => {
+      this.allUsers = data.filter((user: any) =>
+        user.id !== this.currentUser.id && user.username !== 'admin');
+      this.usersFiltered = [...this.allUsers];
+      this.usersLoaded = true;
+
+      // filter users
+      this.filterUsers();
+      this.applySearchFilter();
+    })
+
+    // Aplica búsqueda si existe al cargar
   }
 
   // filter users
   filterUsers() {
     // choose category (from route or component)
-    const categoryName = this.filterActive?.name || this.activeCategoryFromRoute;
-    // filter with category 
+    const categoryName = this.filterActive || this.activeCategoryFromRoute;
+
     if (categoryName) {
       this.filterByCategory(categoryName);
-      console.log(categoryName);
     }
     else {
+      this.usersFiltered = [...this.allUsers];
       this.loadUsers();
     }
-
   }
 
   // filter users by category
-  filterByCategory(category: Category | string) {
+  filterByCategory(category: string) {
     this.apiService
       .getUsersByFilterCategorie(category)
       .subscribe((data) => {
         this.usersFiltered = data;
+
         // apply search filter
         this.applySearchFilter();
-        
       });
   }
 
@@ -74,18 +100,6 @@ export class UserListComponent implements OnInit, OnChanges {
         user.username.toLowerCase().includes(this.search.toLowerCase()));
     }
   }
-
-  loadUsers() {
-    this.apiService.getUsers().subscribe((data) => {
-      this.allUsers = data.filter((user: any) =>
-        user.id !== this.currentUser.id && user.username !== 'admin');
-      this.usersFiltered = [...this.allUsers];
-      this.applySearchFilter();
-    })
-
-    // Aplica búsqueda si existe al cargar
-  }
-
 
   getCurrentUser() {
     return this.authService.getCurrentUser();
