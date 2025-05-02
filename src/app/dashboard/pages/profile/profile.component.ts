@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   avatars: Avatar[] = [];
   user!: User;
   formProfile!: FormGroup;
+  countries: string[] = [];
 
   // User skills
   KnownSkills: any[] = [];
@@ -25,64 +26,60 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService, 
+    private apiService: ApiService,
     private authService: AuthService,
     private router: Router
   ) { }
   allSkills: Skill[] = [];
 
-  getSkills() {
-    this.apiService.getSkills().subscribe((data) => {
-      this.allSkills = data;
-    });
-  }
+
 
   // lista de fields con validations
   formFields = [
     {
-      id: 'full_name', label: 'Nombre completo', controlName: 'full_name', type: 'text', placeholder: 'Nombre Apellido',
+      id: 1, label: 'Nombre completo', controlName: 'full_name', type: 'text', placeholder: 'Nombre Apellido',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
     {
-      id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text', placeholder: 'ejemplo01',
+      id: 2, label: 'Nombre de usuario', controlName: 'username', type: 'text', placeholder: 'ejemplo01',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
     {
-      id: 'email', label: 'Email', controlName: 'email', type: 'email', placeholder: 'ejemplo@gmail.com',
+      id: 3, label: 'Email', controlName: 'email', type: 'email', placeholder: 'ejemplo@gmail.com',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
     {
-      id: 'password', label: 'Contraseña', controlName: 'password', type: 'password', placeholder: '********',
+      id: 4, label: 'Contraseña', controlName: 'password', type: 'password', placeholder: '********',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
     {
-      id: 'edad', label: 'Edad', controlName: 'edad', type: 'number', placeholder: 'Ejemplo: 25',
+      id: 5, label: 'Edad', controlName: 'edad', type: 'number', placeholder: 'Ejemplo: 25',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
     {
-      id: 'disponibilidad', label: 'Disponibilidad', controlName: 'disponibilidad', type: 'text', placeholder: 'Ejemplo: Disponible',
+      id: 6, label: 'Localidad', controlName: 'localidad', type: 'select', placeholder: 'Selecciona una opción',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
-    { id: 'sexo', label: 'Sexo', controlName: 'sexo', type: 'text', placeholder: 'Ejemplo: Masculino' },
-    { id: 'description', label: 'Descripción', controlName: 'description', type: 'text', placeholder: 'Ejemplo: Soy un usuario', },
+    { id: 7, label: 'Sexo', controlName: 'sexo', type: 'text', placeholder: 'Ejemplo: Masculino' },
+    { id: 8, label: 'Descripción', controlName: 'description', type: 'text', placeholder: 'Ejemplo: Soy un usuario', },
   ]
 
   selectFields = [
@@ -110,7 +107,7 @@ export class ProfileComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       edad: ['', Validators.required],
-      disponibilidad: ['', Validators.required],
+      localidad: ['', Validators.required],
       sexo: ['', Validators.required],
       description: ['', Validators.required],
       skills: ['', Validators.required],
@@ -119,11 +116,19 @@ export class ProfileComponent implements OnInit {
     this.patchForm(this.user);
     this.getSkills();
     this.getSkillsUser(this.user);
+    this.getCountriesOptions();
+    console.log(this.countries);
 
   }
 
   patchForm(user: User) {
     this.formProfile.patchValue(user);
+  }
+
+  getSkills() {
+    this.apiService.getSkills().subscribe((data) => {
+      this.allSkills = data;
+    });
   }
 
   getSkillsUser(user: User) {
@@ -138,6 +143,14 @@ export class ProfileComponent implements OnInit {
     console.log('aprender', this.KnownSkills, 'enseñar', this.SkillsToLearn);
   }
 
+
+  // take country options from api
+  getCountriesOptions() {
+    this.apiService.getCountries().subscribe((data) => {
+      this.countries = data;
+      console.log(this.countries);
+    });
+  }
   // funcion para seleccionar avatar
   toggleAvatar(avatar: Avatar) {
     avatar.selected = !avatar.selected;
@@ -152,7 +165,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  // TODO: Error 401 Unauthorized
+  // TODO: Error 401 Unauthorized console error
   onSubmit() {
     if (this.formProfile.valid) {
       this.authService.register(this.user).subscribe((data) => {
