@@ -6,12 +6,10 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
-  // register
-  registerUrl = 'http://localhost:8000/api/users/'
+  // url api
+  apiUrl = 'http://localhost:8000/api/';
 
 
-  // login
-  loginUrl = 'http://localhost:8000/api/login/';
   
   private storage = sessionStorage;
   isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
@@ -36,14 +34,13 @@ export class AuthService {
       disponibility: user.location,
       gender: user.gender,
     }
-    return this.http.post<User>(this.registerUrl, registrationData);
-
+    return this.http.post<User>(this.apiUrl + 'users/', registrationData);
   }
 
 
   // LOGIN
   login(username: string, password: string): Observable<UserResponse> {
-    return this.http.post<UserResponse>(this.loginUrl, { username, password }).pipe(
+    return this.http.post<UserResponse>(this.apiUrl + 'login/', { username, password }).pipe(
       tap(response => { // Tap para que no modifique el response
         this.storeAuthData(response);
         this.isLoggedIn.next(true);
@@ -52,7 +49,7 @@ export class AuthService {
   }
 
   // update user
-  updateUser(user: User): Observable<User> {
+  updateUser(id: number, user: User): Observable<User> {
     const updateData = {
       avatar: user.avatar_option?.id,
       full_name: user.full_name,
@@ -65,7 +62,7 @@ export class AuthService {
       skills: user.skills,
       interests: user.interests,
     }
-    return this.http.patch<User>(`http://localhost:8000/api/users/update-user/`, updateData);
+    return this.http.patch<User>(this.apiUrl + 'users/update-user/' + id + '/', updateData);
   }
 
 

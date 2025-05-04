@@ -82,10 +82,10 @@
                 {{ field.placeholder }}
               </option>
               <option
-                *ngFor="let gender of genders"
-                [value]="gender"
+                *ngFor="let gender of genderOptions"
+                [value]="gender.value"
               >
-                {{ gender }}
+                {{ gender.label }}
               </option>
             </select>
             </div>

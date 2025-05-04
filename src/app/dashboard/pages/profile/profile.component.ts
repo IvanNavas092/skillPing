@@ -88,7 +88,11 @@ export class ProfileComponent implements OnInit {
     { label: 'Intereses' },
   ]
   // genders choices
-  genders = ['Masculino', 'Femenino', 'Otro']
+  genderOptions = [
+    { value: 'M', label: 'Masculino' },
+    { value: 'F', label: 'Femenino' },
+    { value: 'O', label: 'Otro' }
+  ];
 
   ngOnInit(): void {
     // take user from sessionStorage
@@ -166,7 +170,7 @@ export class ProfileComponent implements OnInit {
       interests: this.SkillsToLearn. map(skill => skill.id)
     }
     console.log('Datos de actualización:', userData);
-    this.authService.updateUser(userData).subscribe({
+    this.authService.updateUser(this.user.id,userData).subscribe({
       next: () => {
         console.log('Datos actualizados');
       },
