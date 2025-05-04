@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // REGISTER
+  // REGISTER and edit
   register(user: User): Observable<User> {
     const registrationData = {
       full_name: user.full_name,
@@ -35,7 +35,6 @@ export class AuthService {
       age: user.age,
       disponibility: user.location,
       gender: user.gender,
-
     }
     return this.http.post<User>(this.registerUrl, registrationData);
 
@@ -51,6 +50,24 @@ export class AuthService {
       })
     );
   }
+
+  // update user
+  updateUser(user: User): Observable<User> {
+    const updateData = {
+      avatar: user.avatar_option?.id,
+      full_name: user.full_name,
+      username: user.username,
+      email: user.email,
+      age: user.age,
+      location: user.location,
+      gender: user.gender,
+      description: user.description,
+      skills: user.skills,
+      interests: user.interests,
+    }
+    return this.http.patch<User>(`http://localhost:8000/api/users/update-user/`, updateData);
+  }
+
 
 
 

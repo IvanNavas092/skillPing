@@ -4,23 +4,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
+import { AvatarService } from './services/avatar.service';
 
 @NgModule({
-   declarations: [],
-   imports: [
-      CommonModule,
-      HttpClientModule,
+  declarations: [],
+  imports: [
+    CommonModule,
+    HttpClientModule,
 
-   ],
-   exports: [
-      HttpClientModule,
-   ],
-   providers: [
-      ApiService,
-      ChatService,
-      AuthService,
-      
-   ]
+  ],
+  exports: [
+    HttpClientModule,
+  ],
+  providers: [
+    ApiService,
+    ChatService,
+    AuthService,
+    AvatarService
+
+  ]
 })
 
 export class CoreModule { }
