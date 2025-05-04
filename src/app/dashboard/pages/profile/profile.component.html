@@ -30,7 +30,6 @@
 
       <!-- contenedor de datos personales -->
       <form
-        action=""
         [formGroup]="formProfile"
         (ngSubmit)="onSubmit()"
       >
@@ -45,7 +44,7 @@
               >
               <!-- Input -->
               <input *ngIf="field.type !== 'select'"
-                class="w-full border p-2 rounded-md"
+                class="w-full border p-2 rounded-md disabled:bg-gray-100"
                 [type]="field.type"
                 [formControlName]="field.controlName"
                 [placeholder]="field.placeholder"
@@ -53,7 +52,7 @@
 
               <!-- Select -->
               <select
-                *ngIf="field.type === 'select'"
+                *ngIf="field.type === 'select' && field.controlName === 'location'"
                 class="w-full border p-2 rounded-md"
                 [formControlName]="field.controlName"
               >
@@ -70,6 +69,25 @@
                   {{ country }}
                 </option>
               </select>
+              <!-- Sexo -->
+              <select
+              *ngIf="field.type === 'select' && field.controlName === 'gender'"
+              class="w-full border p-2 rounded-md"
+              [formControlName]="field.controlName"
+            >
+              <option
+                value=""
+                disabled
+              >
+                {{ field.placeholder }}
+              </option>
+              <option
+                *ngFor="let gender of genders"
+                [value]="gender"
+              >
+                {{ gender }}
+              </option>
+            </select>
             </div>
           </ng-container>
 
@@ -90,7 +108,7 @@
                 </option>
                 <option
                   *ngFor="let skill of allSkills"
-                  [value]="skill.name"
+                  [value]="skill.id"
                 >
                   {{ skill.name }}
                 </option>
@@ -124,7 +142,8 @@
         <div class="flex justify-end">
           <button
             type="submit"
-            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition mt-4 mr-7"
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium transition mt-4 mr-7 disabled:bg-gray-400"
+            [disabled]="!formProfile.valid"
           >
             Guardar cambios
           </button>

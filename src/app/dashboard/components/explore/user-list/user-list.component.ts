@@ -77,7 +77,6 @@ export class UserListComponent implements OnInit, OnChanges {
     }
     else {
       this.usersFiltered = [...this.allUsers];
-      this.loadUsers();
     }
   }
 
