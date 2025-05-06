@@ -31,7 +31,7 @@ export class AuthService {
       avatar: user.avatar_option?.id,
       description: user.description,
       age: user.age,
-      disponibility: user.location,
+      location: user.location,
       gender: user.gender,
     }
     return this.http.post<User>(this.apiUrl + 'users/', registrationData);
@@ -52,7 +52,7 @@ export class AuthService {
   updateUser(id: number, user: User): Observable<User> {
     const updateData = {
       avatar: user.avatar_option?.id,
-      full_name: user.full_name,
+      full_name: user?.full_name,
       username: user.username,
       email: user.email,
       age: user.age,

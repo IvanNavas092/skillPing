@@ -19,12 +19,13 @@ export class ProfileComponent implements OnInit {
   countries: string[] = [];
 
   // User skills
-  KnownSkills: any[] = [];
-  SkillsToLearn: any[] = [];
+  KnownSkills: Skill[] = [];
+  SkillsToLearn: Skill[] = [];
   allSkills: Skill[] = [];
 
   // avatars
   selectedAvatar: Avatar | undefined;
+
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -79,13 +80,13 @@ export class ProfileComponent implements OnInit {
         { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
       ]
     },
-    { id: 7, label: 'genero', controlName: 'gender', type: 'select', placeholder: 'Ejemplo: Masculino' },
+    { id: 7, label: 'género', controlName: 'gender', type: 'select', placeholder: 'Ejemplo: Masculino' },
     { id: 8, label: 'Descripción', controlName: 'description', type: 'text', placeholder: 'Ejemplo: Soy un usuario', },
   ]
 
   selectFields = [
-    { label: 'Habilidades' },
-    { label: 'Intereses' },
+    { label: 'Habilidades', controlName: 'selectedSkillHabilidades' },
+    { label: 'Intereses', controlName: 'selectedSkillIntereses' },
   ]
   // genders choices
   genderOptions = [
@@ -106,11 +107,11 @@ export class ProfileComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: [{value: '', disabled: true}, ],
       age: ['', Validators.required],
-      location: ['', Validators.required],
+      location: ['', ],
       gender: ['', Validators.required],
       description: ['', Validators.minLength(10)],
-      skills: ['', ],
-      interests: ['', ]
+      selectedSkillHabilidades: [''],
+      selectedSkillIntereses: [''],
     })
     this.getCountriesOptions();
     this.patchForm(this.user);
@@ -126,17 +127,44 @@ export class ProfileComponent implements OnInit {
   }
 
   getSkills() {
-    this.apiService.getSkills().subscribe((data) => {
-      this.allSkills = data;
+    // CHANGE---------------
+    this.apiService.getSkills().subscribe((data: Skill[]) => {
+      this.allSkills = data.filter (skill =>
+        !this.KnownSkills.some(known => known.id === skill.id)
+        && !this.SkillsToLearn.some(toLearn => toLearn.id === skill.id)) 
     });
+  }
+
+  addSkill(list: 'known' | 'toLearn') {
+    const controlName = list === 'known' ? 'selectedSkillHabilidades' : 'selectedSkillIntereses';
+    const selectedSkill = this.formProfile.get(controlName)?.value;
+    console.log(selectedSkill);
+
+    if (!selectedSkill) return;
+
+    if (list === 'known' && !this.KnownSkills.some(s => s.id === selectedSkill.id))
+      this.KnownSkills.push(selectedSkill);
+    else if (list === 'toLearn' && !this.SkillsToLearn.some(s => s.id === selectedSkill.id))
+      this.SkillsToLearn.push(selectedSkill);
+
+    console.log('Known', this.KnownSkills, 'toLearn', this.SkillsToLearn);
+  }
+
+  removeSkill(skillToRemove: Skill, list: 'known' | 'toLearn') {
+    if (list === 'known')
+      this.KnownSkills = this.KnownSkills.filter(skill => skill.id !== skillToRemove.id);
+    else if (list === 'toLearn')
+      this.SkillsToLearn = this.SkillsToLearn.filter(skill => skill.id !== skillToRemove.id);
+
+    console.log('known', this.KnownSkills, 'toLearn', this.SkillsToLearn);
   }
 
   getSkillsUser(user: User) {
     if (this.user.skills.length > 0) {
-      this.KnownSkills = user.skills.map(skill => skill.name)
+      this.KnownSkills = user.skills.map(skill => skill)
     }
     if (this.user.interests.length > 0) {
-      this.SkillsToLearn = user.interests.map(skill => skill.name)
+      this.SkillsToLearn = user.interests.map(skill => skill)
     }
     console.log('aprender', this.KnownSkills, 'enseñar', this.SkillsToLearn);
   }
@@ -164,20 +192,36 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
+    // prepare data for submit
+    const formData = this.formProfile.value;
     const userData = {
-      ...this.formProfile.value,
-      skills: this.KnownSkills.map(skill => skill.id),
-      interests: this.SkillsToLearn. map(skill => skill.id)
-    }
+      full_name: formData.full_name,
+      username: formData.username,
+      email: formData.email,
+      age: formData.age,
+      location: formData.location,
+      gender: formData.gender,
+      description: formData.description,
+      avatar_option: this.selectedAvatar?.id || null,  
+      skills: this.KnownSkills.map(skill => skill.id), 
+      interests: this.SkillsToLearn.map(skill => skill.id) 
+    };
+  
     console.log('Datos de actualización:', userData);
-    this.authService.updateUser(this.user.id,userData).subscribe({
-      next: () => {
-        console.log('Datos actualizados');
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    })
+    
+    // this.authService.updateUser(this.user.id, userData).subscribe({
+    //   next: (updatedUser) => {
+    //     console.log('Datos actualizados correctamente', updatedUser);
+    //     // Opcional: Actualizar el usuario en el cliente
+    //     this.user = updatedUser;
+    //     // Mostrar mensaje de éxito
+    //     // this.showSuccessMessage('Perfil actualizado correctamente');
+    //   },
+    //   error: (error) => {
+    //     console.error('Error al actualizar:', error);
+    //     // Mostrar mensaje de error al usuario
+    //     // this.showErrorMessage('Error al actualizar el perfil');
+    //   }
+    // });
   }
-
 }

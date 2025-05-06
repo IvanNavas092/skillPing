@@ -37,3 +37,16 @@ export interface UserResponse {
     average_rating : number 
   }
 }
+
+export interface UserUpdate {
+  full_name: string;
+  username: string;
+  email: string;
+  age: number;
+  location: string;
+  gender: string;
+  description: string;
+  skills: number[]; //ID PK IN BACK
+  interests: number[]; //ID PK IN BACK
+  avatar_option?: number;
+}
