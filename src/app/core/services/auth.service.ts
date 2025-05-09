@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User, UserResponse } from '../models/User';
+import { User, UserResponse, UserUpdate } from '../models/User';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -18,17 +18,17 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // REGISTER and edit
+  // REGISTER
   register(user: User): Observable<User> {
     const registrationData = {
       full_name: user.full_name,
       username: user.username,
       email: user.email,
       password: user.password,
-      skills: user.skills, // ID
-      interests: user.interests, // ID
+      skills: user.skills, 
+      interests: user.interests, 
       // extras
-      avatar: user.avatar_option?.id,
+      avatar: user.avatar,
       description: user.description,
       age: user.age,
       location: user.location,
@@ -49,9 +49,9 @@ export class AuthService {
   }
 
   // update user
-  updateUser(id: number, user: User): Observable<User> {
+  updateUser(id: number, user: UserUpdate): Observable<User> {
     const updateData = {
-      avatar: user.avatar_option?.id,
+      avatar: user.avatar,
       full_name: user?.full_name,
       username: user.username,
       email: user.email,
@@ -94,6 +94,13 @@ export class AuthService {
 
   getToken() {
     return this.storage.getItem('auth-token');
+  }
+
+  
+  getUserById(id: string) : Observable<User> {
+    const idNumber = parseInt(id, 10);
+    
+    return this.http.get<User>(this.apiUrl + 'users/' + idNumber);
   }
 
 

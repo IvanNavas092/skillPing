@@ -16,7 +16,7 @@ export interface User {
   gender: string;
   description: string;
   location: string;
-  avatar_option?: Avatar;
+  avatar?: | number;
   rating_count : number // cantidad de ratings
   average_rating : number // media de ratings
 }
@@ -30,7 +30,7 @@ export interface UserResponse {
     email: string;
     full_name: string;
     description?: string;
-    avatar?: string;
+    avatar?: number;
     skills: any[];
     interests: any[];
     rating_count : number 
@@ -46,7 +46,7 @@ export interface UserUpdate {
   location: string;
   gender: string;
   description: string;
-  skills: number[]; //ID PK IN BACK
-  interests: number[]; //ID PK IN BACK
-  avatar_option?: number;
+  skills: Skill[]; 
+  interests: Skill[]; 
+  avatar?: number;
 }

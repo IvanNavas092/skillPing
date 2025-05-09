@@ -19,6 +19,8 @@ import { ChatComponent } from '../pages/chat/chat.component';
 import { SearchChatComponent } from '../components/chat/search-chat/search-chat.component';
 import { UserCardComponent } from '../components/explore/user-list/user-card/user-card.component';
 import { PublicModule } from "../../public/home/module/public.module";
+import { AvatarService } from 'src/app/core/services/avatar.service';
+import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { PublicModule } from "../../public/home/module/public.module";
     ExploreComponent,
     ProfileComponent,
     ChatComponent,
+    UserDetailComponent,
 
     // components
     SearchComponent,
@@ -54,6 +57,8 @@ import { PublicModule } from "../../public/home/module/public.module";
     ExploreComponent,
     ProfileComponent,
     ChatComponent,
+    UserDetailComponent,
+
 
     // components
     SearchComponent,
@@ -64,7 +69,7 @@ import { PublicModule } from "../../public/home/module/public.module";
     UserCardComponent,
   ],
   providers: [
-    ApiService
+    ApiService, AvatarService
   ]
 })
 export class DashboardModule { }

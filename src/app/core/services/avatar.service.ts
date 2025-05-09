@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Avatar } from '../models/avatar';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AvatarService {
 
   avatars: Avatar[] = [
@@ -16,7 +14,7 @@ export class AvatarService {
   getAvatars() {
     return this.avatars;
   }
-  getAvatarById(id: number) {
+  getAvatarById(id: number | undefined) {
     return this.avatars.find(avatar => avatar.id === id);
   }
 

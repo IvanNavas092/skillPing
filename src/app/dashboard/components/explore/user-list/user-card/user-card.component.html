@@ -1,7 +1,7 @@
 <!-- header with avatar -->
 <div class="flex items-start gap-4 mb-4">
   <img
-    [src]="user.avatar_option?.img ? user.avatar_option?.img : 'assets/avatar/default_avatar.png'"
+    [src]="getAvatar()"
     alt="Avatar de {{ user.full_name }}"
     class="w-16 h-16 rounded-full object-cover border-2 border-blue-100"
   />
@@ -21,7 +21,7 @@
         *ngIf="user"
         class="flex items-center"
       >
-        📍 {{ user }}
+        📍 {{ user.location }}
       </span>
     </div>
   </div>
@@ -100,6 +100,7 @@
 <div class="mt-4 pt-4 border-t border-gray-100">
   <button
     class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 py-2 px-4 rounded-lg text-sm font-medium transition"
+    (click)="navigateToUserDetail()"
   >
     Ver perfil completo
   </button>
