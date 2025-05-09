@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { Category } from 'src/app/core/models/Category';
 import { User } from 'src/app/core/models/User';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs';
 
 
 @Component({
