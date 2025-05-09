@@ -6,6 +6,7 @@ import { Category } from 'src/app/core/models/Category';
 import { Skill } from 'src/app/core/models/skill';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -166,8 +167,27 @@ export class RegisterComponent implements OnInit {
       console.log('Datos de registro:', userData);
       this.authService.register(userData).subscribe({
         next: () => {
-          console.log('Registro exitoso');
-          this.router.navigate(['/login']);
+          Swal.fire({
+            icon: "success",
+            title: "Cuenta creada",
+            text: "¡Tu cuenta ha sido creada exitosamente!",
+            showCancelButton: true,
+            confirmButtonText: 'Iniciar Sesión',
+            cancelButtonText: '¿Cómo Funciona?',
+            customClass: {
+              confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
+              cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg ml-2'
+            },
+            
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/login']);
+            }
+            else {
+              this.router.navigate(['/sobre-nosotros']);
+            }
+          });
+          
         },
         error: (error: any) => {
           this.handleError(error);

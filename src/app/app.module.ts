@@ -11,8 +11,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/home/module/public.module';
 import { AboutComponent } from './public/about/about.component';
-import { SearchChatComponent } from './dashboard/components/chat/search-chat/search-chat.component';
-import { UserCardComponent } from './dashboard/components/explore/user-list/user-card/user-card.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,8 @@ import { UserCardComponent } from './dashboard/components/explore/user-list/user
     PublicModule,
     DashboardModule,
     CoreModule,
-    AuthModule
+    AuthModule,
+    SweetAlert2Module.forRoot(), // for SweetAlert2
   ],
   providers: [],
   bootstrap: [AppComponent]

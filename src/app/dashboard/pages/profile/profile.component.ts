@@ -5,14 +5,15 @@ import { User } from 'src/app/core/models/User';
 import { ApiService } from 'src/app/core/services/api.service';
 import { Skill } from 'src/app/core/models/skill';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Router } from '@angular/router';
 import { AvatarService } from 'src/app/core/services/avatar.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  storage = sessionStorage;
   avatars: Avatar[] = [];
   user!: User;
   formProfile!: FormGroup;
@@ -24,13 +25,12 @@ export class ProfileComponent implements OnInit {
   allSkills: Skill[] = [];
 
   // avatars
-  selectedAvatar: Avatar | undefined;
+  selectedAvatar: number | undefined;
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private authService: AuthService,
-    private router: Router,
     private avatarService: AvatarService
   ) { }
 
@@ -105,9 +105,9 @@ export class ProfileComponent implements OnInit {
       full_name: ['', Validators.required],
       username: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
-      password: [{value: '', disabled: true}, ],
+      password: [{ value: '', disabled: true },],
       age: ['', Validators.required],
-      location: ['', ],
+      location: ['',Validators.required],
       gender: ['', Validators.required],
       description: ['', Validators.minLength(10)],
       selectedSkillHabilidades: [''],
@@ -117,21 +117,30 @@ export class ProfileComponent implements OnInit {
     this.patchForm(this.user);
     this.getSkills();
     this.getSkillsUser(this.user);
-    
+
     console.log(this.countries);
 
   }
 
   patchForm(user: User) {
+    console.log('user before patch:', this.user);
+
     this.formProfile.patchValue(user);
+
+    
+  }
+
+  // update user data in sessionStorage
+  updateDataUser(user: User) {
+    this.user = user;
+    this.storage.setItem('auth-user', JSON.stringify(user));
   }
 
   getSkills() {
-    // CHANGE---------------
     this.apiService.getSkills().subscribe((data: Skill[]) => {
-      this.allSkills = data.filter (skill =>
+      this.allSkills = data.filter(skill =>
         !this.KnownSkills.some(known => known.id === skill.id)
-        && !this.SkillsToLearn.some(toLearn => toLearn.id === skill.id)) 
+        && !this.SkillsToLearn.some(toLearn => toLearn.id === skill.id))
     });
   }
 
@@ -166,7 +175,6 @@ export class ProfileComponent implements OnInit {
     if (this.user.interests.length > 0) {
       this.SkillsToLearn = user.interests.map(skill => skill)
     }
-    console.log('aprender', this.KnownSkills, 'enseñar', this.SkillsToLearn);
   }
 
 
@@ -180,48 +188,88 @@ export class ProfileComponent implements OnInit {
   // funcion para seleccionar avatar
   toggleAvatar(avatar: Avatar) {
     avatar.selected = !avatar.selected;
-    this.selectedAvatar = avatar;
+    this.selectedAvatar = avatar.id;
     console.log(this.selectedAvatar);
   }
 
   // verifica si el avatar es seleccionado
   avatarIsSelected(avatar: Avatar) {
     if (avatar.selected) {
-      this.selectedAvatar = avatar;
+      this.selectedAvatar = avatar.id;
     }
   }
 
   onSubmit() {
-    // prepare data for submit
-    const formData = this.formProfile.value;
-    const userData = {
-      full_name: formData.full_name,
-      username: formData.username,
-      email: formData.email,
-      age: formData.age,
-      location: formData.location,
-      gender: formData.gender,
-      description: formData.description,
-      avatar_option: this.selectedAvatar?.id || null,  
-      skills: this.KnownSkills.map(skill => skill.id), 
-      interests: this.SkillsToLearn.map(skill => skill.id) 
-    };
-  
-    console.log('Datos de actualización:', userData);
-    
-    // this.authService.updateUser(this.user.id, userData).subscribe({
-    //   next: (updatedUser) => {
-    //     console.log('Datos actualizados correctamente', updatedUser);
-    //     // Opcional: Actualizar el usuario en el cliente
-    //     this.user = updatedUser;
-    //     // Mostrar mensaje de éxito
-    //     // this.showSuccessMessage('Perfil actualizado correctamente');
-    //   },
-    //   error: (error) => {
-    //     console.error('Error al actualizar:', error);
-    //     // Mostrar mensaje de error al usuario
-    //     // this.showErrorMessage('Error al actualizar el perfil');
-    //   }
-    // });
+    // first ask if the user wants to save the changes
+    Swal.fire({
+      title: '¿Guardar cambios?',
+      text: '¿Estás seguro de que quieres actualizar tu perfil?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: '!bg-blue-600 hover:!bg-blue-700 !text-white !font-medium !py-2 !px-4 !rounded-lg',
+        cancelButton: '!bg-gray-200 hover:!bg-gray-300 !text-gray-800 !font-medium !py-2 !px-4 !rounded-lg !ml-2'
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const formData = this.formProfile.value;
+        // if the user confirm, update the user
+        const userData = {
+          full_name: formData.full_name,
+          username: formData.username,
+          email: formData.email,
+          age: formData.age,
+          location: formData.location,
+          gender: formData.gender,
+          description: formData.description,
+          avatar: this.selectedAvatar,
+          skills: this.KnownSkills,
+          interests: this.SkillsToLearn,
+        };
+
+        this.authService.updateUser(this.user.id, userData).subscribe({
+          next: (updatedUser) => {
+            this.user = updatedUser;
+            this.updateDataUser(this.user);
+            // Modal de éxito
+            Swal.fire({
+              title: '¡Perfil actualizado!',
+              text: 'Tus cambios se guardaron correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              timer: 3000,  // auto close in 3 seconds
+              timerProgressBar: true,
+              customClass: {
+                confirmButton: '!bg-blue-600 hover:!bg-blue-700 !text-white !font-medium !py-2 !px-4 !rounded-lg',
+              },
+            });
+          },
+          error: (error) => {
+            console.error('Error:', error);
+            // Error modal
+            Swal.fire({
+              title: 'Algo salió mal',
+              text: 'No se pudieron actualizar los datos del perfil',
+              icon: 'error',
+              confirmButtonText: 'Entendido',
+              customClass: {
+                confirmButton: '!bg-blue-600 hover:!bg-blue-700 !text-white !font-medium !py-2 !px-4 !rounded-lg',
+              },
+            });
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // if the user cancels, do nothing
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'Tus cambios no se han guardado',
+          icon: 'info',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    });
   }
 }
