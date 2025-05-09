@@ -2,7 +2,7 @@
   #formContainer
   class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
 >
-  <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="mt-16  sm:mx-auto sm:w-full sm:max-w-md" >
     <div
       class="bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-100 sm:px-10 transition-all duration-300 hover:shadow-2xl"
     >
@@ -168,7 +168,7 @@
             </div>
 
             <!-- buttons for choose skills -->
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap gap-3 overflow-y-scroll max-h-[300px] py-2 pr-2">
               <button
                 *ngFor="let skill of allSkills"
                 type="button"
@@ -186,25 +186,6 @@
                 <span *ngIf="isSkillDisabled(skill.id)" class="ml-1 text-xs">(ya seleccionada)</span>
 
               </button>
-            </div>
-
-            <div
-              *ngIf="errorMessage"
-              class="p-3 bg-red-50 rounded-lg flex items-start"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-red-500 mr-2 mt-0.5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <span class="text-sm text-red-600">{{ errorMessage }}</span>
             </div>
 
             <div class="flex justify-between pt-4">
