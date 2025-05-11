@@ -1,0 +1,67 @@
+<form  (ngSubmit)="onSubmit()" class="space-y-4 mb-4">
+  <div>
+    <h3 class="text-lg font-semibold mb-2">Deja tu valoración</h3>
+  </div>
+  
+  <!-- Selector de estrellas -->
+  <div>
+    <label class="block mb-2">Puntuación</label>
+    <div class="flex items-center space-x-1">
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+        <svg
+          (click)="rating = i + 1"
+          [class.text-yellow-400]="i + 1 <= rating"
+          [class.text-gray-300]="i + 1 > rating"
+          class="w-8 h-8 cursor-pointer"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+      </ng-container>
+      <span class="ml-2 text-gray-600">{{ rating }}/5</span>
+    </div>
+  </div>
+
+  <!-- Campo de comentario -->
+  <div>
+    <label for="comentario" class="block mb-2">Comentario</label>
+    <textarea
+      id="comment"
+      [(ngModel)]="comment"
+      name="comentario"
+      required
+      class="w-full px-3 py-2 border rounded-md"
+      rows="3"
+      placeholder="Escribe tu opinión..."
+    ></textarea>
+  </div>
+  <div
+    *ngIf="errorMessage"
+    class="p-3 bg-red-50 rounded-lg flex items-start transition-all duration-300 ease-in-out"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 text-red-500 mr-2 mt-0.5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+        clip-rule="evenodd"
+      />
+    </svg>
+    <span *ngIf="errorMessage" class="text-sm text-red-600">{{ errorMessage }}</span>
+  </div>
+  <!-- send button -->
+  <button
+    type="submit"
+    [disabled]="!comment || !rating"
+    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+  >
+    Enviar Valoración
+  </button>
+</form>

@@ -86,9 +86,16 @@ export class AuthService {
     return !!this.storage.getItem('auth-token');
   }
 
+  // get current user OBJECT
   getCurrentUser() {
     const user = this.storage.getItem('auth-user');
     return user ? JSON.parse(user) : null;
+  }
+
+  // get current user ID
+  getCurrentUserId() {
+    const user = this.storage.getItem('auth-user');
+    return user ? JSON.parse(user).id : null;
   }
 
 
@@ -99,7 +106,6 @@ export class AuthService {
   
   getUserById(id: string) : Observable<User> {
     const idNumber = parseInt(id, 10);
-    
     return this.http.get<User>(this.apiUrl + 'users/' + idNumber);
   }
 

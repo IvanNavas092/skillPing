@@ -21,6 +21,10 @@ import { UserCardComponent } from '../components/explore/user-list/user-card/use
 import { PublicModule } from "../../public/home/module/public.module";
 import { AvatarService } from 'src/app/core/services/avatar.service';
 import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
+import { RatingCardComponent } from '../components/user-detail/rating-card/rating-card.component';
+import { RatingFormComponent } from '../components/user-detail/rating-form/rating-form.component';
+
+
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
 @NgModule({
   declarations: [
@@ -39,6 +43,8 @@ import { UserDetailComponent } from '../pages/user-detail/user-detail.component'
     allComponent,
     SearchChatComponent,
     UserCardComponent,
+    RatingCardComponent,
+    RatingFormComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +54,7 @@ import { UserDetailComponent } from '../pages/user-detail/user-detail.component'
     DashboardRoutingModule,
     HttpClientModule,
     LucideAngularModule.pick({ Search }),
-    PublicModule
+    PublicModule,
 ],
   exports: [
     DashboardComponent,
@@ -67,6 +73,7 @@ import { UserDetailComponent } from '../pages/user-detail/user-detail.component'
     allComponent,
     SearchChatComponent,
     UserCardComponent,
+    RatingFormComponent,
   ],
   providers: [
     ApiService, AvatarService
