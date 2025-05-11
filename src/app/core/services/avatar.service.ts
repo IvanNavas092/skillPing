@@ -15,8 +15,10 @@ export class AvatarService {
     return this.avatars;
   }
   getAvatarById(id: number | undefined) {
-    return this.avatars.find(avatar => avatar.id === id);
+    const avatar = this.avatars.find(avatar => avatar.id === Number (id));
+    return avatar ? avatar.img : '/assets/avatar/default_avatar.png';
   }
+  
 
   
 
