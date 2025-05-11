@@ -13,7 +13,10 @@ export class UserDetailComponent implements OnInit {
   // Current User
   userId!: string;
   user!: User;
-  activetab: 'general' | 'valoraciones' = 'general';
+  // menu nav
+  activetab: 'general' | 'Opiniones' = 'general';
+  // state of rating button
+  ratingActivate = false;
 
   constructor(
     private authService: AuthService,
@@ -50,6 +53,10 @@ export class UserDetailComponent implements OnInit {
 
   navigateExplore() {
     this.router.navigate(['dashboard/explorar']);
+  }
+
+  toggleRating() {
+    this.ratingActivate = !this.ratingActivate;
   }
 
 

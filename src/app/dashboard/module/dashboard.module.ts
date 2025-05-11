@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from '../dashboard.component';
-import { LucideAngularModule, Search,  } from 'lucide-angular';
+import { LucideAngularModule, Search, SquarePlus,  } from 'lucide-angular';
 
 import { ApiService } from 'src/app/core/services/api.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -53,7 +53,7 @@ import { RatingFormComponent } from '../components/user-detail/rating-form/ratin
     RouterModule,
     DashboardRoutingModule,
     HttpClientModule,
-    LucideAngularModule.pick({ Search }),
+    LucideAngularModule.pick({ Search, SquarePlus }),
     PublicModule,
 ],
   exports: [

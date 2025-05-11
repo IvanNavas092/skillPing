@@ -75,7 +75,7 @@
       <!-- right column -->
       <div class="md:w-2/3 p-8">
         <!-- Pestañas de navegación -->
-        <nav class="flex border-b border-gray-200 mb-8">
+        <nav class="flex border-b border-gray-200 mb-4">
           <button
             (click)="activetab = 'general'"
             [class]="activetab === 'general' ? 'active' : 'inactive'"
@@ -83,16 +83,15 @@
             General
           </button>
           <button
-            (click)="activetab = 'valoraciones'"
-            [class]="activetab === 'valoraciones' ? 'active' : 'inactive'"
+            (click)="activetab = 'Opiniones'"
+            [class]="activetab === 'Opiniones' ? 'active' : 'inactive'"
           >
-            Valoraciones
+            Opiniones
           </button>
         </nav>
 
         <!-- general tab -->
-        <ng-container *ngIf="activetab === 'general'"
-        class="overflow-y-auto">
+        <ng-container *ngIf="activetab === 'general'" class="overflow-y-auto">
           <!-- Descripción -->
           <div class="mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Sobre mí</h2>
@@ -131,18 +130,26 @@
 
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-sm font-medium text-gray-500">Interacciones Totales: </h3>
+              <h3 class="text-sm font-medium text-gray-500">Interacciones Totales:</h3>
               <p class="text-gray-800 text-sm">{{ user.interactions }}</p>
             </div>
-
-            
           </div>
         </ng-container>
 
         <!-- valorations tab -->
-        <ng-container *ngIf="activetab === 'valoraciones'">
-          <app-rating-form [ratedUserId]="user.id"></app-rating-form>
-          <app-rating-card [clickedUserId]="user.id"></app-rating-card> 
+        <ng-container *ngIf="activetab === 'Opiniones'">
+          <button
+            (click)="toggleRating()"
+            class="border flex items-center border-gray-200 text-gray-900 cursor-pointer rounded-3xl 
+            py-2 px-4 text-sm font-semibold mb-5"
+          >
+            Crea tu opinión
+            <lucide-icon name="square-plus" class="w-5 h-5 ml-1"></lucide-icon>
+          </button>
+          <app-rating-form *ngIf="ratingActivate" [ratedUserId]="user.id"></app-rating-form>
+          <div class="overflow-y-scroll h-96">
+            <app-rating-card [clickedUserId]="user.id"></app-rating-card>
+          </div>
         </ng-container>
       </div>
     </div>
