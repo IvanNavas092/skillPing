@@ -1,4 +1,3 @@
-import { Avatar } from "./avatar";
 import { Skill } from "./skill";
 
 export interface User {
@@ -19,6 +18,9 @@ export interface User {
   avatar?: | number;
   rating_count : number // cantidad de ratings
   average_rating : number // media de ratings
+  interactions: number;
+
+
 }
 
 export interface UserResponse {

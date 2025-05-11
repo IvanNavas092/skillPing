@@ -45,8 +45,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getAvatar() {
-    const avatar = this.avatarService.getAvatarById(this.user.avatar);
-    return avatar ? avatar.img : '/assets/avatar/default_avatar.png'; // Imagen por defecto si no se encuentra el avatar 
+    return this.avatarService.getAvatarById(this.user.avatar);
   }
 
   navigateExplore() {

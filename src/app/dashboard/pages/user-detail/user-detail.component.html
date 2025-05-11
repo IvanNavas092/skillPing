@@ -4,7 +4,7 @@
     class="max-w-7xl mx-auto mt-10 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
   >
     <button
-      class="flex items-center p-2 text-blue-500 hover:text-blue-600 transition-colors duration-200"
+      class="flex items-center p-4 text-blue-500 hover:text-blue-600 transition-colors duration-200"
       (click)="navigateExplore()"
     >
       <svg
@@ -44,11 +44,11 @@
 
           <!-- full name y username -->
           <h1 class="text-2xl font-bold text-gray-800">{{ user.full_name }}</h1>
-          <p class="text-gray-500 mb-6">1 {{ user.username }}</p>
+          <p class="text-gray-500 mb-6">{{ '@' + user.username }}</p>
 
-          <!-- Rating -->
-          <div class="flex items-center mb-6 bg-blue-50 px-4 py-2 rounded-full">
-            <div class="flex items-center">
+          <!-- Rating and location -->
+          <div class="flex items-center mb-6 gap-4">
+            <div class="flex items-center bg-blue-50 px-4 py-2 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 text-yellow-400"
@@ -63,39 +63,10 @@
                 <span class="text-gray-500 ml-2">({{ user.average_rating }})</span>
               </span>
             </div>
-          </div>
 
-          <!-- location -->
-          <div class="flex items-center text-gray-600 mb-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mr-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <span>{{ user.location || 'Ubicación no especificada' }}</span>
-          </div>
-        </div>
-
-        <!-- basic information -->
-        <div class="mt-8">
-          <h2 class="text-xl font-semibold text-gray-800 mb-4">Información básica</h2>
-
-          <div class="space-y-4">
-            <div>
-              <h3 class="text-sm font-medium text-gray-500">Miembro desde</h3>
-              <p class="text-gray-800">Creacion de usuario</p>
-            </div>
-
-            <div>
-              <h3 class="text-sm font-medium text-gray-500">Idiomas</h3>
-              <p class="text-gray-800">Español, Inglés</p>
+            <!-- location -->
+            <div class="flex items-center text-gray-600 bg-blue-50 rounded-full px-4 py-2">
+              <span>📍 {{ user.location || 'Ubicación no especificada' }}</span>
             </div>
           </div>
         </div>
@@ -106,21 +77,22 @@
         <!-- Pestañas de navegación -->
         <nav class="flex border-b border-gray-200 mb-8">
           <button
-          (click)="activetab = 'general'"
-          [class]="activetab === 'general' ? 'active' : 'inactive'"
+            (click)="activetab = 'general'"
+            [class]="activetab === 'general' ? 'active' : 'inactive'"
           >
             General
           </button>
           <button
-          (click)="activetab = 'valoraciones'"
-          [class]="activetab === 'valoraciones' ? 'active' : 'inactive'"
+            (click)="activetab = 'valoraciones'"
+            [class]="activetab === 'valoraciones' ? 'active' : 'inactive'"
           >
             Valoraciones
           </button>
         </nav>
 
         <!-- general tab -->
-        <div *ngIf="activetab === 'general'">
+        <ng-container *ngIf="activetab === 'general'"
+        class="overflow-y-auto">
           <!-- Descripción -->
           <div class="mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Sobre mí</h2>
@@ -134,7 +106,7 @@
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Habilidades</h2>
             <div class="flex flex-wrap gap-2">
               <span
-                *ngFor="let skill of user.skills_details"
+                *ngFor="let skill of user.skills"
                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
               >
                 {{ skill.name }}
@@ -147,19 +119,31 @@
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Quiero aprender</h2>
             <div class="flex flex-wrap gap-2">
               <span
-                *ngFor="let interest of user.interests_details"
+                *ngFor="let interest of user.interests"
                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800"
               >
                 {{ interest.name }}
               </span>
             </div>
           </div>
-        </div>
+          <!-- basic information -->
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Información básica</h2>
+
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium text-gray-500">Interacciones Totales: </h3>
+              <p class="text-gray-800 text-sm">{{ user.interactions }}</p>
+            </div>
+
+            
+          </div>
+        </ng-container>
 
         <!-- valorations tab -->
-        <div *ngIf="activetab === 'valoraciones'">
-          <p class="text-gray-600">Aquí irían las valoraciones del usuario.</p>
-        </div>
+        <ng-container *ngIf="activetab === 'valoraciones'">
+          <app-rating-form [ratedUserId]="user.id"></app-rating-form>
+          <app-rating-card [clickedUserId]="user.id"></app-rating-card> 
+        </ng-container>
       </div>
     </div>
   </div>
