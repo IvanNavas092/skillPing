@@ -93,7 +93,7 @@
           <!-- Menú de subcategorías -->
           <a
             *ngFor="let category of categories"
-            class="w-full lg:w-48 h-24 bg-gray-100 p-4 rounded-md flex flex-col justify-center hover:bg-gray-200"
+            class="w-full lg:w-48 h-24 bg-gray-100 p-4 rounded-md flex flex-col justify-center hover:bg-gray-200 cursor-pointer"
             (click)="goToExploreWithCategory(category.name)"
           >
             <div class="flex items-center">
