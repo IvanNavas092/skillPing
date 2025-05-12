@@ -5,6 +5,7 @@ import { ChatService } from 'src/app/core/services/chat.service';
 import { Message } from 'src/app/core/models/chat-message';
 import { ApiService } from 'src/app/core/services/api.service';
 import { User } from 'src/app/core/models/User';
+import { AvatarService } from 'src/app/core/services/avatar.service';
 
 @Component({
   selector: 'app-all',
@@ -25,7 +26,13 @@ export class allComponent implements OnInit {
   pusher! : Pusher;
 
   errorMessage = '';
-  constructor(private authService: AuthService, private chatService: ChatService, private apiService: ApiService) { }
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService, 
+    private apiService: ApiService,
+    private avatarService: AvatarService,
+  
+  ) { }
   
   ngOnInit(): void {
     this.getUsers();
@@ -36,6 +43,10 @@ export class allComponent implements OnInit {
     console.log('username', this.currentUser.username);
     console.log('message', this.message);
     console.log('messages', this.messages);
+  }
+
+  getAvatar(avatarId: number | undefined) {
+    return this.avatarService.getAvatarById(avatarId);
   }
 
 
