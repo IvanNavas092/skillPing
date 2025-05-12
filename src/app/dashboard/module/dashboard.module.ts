@@ -18,11 +18,11 @@ import { allComponent } from '../pages/chat/all/all.component';
 import { ChatComponent } from '../pages/chat/chat.component';
 import { SearchChatComponent } from '../pages/chat/search-chat/search-chat.component';
 import { UserCardComponent } from '../pages/explore/user-list/user-card/user-card.component';
-import { PublicModule } from "../../public/home/module/public.module";
 import { AvatarService } from 'src/app/core/services/avatar.service';
 import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
 import { RatingCardComponent } from '../pages/user-detail/rating-card/rating-card.component';
 import { RatingFormComponent } from '../pages/user-detail/rating-form/rating-form.component';
+import { NotificationComponent } from '../pages/chat/notification/notification.component';
 
 
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
@@ -45,6 +45,7 @@ import { RatingFormComponent } from '../pages/user-detail/rating-form/rating-for
     UserCardComponent,
     RatingCardComponent,
     RatingFormComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +55,6 @@ import { RatingFormComponent } from '../pages/user-detail/rating-form/rating-for
     DashboardRoutingModule,
     HttpClientModule,
     LucideAngularModule.pick({ Search }),
-    PublicModule,
 ],
   exports: [
     DashboardComponent,
