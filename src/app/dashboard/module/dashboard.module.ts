@@ -53,7 +53,7 @@ import { RatingFormComponent } from '../components/user-detail/rating-form/ratin
     RouterModule,
     DashboardRoutingModule,
     HttpClientModule,
-    LucideAngularModule.pick({ Search, SquarePlus }),
+    LucideAngularModule.pick({ Search }),
     PublicModule,
 ],
   exports: [
