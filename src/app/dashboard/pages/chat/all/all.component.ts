@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import Pusher from 'pusher-js';
 import { ChatService } from 'src/app/core/services/chat.service';
@@ -6,58 +6,59 @@ import { Message } from 'src/app/core/models/chat-message';
 import { ApiService } from 'src/app/core/services/api.service';
 import { User } from 'src/app/core/models/User';
 import { AvatarService } from 'src/app/core/services/avatar.service';
+import { PusherService } from 'src/app/core/services/pusher.service';
 
 @Component({
   selector: 'app-all',
   templateUrl: './all.component.html',
   styleUrls: ['./style.css']
 })
-export class allComponent implements OnInit {
-  
+export class allComponent implements OnInit, OnDestroy {
+
   search = '';
   currentUser = this.authService.getCurrentUser();
-  allUsers : User[] = [];
-  usersFiltered : User[] = [];
-  selectedUser! : User;
+  allUsers: User[] = [];
+  usersFiltered: User[] = [];
+  selectedUser!: User;
 
   message = ''
-  messages : Message[] = [];
+  messages: Message[] = [];
   receptor: string = '';
-  pusher! : Pusher;
+  pusher!: Pusher;
 
   errorMessage = '';
+
+  // notifications
+  unreadBySender: { [key: string]: number } = {};
+
   constructor(
     private authService: AuthService,
-    private chatService: ChatService, 
+    private chatService: ChatService,
     private apiService: ApiService,
     private avatarService: AvatarService,
-  
+    private pusherService: PusherService,
+
   ) { }
-  
+
   ngOnInit(): void {
     this.getUsers();
-    this.initializePusher();
-    
+
+    this.chatService.unReadBySender$.subscribe((data) => {
+      this.unreadBySender = data;
+    });
+
+    // force refresh unread counts
+    this.chatService.refreshUnreadCounts();
 
     // depuration
-    console.log('username', this.currentUser.username);
-    console.log('message', this.message);
-    console.log('messages', this.messages);
-  }
-
-  getAvatar(avatarId: number | undefined) {
-    return this.avatarService.getAvatarById(avatarId);
+    // --------------------------------------
+    // console.log('username', this.currentUser.username);
+    // console.log('message', this.message);
+    // console.log('messages', this.messages);
+    // --------------------------------------
   }
 
 
-  // connect to the chat room
-  initializePusher() {
-    Pusher.logToConsole = true; // depuration
-    this.pusher = new Pusher('682407f9d91aaf86de6f', {
-      cluster: 'eu',
-      forceTLS: true
-    });
-  }
 
   // take the users without the current user
   getUsers() {
@@ -65,31 +66,23 @@ export class allComponent implements OnInit {
       this.allUsers = data.filter((user: User) =>
         user.id !== this.currentUser.id && user.username !== 'admin');
       this.usersFiltered = [...this.allUsers];
+      this.setupPusherListener();
     })
+
   }
 
   selectUser(user: User) {
     this.selectedUser = user;
-    this.loadHistory(this.currentUser.username, this.selectedUser.username);
 
-    // unsuscribe all previous channels
-    this.pusher.allChannels().forEach(channel => {
-      this.pusher.unsubscribe(channel.name);
-    });
-
-    // create unique channel for the users
-    const channelName = this.getChannelName(this.currentUser.username, user.username);
-    // suscribe the channel
-    const channel = this.pusher.subscribe(channelName);
-
-    channel.bind('new-message', (data: Message) => {
-      this.messages.push({
-        sender: data.sender,
-        message: data.message,
-        timestamp: data.timestamp,
-        isMe: data.sender === this.currentUser.username
+    // when select a user, mark as read and load history
+    this.chatService.markAsRead(this.currentUser.username, this.selectedUser.username)
+      .subscribe({
+        next: () => {
+          this.loadHistory(this.currentUser.username, this.selectedUser.username);
+          this.chatService.refreshUnreadCounts();
+        },
+        error: (err) => console.error('Error marking as read', err)
       });
-    });
   }
 
 
@@ -103,6 +96,7 @@ export class allComponent implements OnInit {
     this.chatService.getChatHistory(user1, user2).subscribe((data: Message[]) => {
       this.messages = data.map(msg => ({
         ...msg,
+        // true if sender = current user
         isMe: msg.sender === this.currentUser.username,
       }));
     })
@@ -112,30 +106,39 @@ export class allComponent implements OnInit {
 
   // send message to the selected user
   sendMessage() {
-    if (!this.message || !this.selectUser) return;
+    if (!this.message || !this.selectedUser) return;
 
     console.log('attempting to send message')
     console.log(this.currentUser.username);
     console.log(this.selectedUser.username);
     console.log(this.message);
-    
+
     this.chatService.sendPrivateMessage(this.currentUser.username, this.message, this.selectedUser.username)
-    .subscribe({
-      next: (data) => {
-        console.log('message sent');
-        this.message = '';
-      },
-      error: (e) => {
-        console.log('error sending message')
-        this.errorMessage = e.message;
-      }
-    })
+      .subscribe({
+        next: (data) => {
+          console.log('message sent');
+
+          // Añadir el mensaje a la vista local inmediatamente
+          this.messages.push({
+            sender: this.currentUser.username,
+            message: this.message,
+            timestamp: new Date().toISOString(),
+            isMe: true
+          });
+
+          this.message = '';
+        },
+        error: (e) => {
+          console.log('error sending message')
+          this.errorMessage = e.message;
+        }
+      });
   }
 
   onSearch(value: string) {
     this.search = value.toLowerCase().trim();
 
-    if (!this.search) { 
+    if (!this.search) {
       this.usersFiltered = [...this.allUsers];
     }
     else {
@@ -146,12 +149,56 @@ export class allComponent implements OnInit {
     }
     // depuration
     console.log("USUARIO TODOS" + this.allUsers.length);
-    console.log("USUARIO FILTRADOS" +this.usersFiltered.length);
+    console.log("USUARIO FILTRADOS" + this.usersFiltered.length);
+  }
+
+  // get unread count for a user
+  getUnreadCountForUser(username: string): number {
+    return this.unreadBySender[username] || 0;
+  }
+
+  setupPusherListener() {
+    // Escuchar el canal de notificaciones para actualizaciones generales
+    const notificationChannel = this.pusherService.suscribe(
+      `notifications-${this.currentUser.username}`
+    );
+    
+    notificationChannel.bind('unread-messages', (data: any) => {
+      this.chatService.refreshUnreadCounts();
+    });
+    
+    // Escuchar mensajes entrantes para todos los usuarios
+    this.allUsers.forEach(user => {
+      if (user.username !== this.currentUser.username) {
+        const channelName = this.getChannelName(this.currentUser.username, user.username);
+        const channel = this.pusherService.suscribe(channelName);
+        console.log('Subscribing to channel', channelName);
+
+        channel.bind('new-message', (data: Message) => {
+          // Si estamos en el chat con este usuario, añadir el mensaje
+          if (this.selectedUser?.username === data.sender) {
+            this.messages.push({
+              sender: data.sender,
+              message: data.message,
+              timestamp: data.timestamp,
+              isMe: false
+            });
+          }
+          // Actualizar contadores
+          this.chatService.refreshUnreadCounts();
+        });
+      }
+    });
+  }
+
+
+    getAvatar(avatarId: number | undefined) {
+    return this.avatarService.getAvatarById(avatarId);
   }
 
 
 
-  onDestroy() {
+  ngOnDestroy() {
     if (this.pusher)
       this.pusher.disconnect();
   }

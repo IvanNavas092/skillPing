@@ -16,15 +16,18 @@
           <div class="flex items-center space-x-3">
             <div class="flex-shrink-0">
               <!-- avatar user -->
-              <img
-                [src]="getAvatar(user.avatar)"
-                class="h-8 w-8 rounded-full"
-              />
+              <img [src]="getAvatar(user.avatar)" class="h-8 w-8 rounded-full" />
             </div>
-            <div class="flex-1 min-w-0">
+            <div class="flex justify-between flex-1 min-w-0">
               <p class="text-sm font-medium text-gray-900 truncate">
                 {{ user.username }}
               </p>
+              <span
+                *ngIf="getUnreadCountForUser(user.username) > 0"
+                class="text-white text-sm py-1 px-3 bg-red-500 rounded-full"
+              >
+                {{ getUnreadCountForUser(user.username) }}
+              </span>
             </div>
           </div>
         </li>
@@ -32,13 +35,11 @@
     </div>
 
     <!-- Chat Area -->
-    <div class="flex-1 bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-[calc(100vh-200px)]">
-      
+    <div
+      class="flex-1 bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-[calc(100vh-200px)]"
+    >
       <!-- Chat Header -->
-      <div
-        class="bg-blue-500 p-4"
-        *ngIf="selectedUser"
-      >
+      <div class="bg-blue-500 p-4" *ngIf="selectedUser">
         <div>
           <h3 class="text-lg font-semibold text-white">Chat con {{ selectedUser.username }}</h3>
           <p class="text-xs text-indigo-200">En línea</p>
@@ -46,17 +47,9 @@
       </div>
 
       <!-- messages -->
-      <div
-        class="flex-1 p-4 overflow-y-auto bg-gray-50"
-      >
-        <div
-          *ngIf="selectedUser; else noChatSelected"
-          class="space-y-3"
-        >
-          <div class="flex"
-            *ngFor="let msg of messages"
-            [class.justify-end]="msg.isMe"
-          >
+      <div class="flex-1 p-4 overflow-y-auto bg-gray-50">
+        <div *ngIf="selectedUser; else noChatSelected" class="space-y-3">
+          <div class="flex" *ngFor="let msg of messages" [class.justify-end]="msg.isMe">
             <div
               [ngClass]="msg.isMe ? 'msg-me' : 'msg-other'"
               class="max-w-xs md:max-w-md lg:max-w-lg rounded-lg p-3 shadow-sm"
@@ -97,10 +90,7 @@
       </div>
 
       <!-- Input de mensaje -->
-      <div
-        *ngIf="selectedUser"
-        class="border-t border-gray-200 p-4 bg-white"
-      >
+      <div *ngIf="selectedUser" class="border-t border-gray-200 p-4 bg-white">
         <div class="flex items-center space-x-2">
           <input
             [(ngModel)]="message"
@@ -128,10 +118,7 @@
             </svg>
           </button>
         </div>
-        <div
-          *ngIf="errorMessage"
-          class="mt-2 text-sm text-red-600"
-        >
+        <div *ngIf="errorMessage" class="mt-2 text-sm text-red-600">
           {{ errorMessage }}
         </div>
       </div>

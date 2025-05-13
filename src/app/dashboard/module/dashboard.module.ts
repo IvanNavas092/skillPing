@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from '../dashboard.component';
-import { LucideAngularModule, Search, SquarePlus,  } from 'lucide-angular';
+import { LucideAngularModule, MessageCircleMore, Search, SquarePlus,  } from 'lucide-angular';
 
 import { ApiService } from 'src/app/core/services/api.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +22,6 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
 import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
 import { RatingCardComponent } from '../pages/user-detail/rating-card/rating-card.component';
 import { RatingFormComponent } from '../pages/user-detail/rating-form/rating-form.component';
-import { NotificationComponent } from '../pages/chat/notification/notification.component';
 
 
   // poner los componentes que vamos a usar (Home, Cursos, Sobre Nosotros...etc)
@@ -45,7 +44,6 @@ import { NotificationComponent } from '../pages/chat/notification/notification.c
     UserCardComponent,
     RatingCardComponent,
     RatingFormComponent,
-    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +52,7 @@ import { NotificationComponent } from '../pages/chat/notification/notification.c
     RouterModule,
     DashboardRoutingModule,
     HttpClientModule,
-    LucideAngularModule.pick({ Search }),
+    LucideAngularModule.pick({ Search, MessageCircleMore }),
 ],
   exports: [
     DashboardComponent,

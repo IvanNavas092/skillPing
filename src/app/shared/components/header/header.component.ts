@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/core/models/Category';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ChatService } from 'src/app/core/services/chat.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,6 +10,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false;
+  notifications: number = 0;
   // Diccionario con las categorías
   categories = [
     { name: "Idiomas", description: "¡Aprende a hablar al máximo!" },
@@ -17,7 +19,11 @@ export class HeaderComponent implements OnInit {
     { name: "Música", description: "¡Aprende lo que hacen tus artistas favoritos!" }
   ];
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private chatService: ChatService
+  ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
@@ -25,6 +31,11 @@ export class HeaderComponent implements OnInit {
     this.authService.loggedIn$.subscribe((state) =>{
       this.isLoggedIn = state;
     })
+
+    this.chatService.unReadCountTotal$.subscribe((data) => {
+      this.notifications = data;
+      console.log('total unread', data);
+    });
   }
 
   goToExploreWithCategory(categoryName: string) {
