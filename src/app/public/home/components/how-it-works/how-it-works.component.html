@@ -3,9 +3,9 @@
   data-aos="fade-up"
   data-aos-duration="300"
 >
-  <div class="max-w-7xl w-full mx-auto px-4 py-20">
-    <div class="flex flex-col gap-16">
-      <div class="flex flex-col gap-5 w-full text-center">
+  <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+    <div class="flex flex-col gap-16 md:gap-16">
+      <div class="flex flex-col gap-5 w-full text-center sm:gap-7">
         <h1 class="text-4xl font-bold">¿Cómo funciona SkillSwap?</h1>
         <p class="text-gray-500 text-lg">
           Nuestra plataforma te permite intercambiar conocimientos y habilidades con otras personas
@@ -13,7 +13,7 @@
           manera sencilla y sin costos.
         </p>
       </div>
-      <div class="grid grid-cols-4 gap-8 place-items-center">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 md:grid-cols-2 gap-8  place-items-center"> 
         <app-works-card
           *ngFor="let section of sections"
           [section]="section"
