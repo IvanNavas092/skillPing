@@ -1,0 +1,49 @@
+<!-- Actions buttons -->
+<div class="hidden lg:flex lg:flex-1 lg:justify-end gap-2 items-center">
+  <div *ngIf="isLoggedIn" class="flex gap-4 mr-5">
+    <button
+      routerLink="/dashboard/chat"
+      class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-full p-2 font-semibold relative"
+    >
+      <lucide-icon name="message-circle" class="w-5 h-5"></lucide-icon>
+      <span
+        *ngIf="notifications > 0"
+        class="bg-red-500 rounded-full w-5 h-5 flex items-center justify-center text-white text-xs font-bold absolute -top-1 -right-1"
+      >
+        {{ notifications > 99 ? '99+' : notifications }}
+      </span>
+    </button>
+
+    <button
+      class="bg-white hover:bg-gray-100 border text-gray-700 cursor-pointer rounded-3xl py-2 px-4 font-semibold"
+      routerLink="/dashboard/profile"
+    >
+      <lucide-icon name="User" class="w-5 h-5"></lucide-icon>
+    </button>
+  </div>
+
+  <button
+    *ngIf="!isLoggedIn"
+    routerLink="/login"
+    class="bg-white hover:bg-gray-100 border text-black cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold"
+  >
+    Iniciar Sesión
+  </button>
+
+  <button
+    *ngIf="!isLoggedIn"
+    routerLink="/registro"
+    class="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold"
+  >
+    Crea tu perfil
+  </button>
+
+  <button
+    *ngIf="isLoggedIn"
+    (click)="logout()"
+    routerLink="/login"
+    class="bg-white hover:bg-gray-100 border text-black cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold"
+  >
+    Cerrar sesión
+  </button>
+</div>

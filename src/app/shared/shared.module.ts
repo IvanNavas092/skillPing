@@ -8,6 +8,10 @@ import { FooterComponent } from './components/footer/footer.component';
 // Icons
 import { LucideAngularModule, Tag, MoveRight, User, MessageCircle } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
+import { LogoComponent } from './components/header/logo/logo.component';
+import { NavDesktopComponent } from './components/header/nav-desktop/nav-desktop.component';
+import { NavMobileComponent } from './components/header/nav-mobile/nav-mobile.component';
+import { UserActionsComponent } from './components/header/user-actions/user-actions.component';
 
 
 
@@ -15,7 +19,11 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LogoComponent,
+    NavDesktopComponent,
+    NavMobileComponent,
+    UserActionsComponent
 
   ],
   imports: [
@@ -26,6 +34,10 @@ import { RouterModule } from '@angular/router';
   exports: [
     HeaderComponent,
     FooterComponent,
+    LogoComponent,
+    NavDesktopComponent,
+    NavMobileComponent,
+    UserActionsComponent,
     LucideAngularModule
 
   ]

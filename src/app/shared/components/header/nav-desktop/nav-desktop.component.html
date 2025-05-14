@@ -1,0 +1,60 @@
+<!-- Main Menu -->
+<ul class="hidden lg:flex lg:gap-x-12 bg-white">
+  <li><a href="#" class="font-semibold text-gray-900 hover:text-blue-500">Inicio</a></li>
+
+  <!-- Menú desplegable "Explorar" -->
+  <li class="relative group">
+    <a
+      routerLink="/dashboard/explorar"
+      class="font-semibold text-gray-900 hover:text-blue-500 flex items-center"
+    >
+      Explorar
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-3 ml-1 transition-transform transform group-hover:rotate-180"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+      </svg>
+    </a>
+
+    <!-- Submenú Desktop -->
+<div
+  class="absolute left-1/2 -translate-x-1/2 z-10 mt-4 w-[500px]  bg-white rounded-lg shadow-2xl px-6 py-5 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible"
+>
+  <div class="grid grid-cols-2 gap-4">
+    <a
+      *ngFor="let category of categories"
+      class="flex flex-col gap-1 hover:bg-gray-100 p-3 rounded-md transition cursor-pointer"
+      (click)="goToExploreWithCategory(category.name)"
+    >
+      <div class="flex items-center text-gray-900 font-semibold text-sm">
+        <lucide-icon name="tag" class="w-4 h-4 mr-2"></lucide-icon>
+        {{ category.name }}
+      </div>
+      <p class="text-sm text-gray-600">{{ category.description }}</p>
+    </a>
+  </div>
+
+  <!-- Enlace inferior -->
+  <div class="mt-4">
+    <a
+      routerLink="dashboard/explorar"
+      class="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:underline"
+    >
+      Ver todas las categorías
+      <lucide-icon name="move-right" class="w-4 h-4"></lucide-icon>
+    </a>
+  </div>
+</div>
+
+
+  <li>
+    <a routerLink="/sobre-nosotros" class="font-semibold text-gray-900 hover:text-blue-500"
+      >Sobre nosotros</a
+    >
+  </li>
+</ul>
