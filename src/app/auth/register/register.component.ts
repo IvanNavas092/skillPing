@@ -183,7 +183,7 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(['/login']);
             }
             else {
-              this.router.navigate(['/sobre-nosotros']);
+              this.router.navigate(['/como-funciona']);
             }
           });
           

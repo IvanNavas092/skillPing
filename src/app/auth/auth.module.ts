@@ -6,35 +6,34 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { LucideAngularModule, Eye, EyeOff} from 'lucide-angular';
+import { SharedModule } from '../shared/shared.module';
 
 
 
 @NgModule({
-   declarations: [
-      LoginComponent,
-      RegisterComponent,
-   ],
-   imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      RouterModule,
-      LucideAngularModule.pick({ Eye, EyeOff }), 
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SharedModule
+  ],
 
-   ],
-
-   exports: [
-      LoginComponent,
-      RegisterComponent
-   ],
-   providers: [
-      AuthService,
-      // Importamos el interceptor de JWT
-      { 
-         provide: JwtInterceptor,
-         useClass: JwtInterceptor,
-         multi: true
-      }
-   ]
+  exports: [
+    LoginComponent,
+    RegisterComponent
+  ],
+  providers: [
+    AuthService,
+    // Importamos el interceptor de JWT
+    {
+      provide: JwtInterceptor,
+      useClass: JwtInterceptor,
+      multi: true
+    }
+  ]
 })
 export class AuthModule { }

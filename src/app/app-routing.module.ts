@@ -4,7 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { authGuard } from './auth/guard/auth.guard';
 import { HomeComponent } from './public/home/home.component';
-import { AboutComponent } from './public/about/about.component';
+import { HowItWorksPageComponent } from './public/how-it-works-page/how-it-works-page.component';
 
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
 
   { path: 'inicio', component: HomeComponent },
-  { path: 'sobre-nosotros', component: AboutComponent },
+  { path: 'como-funciona', component: HowItWorksPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },

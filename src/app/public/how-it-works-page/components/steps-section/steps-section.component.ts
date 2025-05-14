@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './steps-section.component.html',
 })
 export class StepsSectionComponent {
-  steps = [
+    steps = [
     { number: "01", title: "Busca habilidades", description: "Encuentra personas dispuestas a compartir sus conocimientos en una amplia variedad de disciplinas."},
     { number: "02", title: "Conecta con otros", description: "Conoce personas con intereses similares y complementa tus habilidades con las suyas."},
     { number: "03", title: "Coordina intercambios", description: "Utiliza nuestro sistema de chat para organizar los detalles del intercambio de habilidades."},

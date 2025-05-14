@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/core/models/Category';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ChatService } from 'src/app/core/services/chat.service';
 @Component({
