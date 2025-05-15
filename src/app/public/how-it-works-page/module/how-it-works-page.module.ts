@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { HowItWorksPageComponent } from '../how-it-works-page.component';
 import { HeroWorksComponent } from '../components/hero-works/hero-works.component';
 import { LucideAngularModule } from 'lucide-angular';
+import { CallToActionComponent } from '../../home/components/call-to-action/call-to-action.component';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { LucideAngularModule } from 'lucide-angular';
     StepCardComponent,
     HowItWorksComponent,
     WorksCardComponent,
-    HeroWorksComponent
+    HeroWorksComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +36,9 @@ import { LucideAngularModule } from 'lucide-angular';
     StepCardComponent,
     HowItWorksComponent,
     WorksCardComponent,
-    HeroWorksComponent
+    HeroWorksComponent,
+    CallToActionComponent
+
   ]
 })
 export class HowItWorksPageModule { }

@@ -10,4 +10,11 @@ export class HeroWorksComponent {
     { title: "Recibe a cambio", description: "Clases de cocina, música, arte..." },
     { title: "¡Sin costos!", description: "Solo intercambio de conocimientos!" },
   ]
+
+  ratings = [
+    { puntuation: "1k+", title: 'Usuarios activos'},
+    { puntuation: "50+", title: 'Habilidades por aprender'},
+    { puntuation: "4.8", title: 'Valoración media'},
+  ]
+  
 }
