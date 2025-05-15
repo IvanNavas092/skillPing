@@ -9,7 +9,8 @@ import { HowItWorksPageComponent } from '../how-it-works-page.component';
 import { HeroWorksComponent } from '../components/hero-works/hero-works.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { CallToActionComponent } from '../../home/components/call-to-action/call-to-action.component';
-
+import { FaqComponent } from '../components/faq/faq.component';
+import { FaqItemComponent } from '../components/faq/faq-item/faq-item.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,9 @@ import { CallToActionComponent } from '../../home/components/call-to-action/call
     HowItWorksComponent,
     WorksCardComponent,
     HeroWorksComponent,
+    FaqComponent,
+    FaqItemComponent,
+
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,8 @@ import { CallToActionComponent } from '../../home/components/call-to-action/call
     HowItWorksComponent,
     WorksCardComponent,
     HeroWorksComponent,
+    FaqComponent,
+    FaqItemComponent,
     CallToActionComponent
 
   ]
