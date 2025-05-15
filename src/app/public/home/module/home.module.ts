@@ -7,7 +7,10 @@ import { CategoryCardComponent } from '../components/categories-section/category
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResultsRatingComponent } from '../components/results-rating/results-rating.component';
 import { CardResultsRatingComponent } from '../components/results-rating/card-results-rating/card-results-rating.component';
-
+import { WhatIsComponent } from '../components/what-is/what-is.component';
+import { StepsComponent } from '../components/what-is/steps/steps.component';
+import { StepItemComponent } from '../components/what-is/steps/step-item/step-item.component';
+import { FeatureItemComponent } from '../components/what-is/feature-item/feature-item.component';
 
 
 @NgModule({
@@ -20,6 +23,11 @@ import { CardResultsRatingComponent } from '../components/results-rating/card-re
     CategoryCardComponent,
     ResultsRatingComponent,
     CardResultsRatingComponent,
+    WhatIsComponent,
+    StepsComponent,
+    StepItemComponent,
+    FeatureItemComponent,
+
   ],
   imports: [
     CommonModule,
@@ -34,6 +42,10 @@ import { CardResultsRatingComponent } from '../components/results-rating/card-re
     CategoryCardComponent,
     ResultsRatingComponent,
     CardResultsRatingComponent,
+    WhatIsComponent,
+    StepsComponent,
+    StepItemComponent,
+    FeatureItemComponent,
   ]
 })
 export class HomeModule { }
