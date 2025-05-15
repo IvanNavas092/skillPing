@@ -6,12 +6,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 // Icons
-import { LucideAngularModule, Tag, MoveRight, User, MessageCircle, MessageCircleMore, CheckCheck, Users, Search, Eye, EyeOff} from 'lucide-angular';
+import { LucideAngularModule, Tag, MoveRight, User, MessageCircle, MessageCircleMore, CheckCheck, Users, Search, Eye, EyeOff } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from './components/header/logo/logo.component';
 import { NavDesktopComponent } from './components/header/nav-desktop/nav-desktop.component';
 import { NavMobileComponent } from './components/header/nav-mobile/nav-mobile.component';
 import { UserActionsComponent } from './components/header/user-actions/user-actions.component';
+import { CallToActionComponent } from '../public/home/components/call-to-action/call-to-action.component';
+import { SkillComponent } from './components/skill/skill.component';
 
 
 
@@ -23,7 +25,9 @@ import { UserActionsComponent } from './components/header/user-actions/user-acti
     LogoComponent,
     NavDesktopComponent,
     NavMobileComponent,
-    UserActionsComponent
+    UserActionsComponent,
+    CallToActionComponent,
+    SkillComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +41,8 @@ import { UserActionsComponent } from './components/header/user-actions/user-acti
     NavDesktopComponent,
     NavMobileComponent,
     UserActionsComponent,
+    CallToActionComponent,
+    SkillComponent,
     LucideAngularModule
 
   ]
