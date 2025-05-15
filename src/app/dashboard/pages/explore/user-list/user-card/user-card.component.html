@@ -57,7 +57,7 @@
       Habilidades
     </h4>
     <div class="flex flex-wrap gap-2">
-      <app-skill *ngFor="let skill of user.skills_details" [skill]="skill"></app-skill>
+      <app-skill *ngFor="let skill of user.skills_details" [skill]="skill.name"></app-skill>
     </div>
   </div>
 
