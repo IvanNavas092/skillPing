@@ -19,6 +19,7 @@ export class UserListComponent implements OnInit, OnChanges {
 
   activeCategoryFromRoute: string | null = '';
   usersLoaded = false; // flag to check if users are loaded
+  
   constructor(
     private apiService: ApiService,
     private authService: AuthService,

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/core/models/Category';
 import { ApiService } from 'src/app/core/services/api.service';
 @Component({
@@ -7,7 +8,9 @@ import { ApiService } from 'src/app/core/services/api.service';
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  constructor(private apiService: ApiService) { }
+  activeCategoryFromRoute: string | null = '';
+
+  constructor(private apiService: ApiService, private router: ActivatedRoute) { }
 
   selectedFilter: Category | null = null;
   categories: any[] = [];
@@ -18,6 +21,7 @@ export class FiltersComponent {
   ngOnInit(): void {
     this.apiService.getCategories().subscribe(data => {
       this.categories = data;
+      this.setupRouteListener();
     });
   }
 
@@ -30,6 +34,18 @@ export class FiltersComponent {
       this.selectedFilter = category;
       this.categorieActive.emit(category.name);
     }
+  }
+
+  setupRouteListener(): void {
+    this.router.paramMap.subscribe(params => {
+      this.activeCategoryFromRoute = params.get('categoryName');
+      console.log('Category from ROUTE -> ' + this.activeCategoryFromRoute);
+      // if users are loaded, filter them
+      if (this.activeCategoryFromRoute) {
+        this.selectedFilter = this.categories.find(category => category.name === this.activeCategoryFromRoute);
+        console.log('FILTER SELECTED ->', this.selectedFilter);
+      }
+    });
   }
 
 }
