@@ -29,7 +29,6 @@ import { UserDetailModule } from '../pages/user-detail/user-detail.module';
   ],
   imports: [
     DashboardRoutingModule,
-    SharedModule,
     ChatModule,
     ExploreModule,
     ProfileModule,

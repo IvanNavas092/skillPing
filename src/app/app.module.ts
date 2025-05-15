@@ -11,7 +11,6 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/module/public.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { HeroWorksComponent } from './public/how-it-works-page/components/hero-works/hero-works.component';
 @NgModule({
   declarations: [
     AppComponent,

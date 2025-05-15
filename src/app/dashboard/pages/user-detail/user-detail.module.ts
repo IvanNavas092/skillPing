@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RatingCardComponent } from './rating-card/rating-card.component';
 import { RatingFormComponent } from './rating-form/rating-form.component';
 import { UserDetailComponent } from './user-detail.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';

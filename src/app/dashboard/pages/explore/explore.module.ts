@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { LucideAngularModule } from 'lucide-angular';
 import { UserCardComponent } from './user-list/user-card/user-card.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -28,6 +29,7 @@ import { UserCardComponent } from './user-list/user-card/user-card.component';
     RouterModule,
     HttpClientModule,
     LucideAngularModule,
+    SharedModule
   ],
   exports: [
     // page
