@@ -8,7 +8,7 @@ export class PusherService {
   private pusher: Pusher;
 
   constructor() {
-    Pusher.logToConsole = true; // depuration
+    // Pusher.logToConsole = true; // depuration
     this.pusher = new Pusher('682407f9d91aaf86de6f', {
       cluster: 'eu',
       forceTLS: true
