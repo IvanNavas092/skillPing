@@ -5,6 +5,7 @@ import { ExploreComponent } from '../pages/explore/explore.component';
 import { UserDetailComponent } from '../pages/user-detail/user-detail.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { ChatComponent } from '../pages/chat/chat.component';
+import { ChangePasswordComponent } from 'src/app/shared/components/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,8 @@ const routes: Routes = [
       { path: 'explorar/usuario/:id', component: UserDetailComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'chat', component: ChatComponent },
+      // { path: 'chat/chat-usuario/:id', component: ChatComponent },
+      { path: 'change-password', component: ChangePasswordComponent}, 
       { path: '', redirectTo: 'inicio', pathMatch: 'full' }
     ]
   }
