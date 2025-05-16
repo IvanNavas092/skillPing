@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AvatarService } from 'src/app/core/services/avatar.service';
 
 @Component({
   selector: 'app-nav-mobile',
@@ -14,7 +15,11 @@ export class NavMobileComponent {
   menuOpen = false;
   submenuOpen = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private avatarService: AvatarService
+  ) { }
 
 
   toggleSubmenu() {
@@ -27,5 +32,13 @@ export class NavMobileComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  getCurrentUserAvatar() {
+    return this.authService.getCurrentUser().avatar;
+  }
+
+  getAvatar(avatarId: number | undefined) {
+    return this.avatarService.getAvatarById(avatarId);
   }
 }

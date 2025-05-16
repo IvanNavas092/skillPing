@@ -6,7 +6,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 // Icons
-import { LucideAngularModule, Tag, MoveRight, User, MessageCircle, MessageCircleMore, CheckCheck, Users, Search, Eye, EyeOff } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from './components/header/logo/logo.component';
 import { NavDesktopComponent } from './components/header/nav-desktop/nav-desktop.component';
@@ -31,7 +30,6 @@ import { SkillComponent } from './components/skill/skill.component';
   ],
   imports: [
     CommonModule,
-    LucideAngularModule.pick({ Tag, MoveRight, User, MessageCircle, MessageCircleMore, CheckCheck, Users, Search, Eye, EyeOff }),
     RouterModule
   ],
   exports: [
@@ -43,7 +41,6 @@ import { SkillComponent } from './components/skill/skill.component';
     UserActionsComponent,
     CallToActionComponent,
     SkillComponent,
-    LucideAngularModule
 
   ]
 

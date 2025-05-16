@@ -6,7 +6,6 @@ import { SearchChatComponent } from './search-chat/search-chat.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { LucideAngularModule } from 'lucide-angular';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { LucideAngularModule } from 'lucide-angular';
     FormsModule,
     RouterModule,
     HttpClientModule,
-    LucideAngularModule,
   ]
 })
 export class ChatModule { }

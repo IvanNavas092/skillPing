@@ -7,10 +7,9 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
   templateUrl: './user-actions.component.html',
 })
 export class UserActionsComponent {
-  avatarId = this.getCurrentUser().avatar;
   @Input() isLoggedIn: boolean = false;
   @Input() notifications: number = 0;
-
+  
   constructor(private authService: AuthService, private avatarService: AvatarService) { }
 
   getAvatar(avatarId: number | undefined) {
@@ -21,8 +20,8 @@ export class UserActionsComponent {
     this.authService.logout();
   }
 
-  getCurrentUser() {
-    return this.authService.getCurrentUser();
+  getCurrentUserAvatar() {
+    return this.authService.getCurrentUser().avatar;
   }
 
 }

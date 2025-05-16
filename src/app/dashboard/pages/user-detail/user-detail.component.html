@@ -1,7 +1,9 @@
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+<div
+  class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center"
+>
   <!-- container -->
   <div
-    class="max-w-7xl w-full mt-10  bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
+    class="max-w-7xl w-full mt-10 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
   >
     <button
       class="flex items-center p-4 text-blue-500 hover:text-blue-600 transition-colors duration-200"
@@ -37,7 +39,23 @@
               <button
                 class="text-white w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center"
               >
-                <lucide-icon name="message-circle-more"></lucide-icon>
+                <svg
+                  class="w-7 h-7 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.3"
+                    d="M16 10.5h.01m-4.01 0h.01M8 10.5h.01M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.6a1 1 0 0 0-.69.275l-2.866 2.723A.5.5 0 0 1 8 18.635V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -140,8 +158,7 @@
         <ng-container *ngIf="activetab === 'Opiniones'">
           <button
             (click)="toggleRating()"
-            class="border flex items-center border-gray-200 text-gray-900 cursor-pointer rounded-3xl 
-            py-2 px-4 text-sm font-semibold mb-5"
+            class="border flex items-center border-gray-200 text-gray-900 cursor-pointer rounded-3xl py-2 px-4 text-sm font-semibold mb-5"
           >
             {{ ratingActivate ? 'Cerrar' : 'Crear valoración' }}
           </button>

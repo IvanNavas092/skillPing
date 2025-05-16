@@ -1,6 +1,8 @@
 <!-- Actions buttons -->
 <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-2 items-center">
   <div *ngIf="isLoggedIn" class="flex gap-6 mr-5">
+
+    <!-- chat button -->
     <button
       routerLink="/dashboard/chat"
       class="bg-white hover:bg-gray-100 text-gray-700 cursor-pointer rounded-full py-2 px-2 font-semibold relative"
@@ -31,11 +33,12 @@
       </span>
     </button>
 
+    <!-- profile button -->
     <button
       class="bg-white hover:bg-gray-100 text-gray-700 cursor-pointer rounded-full font-semibold"
       routerLink="/dashboard/profile"
     >
-      <img class="w-10 h-10" [src]="getAvatar(avatarId)" alt="" /> 
+      <img class="w-10 h-10" [src]="getAvatar(getCurrentUserAvatar())" alt="avatar de usuario" /> 
     </button>
   </div>
 
