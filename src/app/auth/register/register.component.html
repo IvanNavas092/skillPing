@@ -48,7 +48,7 @@
                   [id]="field.id"
                   [formControlName]="field.controlName"
                   [type]="field.type"
-                  class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-200 placeholder-gray-400"
+                  class="block w-full input-style"
                   [placeholder]="field.placeholder || ''"
                 />
 
@@ -74,7 +74,7 @@
                 </div>
               </div>
 
-              <!-- Validaciones -->
+              <!-- validations -->
               <div
                 *ngIf="
                   registerForm.get(field.controlName)?.invalid &&
@@ -110,7 +110,7 @@
             <button
               type="button"
               (click)="nextStep()"
-              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
+              class="btn-primary"
               [disabled]="registerForm.invalid"
               [class.opacity-50]="registerForm.invalid"
               [class.cursor-not-allowed]="registerForm.invalid"

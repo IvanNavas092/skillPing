@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private apiService: ApiService, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
-      full_name: ['', Validators.required],
+      full_name: ['', [Validators.required, Validators.minLength(6)]],
       username: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -42,12 +42,18 @@ export class RegisterComponent implements OnInit {
   }
 
   formFields = [
-    { id: 'full_name', label: 'Nombre completo', controlName: 'full_name', type: 'text', placeholder: 'Nombre Apellido' },
+    {
+      id: 'full_name', label: 'Nombre completo', controlName: 'full_name', type: 'text', placeholder: 'Nombre Apellido',
+      validations: [
+        { type: 'required', message: 'Este campo es obligatorio' },
+        { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
+      ]
+    },
     {
       id: 'username', label: 'Nombre de usuario', controlName: 'username', type: 'text', placeholder: 'ejemplo01',
       validations: [
         { type: 'required', message: 'Este campo es obligatorio' },
-        { type: 'minlength', message: 'El nombre debe tener al menos 6 caracteres' }
+        { type: 'minlength', message: 'El usuario debe tener al menos 6 caracteres' }
       ]
     },
     {
@@ -129,7 +135,7 @@ export class RegisterComponent implements OnInit {
     }
   }
   isSkillDisabled(skillId: number): boolean {
-    return this.currentStep ===3 && this.selectedSkillsInStep2.includes(skillId);
+    return this.currentStep === 3 && this.selectedSkillsInStep2.includes(skillId);
   }
 
   // Recoger las skills
@@ -177,7 +183,7 @@ export class RegisterComponent implements OnInit {
               confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
               cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg ml-2'
             },
-            
+
           }).then((result) => {
             if (result.isConfirmed) {
               this.router.navigate(['/login']);
@@ -186,7 +192,7 @@ export class RegisterComponent implements OnInit {
               this.router.navigate(['/como-funciona']);
             }
           });
-          
+
         },
         error: (error: any) => {
           this.handleError(error);
