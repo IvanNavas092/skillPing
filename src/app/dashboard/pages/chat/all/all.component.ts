@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import Pusher from 'pusher-js';
 import { ChatService } from 'src/app/core/services/chat.service';
@@ -13,8 +13,11 @@ import { PusherService } from 'src/app/core/services/pusher.service';
   templateUrl: './all.component.html',
   styleUrls: ['./style.css']
 })
-export class allComponent implements OnInit, OnDestroy {
-
+export class allComponent implements OnInit, OnDestroy, AfterViewChecked {
+  // scroll
+  @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
+  shouldScroll = false;
+  // 
   search = '';
   currentUser = this.authService.getCurrentUser();
   allUsers: User[] = [];
@@ -58,7 +61,28 @@ export class allComponent implements OnInit, OnDestroy {
     // --------------------------------------
   }
 
-
+  // execute for each change view (when you select user)
+  ngAfterViewChecked() {
+    // timeout for the messages loading, first load messages and then scroll to bottom
+    if (this.shouldScroll) {
+      setTimeout(() => {
+        this.scrollToBottom();
+        this.shouldScroll = false;
+      }, 100);
+    }
+  }
+  // scroll to bottom
+  scrollToBottom(): void {
+    try {
+      const container = this.messagesContainer.nativeElement;
+      container.scrollTo({
+        top: container.scrollHeight,
+        
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   // take the users without the current user
   getUsers() {
@@ -80,6 +104,7 @@ export class allComponent implements OnInit, OnDestroy {
         next: () => {
           this.loadHistory(this.currentUser.username, this.selectedUser.username);
           this.chatService.refreshUnreadCounts();
+          this.shouldScroll = true;
         },
         error: (err) => console.error('Error marking as read', err)
       });
@@ -162,11 +187,11 @@ export class allComponent implements OnInit, OnDestroy {
     const notificationChannel = this.pusherService.suscribe(
       `notifications-${this.currentUser.username}`
     );
-    
+
     notificationChannel.bind('unread-messages', (data: any) => {
       this.chatService.refreshUnreadCounts();
     });
-    
+
     // Escuchar mensajes entrantes para todos los usuarios
     this.allUsers.forEach(user => {
       if (user.username !== this.currentUser.username) {
@@ -192,9 +217,11 @@ export class allComponent implements OnInit, OnDestroy {
   }
 
 
-    getAvatar(avatarId: number | undefined) {
+  getAvatar(avatarId: number | undefined) {
     return this.avatarService.getAvatarById(avatarId);
   }
+
+
 
 
 
