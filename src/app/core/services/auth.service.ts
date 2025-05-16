@@ -10,7 +10,7 @@ export class AuthService {
   apiUrl = 'http://localhost:8000/api/';
 
 
-  
+
   private storage = sessionStorage;
   isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
 
@@ -25,8 +25,8 @@ export class AuthService {
       username: user.username,
       email: user.email,
       password: user.password,
-      skills: user.skills, 
-      interests: user.interests, 
+      skills: user.skills,
+      interests: user.interests,
       // extras
       avatar: user.avatar,
       description: user.description,
@@ -65,7 +65,15 @@ export class AuthService {
     return this.http.patch<User>(this.apiUrl + 'users/update-user/' + id + '/', updateData);
   }
 
+  changePassword(old_password: string, new_password: string): Observable<any> {
+    const body = {
+      old_password,
+      new_password
+    };
 
+    console.log(body);
+    return this.http.put(`${this.apiUrl}change-password/`, body);
+  }
 
 
   storeAuthData(data: UserResponse) {
@@ -103,8 +111,8 @@ export class AuthService {
     return this.storage.getItem('auth-token');
   }
 
-  
-  getUserById(id: string) : Observable<User> {
+
+  getUserById(id: string): Observable<User> {
     const idNumber = parseInt(id, 10);
     return this.http.get<User>(this.apiUrl + 'users/' + idNumber);
   }

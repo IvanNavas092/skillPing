@@ -1,18 +1,27 @@
 <div class="bg-[#f9fafb] w-full flex justify-center items-center">
   <div class="max-w-7xl w-full flex-col mt-24 bg-white shadow rounded border">
     <div class="grid gap-2 p-4">
-      <!-- contenedor de perfil -->
-      <div class="p-2 px-7 rounded flex gap-3 w-full max-w-4xl items-center justify-between">
-        <section>
+      <!-- profile container -->
+      <div class="p-2 px-7 rounded flex  w-full max-w-7xl items-center justify-between">
+        <!-- Título a la izquierda -->
+        <div>
           <h1 class="text-2xl font-bold">Mi <span class="text-blue-500">Perfil</span></h1>
           <p class="text-gray-400 text-sm mt-1">Gestiona tu información personal y preferencias</p>
-        </section>
+        </div>
+
+        <!-- Botón a la derecha -->
+        <button
+          routerLink="/dashboard/change-password"
+          class="border text-black hover:bg-gray-200 hover:border-gray-600  py-2 px-4 rounded-lg text-sm font-medium mr-2 transition mt-1"
+        >
+          Cambiar contraseña
+        </button>
       </div>
 
-      <!-- contenedor de avatar -->
+      <!-- avatar container -->
       <div class="flex justify-between">
         <h1 class="text-2xl font-bold mb-2 px-7">Elige tu avatar</h1>
-        <div class="flex items-center mr-9 ">
+        <div class="flex items-center mr-9">
           <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
             <svg
               [class.text-yellow-400]="star <= user.average_rating"
@@ -47,7 +56,7 @@
       </div>
       <hr />
 
-      <!-- contenedor de datos personales -->
+      <!-- container for personal data -->
       <form [formGroup]="formProfile" (ngSubmit)="onSubmit()">
         <div class="grid grid-cols-2 gap-5 p-2 px-7">
           <ng-container *ngFor="let field of formFields">
@@ -59,7 +68,7 @@
               <!-- Input -->
               <input
                 *ngIf="field.type !== 'select'"
-                class="w-full border p-2 rounded-md disabled:bg-gray-100"
+                class="w-full border p-2 rounded-md disabled:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out  disabled:cursor-not-allowed"
                 [type]="field.type"
                 [formControlName]="field.controlName"
                 [placeholder]="field.placeholder"
@@ -68,7 +77,7 @@
               <!-- Select -->
               <select
                 *ngIf="field.type === 'select' && field.controlName === 'location'"
-                class="w-full border p-2 rounded-md"
+                class="w-full border p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out disabled:bg-gray-100 disabled:cursor-not-allowed"
                 [formControlName]="field.controlName"
               >
                 <option value="" disabled>
@@ -81,7 +90,7 @@
               <!-- gender select -->
               <select
                 *ngIf="field.type === 'select' && field.controlName === 'gender'"
-                class="w-full border p-2 rounded-md"
+                class="w-full border p-2 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out disabled:bg-gray-100 disabled:cursor-not-allowed"
                 [formControlName]="field.controlName"
               >
                 <option value="" disabled>
@@ -110,7 +119,7 @@
                   </option>
                 </select>
 
-                <!-- Habilidades -->
+                <!-- skills -->
                 <button
                   *ngIf="
                     formProfile.get('selectedSkillHabilidades')?.value &&
@@ -123,7 +132,7 @@
                   Agregar
                 </button>
 
-                <!-- Intereses -->
+                <!-- interests -->
                 <button
                   *ngIf="
                     formProfile.get('selectedSkillIntereses')?.value && field.label === 'Intereses'

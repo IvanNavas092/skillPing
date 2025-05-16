@@ -13,6 +13,8 @@ import { NavMobileComponent } from './components/header/nav-mobile/nav-mobile.co
 import { UserActionsComponent } from './components/header/user-actions/user-actions.component';
 import { CallToActionComponent } from '../public/home/components/call-to-action/call-to-action.component';
 import { SkillComponent } from './components/skill/skill.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -27,10 +29,12 @@ import { SkillComponent } from './components/skill/skill.component';
     UserActionsComponent,
     CallToActionComponent,
     SkillComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
@@ -41,6 +45,8 @@ import { SkillComponent } from './components/skill/skill.component';
     UserActionsComponent,
     CallToActionComponent,
     SkillComponent,
+    ChangePasswordComponent,
+
 
   ]
 
