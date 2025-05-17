@@ -11,7 +11,7 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
 })
 export class UserDetailComponent implements OnInit {
   // Current User
-  userId!: string;
+  userId!: number;
   user!: User;
   // menu nav
   activetab: 'general' | 'Opiniones' = 'general';
@@ -28,7 +28,7 @@ export class UserDetailComponent implements OnInit {
   ngOnInit(): void {
     const paramId = this.activatedRoute.snapshot.paramMap.get('id');
     if (paramId !== null) {
-      this.userId = paramId;
+      this.userId = Number(paramId);
     }
     
     console.log(this.userId);
@@ -37,7 +37,7 @@ export class UserDetailComponent implements OnInit {
 
   loadUser() {
     if (this.userId !== null) {
-      this.authService.getUserById(this.userId).subscribe((userData: User) => {
+      this.authService.fetchUserById(this.userId).subscribe((userData: User) => {
         this.user = userData;
         console.log(this.user);
 
