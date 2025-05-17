@@ -9,7 +9,7 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
 export class UserActionsComponent {
   @Input() isLoggedIn: boolean = false;
   @Input() notifications: number = 0;
-  
+
   constructor(private authService: AuthService, private avatarService: AvatarService) { }
 
   getAvatar(avatarId: number | undefined) {
@@ -17,8 +17,14 @@ export class UserActionsComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe({
+      next: () => {
+        // only suscription
+      },
+      error: err => console.error('Error en logout', err)
+    });
   }
+
 
   getCurrentUserAvatar() {
     return this.authService.getCurrentUser().avatar;

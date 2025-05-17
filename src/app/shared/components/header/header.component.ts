@@ -27,17 +27,25 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isAuthenticated();
+    // Check if user is logged in
+    this.authService.isLoggedIn$.subscribe(flag => {
+      this.isLoggedIn = flag;
+      // if is logged in, refresh unread counts for chatService integrate 
+      if (flag) {
+        this.chatService.refreshUnreadCounts();
+      }
+      console.log('Header: isLoggedIn=', flag);
+    });
+
     this.checkWindowSize();
 
-    this.authService.loggedIn$.subscribe((state) => {
-      this.isLoggedIn = state;
-    })
 
     this.chatService.unReadCountTotal$.subscribe((data) => {
       this.notifications = data;
       console.log('total unread', data);
     });
+
+    console.log(this.isLoggedIn.valueOf());
   }
 
   goToExploreWithCategory(categoryName: string) {
@@ -55,9 +63,7 @@ export class HeaderComponent implements OnInit {
     this.isMobile = window.innerWidth <= 1024;
   }
 
-  logout() {
-    this.authService.logout();
-  }
+
 
 
 
