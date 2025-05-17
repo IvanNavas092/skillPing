@@ -33,6 +33,7 @@ import { UserDetailModule } from '../pages/user-detail/user-detail.module';
     ExploreModule,
     ProfileModule,
     UserDetailModule,
+    SharedModule,
 ],
   exports: [
     DashboardComponent,

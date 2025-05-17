@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { AvatarService } from 'src/app/core/services/avatar.service';
-import { ApiService } from 'src/app/core/services/api.service';
+
+import { AvatarSelectorComponent } from './avatar-selector/avatar-selector.component';
+import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { SkillsManagerComponent } from './skills-manager/skills-manager.component';
 
 
 
@@ -16,6 +17,9 @@ import { ApiService } from 'src/app/core/services/api.service';
     // components
 
     ProfileComponent,
+    AvatarSelectorComponent,
+    ProfileFormComponent,
+    SkillsManagerComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,9 @@ import { ApiService } from 'src/app/core/services/api.service';
   ],
   exports: [
     ProfileComponent,
+    AvatarSelectorComponent,
+    ProfileFormComponent,
+    SkillsManagerComponent,
   ],
 })
 export class ProfileModule { }
