@@ -11,11 +11,17 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicModule } from './public/module/public.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
+import { HTTP_INTERCEPTORS, HttpClientModule,  } from '@angular/common/http';
+import { CsrfInterceptor } from './csrf.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    HttpClientModule,
+    // Angular modules
     BrowserModule,
     AppRoutingModule,
     SharedModule,
@@ -25,7 +31,13 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     AuthModule,
     SweetAlert2Module.forRoot(), // for SweetAlert2
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CsrfInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

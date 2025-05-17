@@ -5,10 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { SharedModule } from '../shared/shared.module';
-
-
 
 @NgModule({
   declarations: [
@@ -28,12 +25,6 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     AuthService,
-    // Importamos el interceptor de JWT
-    {
-      provide: JwtInterceptor,
-      useClass: JwtInterceptor,
-      multi: true
-    }
   ]
 })
 export class AuthModule { }
