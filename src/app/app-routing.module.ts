@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { authGuard } from './auth/guard/auth.guard';
+import { AuthGuard } from './auth/guard/auth.guard';
 import { HomeComponent } from './public/home/home.component';
 import { HowItWorksPageComponent } from './public/how-it-works-page/how-it-works-page.component';
 
@@ -10,7 +10,7 @@ import { HowItWorksPageComponent } from './public/how-it-works-page/how-it-works
 const routes: Routes = [
   {
     path: 'dashboard',
-    canActivate: [authGuard],
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./dashboard/module/dashboard.module').then(m => m.DashboardModule)
   },
