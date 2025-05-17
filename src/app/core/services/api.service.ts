@@ -6,44 +6,72 @@ import { User } from '../models/User';
 import { Rating, RatingPayload } from '../models/rating';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ApiService {
-  apiUrl = 'http://127.0.0.1:8000/api';
-  UrlCategory = 'http://127.0.0.1:8000/api/categories';
-  urlSkills = 'http://127.0.0.1:8000/api/skills';
+  private apiUrl = 'http://localhost:8000/api/';
+
   constructor(private http: HttpClient) { }
 
-  getCategories() {
-    return this.http.get<Category[]>(this.UrlCategory);
-  }
-  getSkills() {
-    return this.http.get<Skill[]>(this.urlSkills);
-  }
-
-  getUsers() {
-    return this.http.get<User[]>(`${this.apiUrl}/users/`);
+  getCategories(): Observable<Category[]> {
+    // /categories/
+    return this.http.get<Category[]>(
+      `${this.apiUrl}categories/`,
+      { withCredentials: true }
+    );
   }
 
-  getUsersByFilterCategorie(categoryActive: string) {
-    return this.http.get<User[]>(`${this.apiUrl}/users/by-category/${categoryActive}`);
+  getSkills(): Observable<Skill[]> {
+    // /skills/
+    return this.http.get<Skill[]>(
+      `${this.apiUrl}skills/`,
+      { withCredentials: true }
+    );
   }
 
-  getCountries() {
-    return this.http.get<string[]>(`${this.apiUrl}/countries/`);
+  getUsers(): Observable<User[]> {
+    // /users/
+    return this.http.get<User[]>(
+      `${this.apiUrl}users/`,
+      { withCredentials: true }
+    );
   }
 
-  getRatingsByUser(id: number) {
-    return this.http.get<Rating[]>(`${this.apiUrl}/ratings/${id}`);
+  getUsersByFilterCategorie(categoryActive: string): Observable<User[]> {
+    // /users-by-category/{categoryActive}/
+    return this.http.get<User[]>(
+      `${this.apiUrl}users-by-category/${categoryActive}/`,
+      { withCredentials: true }
+    );
+  }
+
+  getCountries(): Observable<string[]> {
+    // /get-countries/
+    return this.http.get<string[]>(
+      `${this.apiUrl}get-countries/`,
+      { withCredentials: true }
+    );
+  }
+
+  getRatingsByUser(id: number): Observable<Rating[]> {
+    // /user-ratings/{id}/
+    return this.http.get<Rating[]>(
+      `${this.apiUrl}user-ratings/${id}/`,
+      { withCredentials: true }
+    );
   }
 
   setRating(rating: RatingPayload): Observable<RatingPayload> {
+    // POST /ratings/
     const dataRating = {
-      rating_user: rating.rating_user, // user who rated
-      rated_user: rating.rated_user, // user who is rated
-      comment: rating.comment, // comment
-      value: rating.value, // value
-    }
-
-    return this.http.post<RatingPayload>(`${this.apiUrl}/ratings/`,  dataRating); 
+      rating_user: rating.rating_user,
+      rated_user: rating.rated_user,
+      comment: rating.comment,
+      value: rating.value,
+    };
+    return this.http.post<RatingPayload>(
+      `${this.apiUrl}ratings/`,
+      dataRating,
+      { withCredentials: true }
+    );
   }
-} 
+}

@@ -1,22 +1,22 @@
+// src/app/services/chat.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { PusherService } from './pusher.service';
-
+import { Message } from '../models/chat-message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
+  // base API URL
+  private baseUrl = 'http://localhost:8000/api/';
 
-  url = 'http://localhost:8000/api/chat'
-
-  // behaviour subjects reactives states
+  // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
-  private unreadBySenderSubject = new BehaviorSubject<{ [sender: string]: number }>({}); // "juan": 3, "pedro": 1
+  private unreadBySenderSubject = new BehaviorSubject<{ [sender: string]: number }>({});
 
-  // observables
   unReadCountTotal$ = this.unreadCountTotalSubject.asObservable();
   unReadBySender$ = this.unreadBySenderSubject.asObservable();
   currentChannel: any;
@@ -25,111 +25,108 @@ export class ChatService {
     private http: HttpClient,
     private authService: AuthService,
     private pusher: PusherService,
-
   ) {
     this.initNotificationChannel();
   }
 
-
-  // init notification channel pusher
+  /** Inicializa el canal de notificaciones de Pusher para mensajes no leídos */
   initNotificationChannel() {
-    // if not current user return
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser) return;
+    const user = this.authService.getCurrentUser();
+    if (!user || !user.username) return;
 
-    // Suscribir al nuevo canal
-    this.currentChannel = this.pusher.suscribe(`notifications-${currentUser.username}`);
-
-    // suscribe to channel notifications and listen unread messages event and return data
+    this.currentChannel = this.pusher.suscribe(`notifications-${user.username}`);
     this.currentChannel.bind('unread-messages', (data: any) => {
-      console.log('Mensajes no leídos', data);
-      // if new messages arrive, update the counters with the new data
+      console.log('Mensajes no leídos recibidos:', data);
       if (data.unread_counts !== undefined) {
         this.updateUnreadCounts(data.unread_counts, data.sender);
       }
     });
-    // force refresh unread counts
+
     this.refreshUnreadCounts();
   }
+
+  /**
+   * Actualiza los contadores internos de no leídos.
+   * Si se pasa `sender`, refresca también el desglose por remitente desde el backend.
+   */
   updateUnreadCounts(total: number, sender?: string) {
-    // update the total counter
     this.unreadCountTotalSubject.next(total);
-    const currentUser = this.authService.getCurrentUser();
 
-    // actualizar contador por usuario
     if (sender) {
-      const current = this.unreadBySenderSubject.value;
-      console.log('CONTADOR POR USUARIO', current);
-
-      // http post request to get unread counts for the current user
-      this.http.post(`${this.url}/get-unread-counts`, {
-        username: currentUser.username
-      }).subscribe({
-        next: (data: any) => {
-          const bySender: { [sender: string]: number } = {};
-          data.by_sender.forEach((item: any) => {
-            // convert in this format: { username: unreadCount } -> { juan: 3}
+      // refrescar el desglose completo
+      const username = this.authService.getCurrentUser().username;
+      this.http.post(
+        `${this.baseUrl}chat/get-unread-counts/`,
+        { username },
+        { withCredentials: true }
+      ).subscribe({
+        next: (resp: any) => {
+          const bySender: { [s: string]: number } = {};
+          resp.by_sender.forEach((item: any) => {
             bySender[item.sender__username] = item.count;
           });
-          // and update the subject with the new data
           this.unreadBySenderSubject.next(bySender);
         },
-        error: (err) => console.error('Error fetching unread counts', err)
-      })
-      // update the counter of the current user -> (juan: 4)
-      current[sender] = total;
-      this.unreadBySenderSubject.next(current);
-    }
-
-  }
-
-  // obtain initial counters from backend and refresh the observables
-  refreshUnreadCounts(): void {
-    const currentUser = this.authService.getCurrentUser();
-    this.http.post(`${this.url}/get-unread-counts`, { username: currentUser.username })
-      .subscribe({
-        next: (data: any) => {
-          // 1. update total
-          this.unreadCountTotalSubject.next(data.total_unread);
-          // 2. Actualizar por remitente
-          const bySender: { [sender: string]: number } = {};
-          data.by_sender.forEach((item: any) => {
-            // convert again in this format: { juan: 3 } -> { username: unreadCount } -> { username: 3 }
-            bySender[item.sender__username] = item.count;
-          });
-          // save the username and count of sender
-          this.unreadBySenderSubject.next(bySender);
-          console.log('bySender', bySender);
-        },
-        error: (err) => console.error('Error fetching unread counts', err)
+        error: err => console.error('Error al obtener desglose de no leídos', err)
       });
+    }
   }
 
-
-  sendPrivateMessage(sender: string, message: string, receptor: string): Observable<any> {
-    return this.http.post(`${this.url}/send`, {
-      sender, message, receptor
+  /** Obtiene los contadores iniciales de no leídos */
+  refreshUnreadCounts(): void {
+    const username = this.authService.getCurrentUser().username;
+    this.http.post(
+      `${this.baseUrl}chat/get-unread-counts/`,
+      { username },
+      { withCredentials: true }
+    ).subscribe({
+      next: (resp: any) => {
+        this.unreadCountTotalSubject.next(resp.total_unread);
+        const bySender: { [s: string]: number } = {};
+        resp.by_sender.forEach((item: any) => {
+          bySender[item.sender__username] = item.count;
+        });
+        this.unreadBySenderSubject.next(bySender);
+      },
+      error: err => console.error('Error al refrescar no leídos', err.error)
     });
   }
 
-  getChatHistory(user1: string, user2: string): Observable<any> {
-    return this.http.get(`${this.url}/history`, {
-      params: { user1, user2 }
-    });
+  /** Envía un mensaje privado */
+  sendPrivateMessage(sender: string, message: string, receptor: string) {
+    return this.http.post(
+      `${this.baseUrl}chat/send/`,
+      { sender, receptor, message },
+      { withCredentials: true }
+    );
   }
 
-  // obtain no read messages counters
-  getUnreadCounts(username: string): Observable<any> {
-    return this.http.post(`${this.url}/get-unread-counts`, { username });
+  /** Recupera el historial de chat entre dos usuarios */
+  getChatHistory(user1: string, user2: string): Observable<Message[]> {
+    return this.http.get<Message[]>(
+      `${this.baseUrl}chat-history/`,
+      {
+        params: { user1, user2 },
+        withCredentials: true
+      }
+    );
   }
 
-  // mark messages as read
-  markAsRead(currentUser: string, sender: string): Observable<any> {
-    return this.http.post(`${this.url}/mark-messages-as-read`, {
-      current_user: currentUser,
-      sender: sender
-    });
-
+  /** Obtiene los contadores de no leídos para un usuario dado */
+  getUnreadCounts(username: string) {
+    return this.http.post(
+      `${this.baseUrl}chat/get-unread-counts/`,
+      { username },
+      { withCredentials: true }
+    );
   }
 
+  /** Marca mensajes como leídos entre currentUser y sender */
+  markAsRead(currentUser: string, sender: string) {
+    return this.http.post(
+      `${this.baseUrl}chat/mark-messages-as-read/`,
+      { current_user: currentUser, sender },
+      { withCredentials: true }
+    );
+  }
 }

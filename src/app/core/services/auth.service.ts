@@ -1,122 +1,134 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User, UserResponse, UserUpdate } from '../models/User';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { User, UserResponse, UserUpdate } from '../models/User';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
-  // url api
-  apiUrl = 'http://localhost:8000/api/';
-
-
-
+  private baseUrl = 'http://localhost:8000/api/';
   private storage = sessionStorage;
-  isLoggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  loggedIn$ = this.isLoggedIn.asObservable();
-
-  constructor(private http: HttpClient, private router: Router) { }
-
-  // REGISTER
-  register(user: User): Observable<User> {
-    const registrationData = {
-      full_name: user.full_name,
-      username: user.username,
-      email: user.email,
-      password: user.password,
-      skills: user.skills,
-      interests: user.interests,
-      // extras
-      avatar: user.avatar,
-      description: user.description,
-      age: user.age,
-      location: user.location,
-      gender: user.gender,
-    }
-    return this.http.post<User>(this.apiUrl + 'users/', registrationData);
-  }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
 
-  // LOGIN
+  // -----------------------------------
+  // AUTENTICACIÓN
+  // -----------------------------------
+
   login(username: string, password: string): Observable<UserResponse> {
-    return this.http.post<UserResponse>(this.apiUrl + 'login/', { username, password }).pipe(
-      tap(response => { // Tap para que no modifique el response
-        this.storeAuthData(response);
-        this.isLoggedIn.next(true);
+    return this.http.post<UserResponse>(
+      `${this.baseUrl}login/`,
+      { username, password },
+      { withCredentials: true }
+    ).pipe(
+      tap(res => {
+        this.storeAuthData(res);
+        this.isLoggedInSubject.next(true);
       })
     );
   }
 
-  // update user
-  updateUser(id: number, user: UserUpdate): Observable<User> {
-    const updateData = {
-      avatar: user.avatar,
-      full_name: user?.full_name,
-      username: user.username,
-      email: user.email,
-      age: user.age,
-      location: user.location,
-      gender: user.gender,
-      description: user.description,
-      skills: user.skills,
-      interests: user.interests,
-    }
-    return this.http.patch<User>(this.apiUrl + 'users/update-user/' + id + '/', updateData);
+  logout(): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}logout/`,
+      {},
+      { withCredentials: true }
+    ).pipe(
+      tap(() => {
+        this.storage.clear();
+        this.isLoggedInSubject.next(false);
+        this.router.navigate(['/login']);
+      })
+    );
   }
 
-  changePassword(old_password: string, new_password: string): Observable<any> {
-    const body = {
-      old_password,
-      new_password
-    };
-
-    console.log(body);
-    return this.http.put(`${this.apiUrl}change-password/`, body);
+  register(user: User): Observable<User> {
+    return this.http.post<User>(
+      `${this.baseUrl}users/`,
+      user,
+      { withCredentials: true }
+    );
   }
 
+  // -----------------------------------
+  // SESIÓN / USUARIO
+  // -----------------------------------
 
-  storeAuthData(data: UserResponse) {
-    // datos de views.py django
-    // Quiero que guarde en sessionStorage los datos del user que se ha logueado
-    this.storage.setItem('auth-token', data.access_token)
-    this.storage.setItem('auth-user', JSON.stringify(data.user));
+  /** Comprueba si la sesión sigue viva y almacena el usuario */  /** Llama al endpoint y actualiza el estado loggedInSubject */
+  checkSession(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}current-user/`, { withCredentials: true }).pipe(
+      tap(user => {
+        this.storage.setItem('auth-user', JSON.stringify(user));
+        this.isLoggedInSubject.next(true);
+      }),
+      catchError(err => {
+        // Si da error, dejamos el estado en false
+        this.storage.removeItem('auth-user');
+        this.isLoggedInSubject.next(false);
+        return of(); // devolvemos un Observable vacío
+      })
+    );
   }
 
-  logout() {
-    this.storage.removeItem('auth-token');
-    this.storage.removeItem('auth-user');
-    this.isLoggedIn.next(false);
-    this.router.navigate(['/login']);
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.storage.getItem('auth-token');
-  }
-
-  // get current user OBJECT
-  getCurrentUser() {
+  /** Devuelve el objeto User almacenado (o {} si no hay) */
+  getCurrentUser(): User {
     const user = this.storage.getItem('auth-user');
-    return user ? JSON.parse(user) : null;
+    return user ? JSON.parse(user) : {} as User;
   }
 
-  // get current user ID
-  getCurrentUserId() {
-    const user = this.storage.getItem('auth-user');
-    return user ? JSON.parse(user).id : null;
+  /** Devuelve solo el ID (útil para construir URLs) */
+  getCurrentUserId(): number {
+    return this.getCurrentUser().id || 0;
   }
 
-
-  getToken() {
-    return this.storage.getItem('auth-token');
+  /** Obtener cualquier usuario por su ID */
+  fetchUserById(id: number): Observable<User> {
+    return this.http.get<User>(
+      `${this.baseUrl}get-user/${id}/`,
+      { withCredentials: true }
+    );
   }
 
-
-  getUserById(id: string): Observable<User> {
-    const idNumber = parseInt(id, 10);
-    return this.http.get<User>(this.apiUrl + 'users/' + idNumber);
+  /** Obtener valoraciones de un usuario */
+  fetchUserRatings(id: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}user-ratings/${id}/`,
+      { withCredentials: true }
+    );
   }
 
+  // -----------------------------------
+  // PERFIL
+  // -----------------------------------
 
+  updateUser(id: number, payload: UserUpdate): Observable<User> {
+    return this.http.patch<User>(
+      `${this.baseUrl}update-user/${id}/`,
+      payload,
+      { withCredentials: true }
+    );
+  }
 
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}change-password/`,
+      {
+        old_password: oldPassword,
+        new_password: newPassword
+      },
+      { withCredentials: true }
+    );
+  }
+
+  private storeAuthData(res: UserResponse) {
+    this.storage.setItem('auth-user', JSON.stringify(res.user));
+  }
 }
