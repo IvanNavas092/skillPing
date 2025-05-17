@@ -8,8 +8,8 @@ export interface User {
   password: string;
   skills: Skill[]; // ID
   interests: Skill[]; // ID
-  skills_details?: Skill[];  // for read  (with names)
-  interests_details?: Skill[]; // for read (with names)
+  skills_details: Skill[];  // for read  (with names)
+  interests_details: Skill[]; // for read (with names)
   // Extras
   age: number;
   gender: string;
