@@ -1,0 +1,84 @@
+<div
+  class="bg-white rounded-xl shadow-sm border w-[] border-gray-200 overflow-hidden flex flex-col h-auto md:h-[calc(100vh-180px)]"
+>
+  <!-- Header -->
+  <div class="bg-blue-500 p-4 border-b border-gray-200" *ngIf="selectedUser">
+    <div class="flex items-center space-x-3">
+      <img
+        [src]="getAvatar(selectedUser.avatar)"
+        class="h-10 w-10 rounded-full object-cover border-2 border-indigo-300 flex-shrink-0"
+        alt="Avatar de {{ selectedUser.username }}"
+      />
+      <h3 class="text-base sm:text-lg font-semibold text-white truncate">
+        Chat con {{ selectedUser.username }}
+      </h3>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div class="flex-1 p-3 sm:p-4 overflow-y-auto bg-gray-50" #messagesContainer>
+    <ng-container *ngIf="selectedUser; else noChat">
+      <div class="space-y-2 sm:space-y-3">
+        <div *ngFor="let msg of messages" class="flex" [class.justify-end]="msg.isMe">
+          <div
+            [ngClass]="msg.isMe ? 'msg-me' : 'msg-other'"
+            class="rounded-lg p-2 sm:p-3 shadow-sm max-w-[80%] sm:max-w-[70%] lg:max-w-[60%]"
+          >
+            <p class="text-sm sm:text-base break-words">{{ msg.message }}</p>
+            <p
+              class="text-[10px] sm:text-xs mt-1"
+              [class.text-indigo-100]="msg.isMe"
+              [class.text-gray-500]="!msg.isMe"
+            >
+              {{ msg.timestamp | date : 'shortTime' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noChat>
+      <div class="text-center p-6 items-center flex flex-col">
+        <h3 class="mt-2 text-sm sm:text-lg font-medium text-gray-900">No hay chat seleccionado</h3>
+        <p class="mt-1 text-xs sm:text-sm text-gray-500">
+          Selecciona un usuario para comenzar a chatear
+        </p>
+        <svg
+          class="w-10 h-10 mt-2 text-gray-700"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 10.5h.01m-4.01 0h.01M8 10.5h.01M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-6.6a1 1 0 0 0-.69.275l-2.866 2.723A.5.5 0 0 1 8 18.635V17a1 1 0 0 0-1-1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+          />
+        </svg>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Input -->
+  <div class="border-t border-gray-200 p-3 sm:p-4 bg-white" *ngIf="selectedUser">
+    <div class="flex items-center space-x-2">
+      <input
+        [(ngModel)]="messageText"
+        (keyup.enter)="onSend()"
+        class="flex-1 px-3 py-2 sm:px-4 sm:py-2 border border-gray-300 rounded-full text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        placeholder="Escribe tu mensaje..."
+      />
+      <button
+        (click)="onSend()"
+        [disabled]="!messageText.trim()"
+        class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+      >
+        <!-- icono enviar -->
+      </button>
+    </div>
+  </div>
+</div>

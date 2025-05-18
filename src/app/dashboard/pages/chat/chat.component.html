@@ -1,1 +1,25 @@
-<app-all></app-all>
+<div class="bg-gray-100 min-h-screen flex justify-center items-start p-4 md:p-6">
+  <div class="max-w-7xl w-full mt-16 md:mt-20">
+    <app-chat-desktop
+      *ngIf="!isMobile"
+      [users]="usersFiltered"
+      [unreadBySender]="unreadBySender"
+      [selectedUser]="selectedUser"
+      [messages]="messages"
+      (searchChange)="onSearch($event)"
+      (userSelected)="onUserSelected($event)"
+      (sendMessage)="onSendMessage($event)"
+    ></app-chat-desktop>
+
+    <app-chat-mobile
+      *ngIf="isMobile"
+      [users]="usersFiltered"
+      [unreadBySender]="unreadBySender"
+      [selectedUser]="selectedUser"
+      [messages]="messages"
+      (searchChange)="onSearch($event)"
+      (userSelected)="onUserSelected($event)"
+      (sendMessage)="onSendMessage($event)"
+    ></app-chat-mobile>
+  </div>
+</div>
