@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { User, UserResponse, UserUpdate } from '../models/User';
 
@@ -73,7 +73,8 @@ export class AuthService {
         // Si da error, dejamos el estado en false
         this.storage.removeItem('auth-user');
         this.isLoggedInSubject.next(false);
-        return of(); // devolvemos un Observable vacío
+        console.log('Debes inciar sesión');
+        return throwError(() => err);
       })
     );
   }
