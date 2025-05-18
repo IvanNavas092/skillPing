@@ -59,6 +59,10 @@ export class UserDetailComponent implements OnInit {
     this.ratingActivate = !this.ratingActivate;
   }
 
+  navigateToChatUser() {
+    this.router.navigate(['dashboard/chat/chat-usuario/' + this.user.id]);
+  }
+
 
 
 

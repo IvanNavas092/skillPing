@@ -12,6 +12,7 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
 import Pusher from 'pusher-js';
 import { User } from 'src/app/core/models/User';
 import { Message } from 'src/app/core/models/chat-message';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -28,6 +29,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   currentUser = this.authService.getCurrentUser();
   pusher!: Pusher;
   isMobile = window.innerWidth <= 1024;
+  userSelectedFromButton!: User | undefined;
 
 
   constructor(
@@ -35,7 +37,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private chatService: ChatService,
     private pusherService: PusherService,
-    private avatarService: AvatarService
+    private avatarService: AvatarService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.unreadBySender = data;
     });
     this.chatService.refreshUnreadCounts();
+
   }
 
   ngOnDestroy() {
@@ -58,6 +62,17 @@ export class ChatComponent implements OnInit, OnDestroy {
         u.id !== this.currentUser.id &&
         u.username !== 'admin'
       );
+      // obtiene por url el id del usuario
+      const paramId = this.activatedRoute.snapshot.paramMap.get('id');
+      if (paramId !== null) {
+        this.userSelectedFromButton = this.allUsers.find(u => u.id === Number(paramId));
+        console.log(this.userSelectedFromButton);
+        console.log(this.allUsers);
+        if (this.userSelectedFromButton) {
+          this.onUserSelected(this.userSelectedFromButton);
+          console.log(this.userSelectedFromButton);
+        }
+      }
       this.usersFiltered = [...this.allUsers];
       this.setupPusherListener();
     });
