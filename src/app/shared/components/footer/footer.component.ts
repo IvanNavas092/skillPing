@@ -11,7 +11,7 @@ export class FooterComponent {
   constructor(private router: Router) { }
 
   goToExploreWithCategory(categoryName: string) {
-    this.router.navigate(['dashboard/explorar/categoria', categoryName],
+    this.router.navigate(['/dashboard/explorar/categoria', categoryName],
     )
   }
 

@@ -2,15 +2,15 @@
   <nav class="flex items-center justify-between p-3 lg:px-8">
     <!-- ZONA IZQUIERDA -->
     <div class="flex items-center flex-1">
-      <app-logo ></app-logo>
+      <app-logo></app-logo>
     </div>
 
     <!-- ZONA CENTRAL -->
     <div class="flex justify-center flex-1">
       <app-nav-desktop
+        class="hidden lg:flex"
         [categories]="categories"
         [goToExploreWithCategory]="goToExploreWithCategory"
-        *ngIf="!isMobile"
       >
       </app-nav-desktop>
     </div>
@@ -19,7 +19,7 @@
     <div class="flex justify-end items-center flex-1">
       <!-- Mobile solo visible en móvil -->
       <app-nav-mobile
-        *ngIf="isMobile"
+      class="lg:hidden"
         [categories]="categories"
         [isLoggedIn]="isLoggedIn"
         [notifications]="notifications"
@@ -27,7 +27,10 @@
       >
       </app-nav-mobile>
 
-      <app-user-actions [isLoggedIn]="isLoggedIn" [notifications]="notifications"></app-user-actions>
+      <app-user-actions
+        [isLoggedIn]="isLoggedIn"
+        [notifications]="notifications"
+      ></app-user-actions>
     </div>
   </nav>
 </header>

@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goToExploreWithCategory(categoryName: string) {
-    this.router.navigate(['dashboard/explorar/categoria', categoryName],
+    this.router.navigate(['/dashboard/explorar/categoria', categoryName],
     )
   }
 
@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private checkWindowSize(): void {
-    this.isMobile = window.innerWidth <= 1024;
+    this.isMobile = window.innerWidth <= 768;
   }
 
 
