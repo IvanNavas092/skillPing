@@ -5,7 +5,6 @@ import { Category } from 'src/app/core/models/Category';
 @Component({
   selector: 'app-categories-section',
   templateUrl: './categories-section.component.html',
-  styleUrls: ['./categories-section.component.css']
 })
 export class CategoriesSectionComponent implements OnInit {
   constructor(private apiService: ApiService) { }

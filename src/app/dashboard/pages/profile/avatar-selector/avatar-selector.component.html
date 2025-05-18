@@ -10,10 +10,16 @@
       <button
         (click)="selectAvatar(avatar)"
         [class.bg-blue-100]="avatar.id === selectedAvatar"
-        class="flex flex-col rounded border border-gray-300 items-center justify-center p-2 w-full max-w-60 mb-2"
+        class="flex flex-col rounded border hover:shadow-md hover:shadow-blue-100 transition-all duration-200 border-gray-300 items-center justify-center p-2 w-full max-w-60 mb-2"
       >
-        <img [src]="avatar.img" alt="avatar" class="w-16 h-16 rounded-full object-cover" />
-        <p class="text-sm font-semibold mt-2">{{ avatar.name }}</p>
+        <img
+          [src]="avatar.img"
+          alt="Avatar de {{ avatar.name }}"
+          class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
+        />
+        <p class="text-sm sm:text-base font-semibold mt-2 text-center truncate">
+          {{ avatar.name }}
+        </p>
       </button>
     </ng-container>
   </div>

@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit, OnChanges {
 
   activeCategoryFromRoute: string | null = '';
   usersLoaded = false; // flag to check if users are loaded
-  
+
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
@@ -32,10 +32,19 @@ export class UserListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.usersLoaded && changes['filterActive'] || changes['search'])
+    // only if users are loaded
+    if (!this.usersLoaded) return;
+
+    // if filterActive changed, filter users
+    if (changes['filterActive']) {
+      this.activeCategoryFromRoute = null;  // remove activeCategoryFromRoute
       this.filterUsers();
-      // when filterActive is choosed, is null the activeCategoryFromRoute
-      this.activeCategoryFromRoute = null;
+    }
+
+    // if search changed, apply search
+    if (changes['search']) {
+      this.applySearchFilter();
+    }
   }
 
   setupRouteListener(): void {
