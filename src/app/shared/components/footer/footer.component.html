@@ -14,34 +14,17 @@
       <div class="space-y-3">
         <h3 class="text-sm font-bold text-gray-900">Explorar</h3>
         <ul class="space-y-2">
-          <li>
+          <li *ngFor="let category of exploreCategories">
             <a
-              (click)="goToExploreWithCategory('Idiomas')"
+              matTooltip="Accede a Explorar tras registrarte"
+              matTooltipPosition="above"
+              routerLink="/dashboard/explorar"
+              (click)="goToExploreWithCategory('category.name')"
               class="text-gray-500 hover:text-gray-900 text-sm transition cursor-pointer"
-              >Idiomas</a
+              >{{category.name}}</a
             >
           </li>
-          <li>
-            <a
-              (click)="goToExploreWithCategory('Idiomas')"
-              class="text-gray-500 hover:text-gray-900 text-sm transition cursor-pointer"
-              >Tecnología</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="goToExploreWithCategory('Idiomas')"
-              class="text-gray-500 hover:text-gray-900 text-sm transition cursor-pointer"
-              >Marketing</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="goToExploreWithCategory('Idiomas')"
-              class="text-gray-500 hover:text-gray-900 text-sm transition cursor-pointer"
-              >Música</a
-            >
-          </li>
+          
         </ul>
       </div>
 
@@ -81,7 +64,9 @@
             <a class="text-gray-500 hover:text-gray-900 text-sm transition">Términos de servicio</a>
           </li>
           <li>
-            <a class="text-gray-500 hover:text-gray-900 text-sm transition">Política de privacidad</a>
+            <a class="text-gray-500 hover:text-gray-900 text-sm transition"
+              >Política de privacidad</a
+            >
           </li>
           <li>
             <a class="text-gray-500 hover:text-gray-900 text-sm transition">Política de cookies</a>

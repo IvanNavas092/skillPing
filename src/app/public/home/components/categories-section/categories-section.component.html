@@ -6,14 +6,18 @@
         <p class="text-gray-500 text-lg">
           Encuentra habilidades en diferentes disciplinas y niveles de dificultad.
         </p>
-        <a class="text-blue-500 font-semibold text-md hover:underline" routerLink="/explore"
-          >Ver todas</a
+        <a
+          matTooltip="Accede a Explorar tras registrarte"
+          matTooltipPosition="above"
+          routerLink="/dashboard/explorar"
+          class="text-blue-500 font-semibold text-md hover:underline mr-5"
+          >Explorar</a
         >
       </div>
     </div>
 
     <div
-      class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  gap-6 mt-5 place-items-center w-full items-stretch"
+      class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5 place-items-center w-full items-stretch"
       data-aos="fade-up"
       data-aos-duration="300"
     >

@@ -14,6 +14,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { HTTP_INTERCEPTORS, HttpClientModule,  } from '@angular/common/http';
 import { CsrfInterceptor } from './csrf.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CsrfInterceptor } from './csrf.interceptor';
     DashboardModule,
     CoreModule,
     AuthModule,
-    SweetAlert2Module.forRoot(), // for SweetAlert2
+    SweetAlert2Module.forRoot(),
+    BrowserAnimationsModule, // for SweetAlert2
   ],
   providers: [
     {

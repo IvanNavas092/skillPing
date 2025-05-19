@@ -11,6 +11,8 @@ import { WhatIsComponent } from '../components/what-is/what-is.component';
 import { StepsComponent } from '../components/what-is/steps/steps.component';
 import { StepItemComponent } from '../components/what-is/steps/step-item/step-item.component';
 import { FeatureItemComponent } from '../components/what-is/feature-item/feature-item.component';
+import { RouterModule } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { FeatureItemComponent } from '../components/what-is/feature-item/feature
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    RouterModule,
+    MatTooltipModule,
   ],
   exports: [
     // components

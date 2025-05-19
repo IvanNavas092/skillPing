@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class NavDesktopComponent implements OnInit {
   @Input() categories: any;
   @Input() goToExploreWithCategory!: (category: string) => void;
+  @Input() isLoggedIn : boolean= false;
 
   constructor(private authService: AuthService, private router: Router) {
 

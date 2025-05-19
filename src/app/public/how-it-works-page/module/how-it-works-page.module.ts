@@ -41,7 +41,6 @@ import { FaqItemComponent } from '../components/faq/faq-item/faq-item.component'
     HeroWorksComponent,
     FaqComponent,
     FaqItemComponent,
-    CallToActionComponent
 
   ]
 })

@@ -1,23 +1,24 @@
 <header class="fixed inset-x-0 top-0 bg-white shadow text-sm/6 z-50">
   <nav class="flex items-center justify-between p-3 lg:px-8">
-    <!-- ZONA IZQUIERDA -->
+    <!-- Left logo -->
     <div class="flex items-center flex-1">
       <app-logo></app-logo>
     </div>
 
-    <!-- ZONA CENTRAL -->
+    <!-- center menu -->
     <div class="flex justify-center flex-1">
       <app-nav-desktop
         class="hidden lg:flex"
+        [isLoggedIn]="isLoggedIn"
         [categories]="categories"
         [goToExploreWithCategory]="goToExploreWithCategory"
       >
       </app-nav-desktop>
     </div>
 
-    <!-- ZONA DERECHA -->
+    <!-- menu hamburger -->
     <div class="flex justify-end items-center flex-1">
-      <!-- Mobile solo visible en móvil -->
+      <!-- Mobile only visible on mobile -->
       <app-nav-mobile
       class="lg:hidden"
         [categories]="categories"
@@ -27,6 +28,7 @@
       >
       </app-nav-mobile>
 
+      <!-- User actions (buttons) -->
       <app-user-actions
         [isLoggedIn]="isLoggedIn"
         [notifications]="notifications"

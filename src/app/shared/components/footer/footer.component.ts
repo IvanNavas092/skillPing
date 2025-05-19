@@ -4,12 +4,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
 
   constructor(private router: Router) { }
 
+
+  exploreCategories = [
+    { name: "Idiomas"  },
+    { name: "Tecnología" },
+    { name: "Marketing" },
+    { name: "Música" }
+  ];
   goToExploreWithCategory(categoryName: string) {
     this.router.navigate(['/dashboard/explorar/categoria', categoryName],
     )

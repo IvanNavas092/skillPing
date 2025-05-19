@@ -2,7 +2,7 @@
   <div class="max-w-screen-xl mx-auto px-6 py-16 sm:py-20 lg:py-28 ">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24">
 
-      <!-- Izquierda: Texto + CTA -->
+      <!-- Left -->
       <div class="w-full lg:w-1/2 space-y-6 text-center lg:text-left" data-aos="fade-right" data-aos-duration="600">
         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
           Conecta, comparte<br class="hidden sm:block"/>
@@ -20,6 +20,7 @@
             Únete gratis
           </a>
           <button
+            routerLink="/como-funciona"
             class="inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-semibold rounded-full transition"
           >
             Cómo funciona
@@ -27,13 +28,14 @@
         </div>
       </div>
 
-      <!-- Derecha: Mockup de la app -->
+      <!-- Right -->
       <div class="w-full lg:w-1/2 flex justify-center lg:justify-end relative" data-aos="fade-left" data-aos-duration="600">
-        <!-- Decoración circular -->
+        <!-- Circles -->
         <div class="hidden lg:block absolute -top-0 -right-0 w-48 h-48 bg-blue-100 rounded-full"></div> 
         <div class="hidden lg:block absolute bottom-10 -left-0 w-48 h-48 bg-blue-100 rounded-full"></div> 
         
         <figure class="relative w-64 sm:w-80 md:w-96 lg:w-[22rem] mx-auto">
+          <!-- quality depending on the device with srcset-->
           <img
             src="assets/imgs/hero-mockup.png"
             srcset="
