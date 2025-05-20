@@ -129,7 +129,16 @@ export class AuthService {
         new_password: newPassword
       },
       { withCredentials: true }
-    );
+      // logout
+    ).pipe(
+      tap(() => {
+        this.storage.clear();
+        this.isLoggedInSubject.next(false);
+        this.router.navigate(['/login']);
+      })
+    )
+
+
   }
 
   private storeAuthData(res: UserResponse) {
