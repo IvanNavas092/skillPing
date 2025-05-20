@@ -1,0 +1,79 @@
+<!-- Main Menu -->
+<ul class="hidden lg:flex lg:gap-x-12 bg-white">
+  <li><a routerLink="/inicio" class="font-semibold text-gray-900 hover:text-blue-500">Inicio</a></li>
+  <!-- Menú desplegable "Explorar" -->
+  <li class="relative group">
+    <a
+      matTooltip="Accede a Explorar tras registrarte"
+      matTooltipPosition="below"
+      routerLink="/dashboard/explorar"
+      [matTooltipDisabled]="isLoggedIn"
+      class="font-semibold text-gray-900 hover:text-blue-500 flex items-center"
+    >
+      Explorar
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-3 ml-1 transition-transform transform group-hover:rotate-180"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+      </svg>
+    </a>
+
+    <!-- Submenú Desktop -->
+    <div
+      *ngIf="isLoggedIn"
+      class="absolute left-1/2 -translate-x-1/2 z-10 mt-4 w-[500px] bg-white rounded-lg shadow-2xl px-6 py-5 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible"
+    >
+      <div class="grid grid-cols-2 gap-4">
+        <a
+          *ngFor="let category of categories"
+          class="flex flex-col gap-1 hover:bg-gray-100 p-3 rounded-md transition cursor-pointer"
+          (click)="goToExploreWithCategory(category.name)"
+        >
+          <div class="flex items-center text-gray-900 font-semibold text-sm">
+            <svg
+              class="w-[24px] h-[24px] text-gray-800 dark:text-white mr-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="black"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M15.583 8.445h.01M10.86 19.71l-6.573-6.63a.993.993 0 0 1 0-1.4l7.329-7.394A.98.98 0 0 1 12.31 4l5.734.007A1.968 1.968 0 0 1 20 5.983v5.5a.992.992 0 0 1-.316.727l-7.44 7.5a.974.974 0 0 1-1.384.001Z"
+              />
+            </svg>
+
+            {{ category.name }}
+          </div>
+          <p class="text-sm text-gray-600">{{ category.description }}</p>
+        </a>
+      </div>
+
+      <!-- Enlace inferior -->
+      <div class="mt-4">
+        <a
+          routerLink="dashboard/explorar"
+          class="text-blue-600 text-sm font-semibold flex items-center gap-1 hover:underline"
+        >
+          Ver todas las categorías
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <a routerLink="/como-funciona" class="font-semibold text-gray-900 hover:text-blue-500"
+      >Cómo funciona</a
+    >
+  </li>
+</ul>

@@ -1,0 +1,18 @@
+<div class="flex flex-col md:flex-row gap-4 md:gap-6 justify-center">
+  <!-- Sidebar -->
+  <app-chat-sidebar
+    [users]="users"
+    [unreadBySender]="unreadBySender"
+    [selectedUser]="selectedUser"
+    (searchChange)="searchChange.emit($event)"
+    (userSelected)="userSelected.emit($event)"
+  ></app-chat-sidebar>
+
+  <!-- Window -->
+  <app-chat-window
+    class="max-w-4xl w-full md:w-1/2 xl:w-2/2"
+    [selectedUser]="selectedUser"
+    [messages]="messages"
+    (sendMessage)="sendMessage.emit($event)"
+  ></app-chat-window>
+</div>

@@ -1,0 +1,73 @@
+<div class="h-autoflex flex-col">
+  <!-- Lista de usuarios -->
+  <ng-container *ngIf="view === 'list'">
+    <div class="p-4 border-b">
+      <app-search-chat (searchChange)="searchChange.emit($event)"></app-search-chat>
+    </div>
+    <ul class="overflow-y-auto flex-1">
+      <li
+        *ngFor="let u of users"
+        (click)="onSelect(u)"
+        class="p-4 hover:bg-indigo-50 cursor-pointer"
+        [class.bg-indigo-100]="selectedUser?.id === u.id"
+      >
+        <div class="flex items-center space-x-3">
+          <img [src]="getAvatar(u.avatar)" class="h-8 w-8 rounded-full" />
+          <div class="flex flex-1 justify-between">
+            <span>{{ u.username }}</span>
+            <span
+              *ngIf="unreadBySender[u.username] > 0"
+              class="inline-flex items-center justify-center h-5 w-5 rounded-full bg-red-500 text-white text-xs"
+            >
+              {{ unreadBySender[u.username] }}
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-container>
+
+  <!-- CHAT WINDOW -->
+  <ng-container *ngIf="view === 'chat'">
+    <div class="flex items-center p-4 bg-blue-500 text-white">
+      <button (click)="backToList()" class="mr-4">←</button>
+      <h3 class="font-semibold">Chat con {{ selectedUser?.username }}</h3>
+    </div>
+    <div #messagesContainer class="flex-1 overflow-y-auto p-3 h-[70vh] bg-gray-50">
+      <ng-container *ngIf="selectedUser">
+        <div *ngFor="let msg of messages" class="flex" [class.justify-end]="msg.isMe">
+          <div
+            [ngClass]="msg.isMe ? 'msg-me' : 'msg-other'"
+            class="rounded-lg p-2 shadow max-w-[80%] "
+          >
+            <p>{{ msg.message }}</p>
+            <p
+              class="text-[10px] mt-1"
+              [class.text-indigo-100]="msg.isMe"
+              [class.text-gray-500]="!msg.isMe"
+            >
+              {{ msg.timestamp | date : 'shortTime' }}
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="p-3 border-t bg-white">
+      <div class="flex items-center space-x-2">
+        <input
+          [(ngModel)]="text"
+          (keyup.enter)="send()"
+          class="flex-1 px-3 py-2 border rounded-full"
+          placeholder="Escribe tu mensaje..."
+        />
+        <button
+          (click)="send()"
+          [disabled]="!text.trim()"
+          class="p-2 rounded-full bg-blue-500 text-white"
+        >
+          ➤
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

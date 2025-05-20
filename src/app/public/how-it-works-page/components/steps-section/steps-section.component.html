@@ -1,0 +1,23 @@
+<section
+  class="bg-[#f9fafb] w-full"
+  data-aos="fade-up"
+  data-aos-duration="300"
+>
+  <div class="max-w-7xl w-full mx-auto px-4 py-20">
+    <div class="flex flex-col gap-16">
+      <div class="flex flex-col gap-5 w-full text-center">
+        <h1 class="text-4xl font-bold">Intercambia habilidades en 4 simples pasos</h1>
+        <p class="text-gray-500 text-lg">
+          Nunca ha sido tan fácil aprender algo nuevo mientras compartes lo que sabes.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 md:grid-cols-2 gap-8  place-items-center">
+        <app-step-card
+          *ngFor="let step of steps"
+          [step]="step"
+        ></app-step-card>
+      </div>
+    </div>
+  </div>
+</section>
+

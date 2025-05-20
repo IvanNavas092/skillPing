@@ -1,0 +1,57 @@
+<div class="space-y-4">
+  <div class="text-center">
+    <h3 class="text-xl font-semibold">{{ title }}</h3>
+    <p class="text-sm text-gray-500">{{ subtitle }}</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-600 text-sm text-center">
+    {{ errorMessage }}
+  </div>
+
+  <div class="flex flex-wrap gap-2 max-h-60 overflow-auto">
+    <button
+      *ngFor="let s of skills"
+      type="button"
+      (click)="onSkillClick(s.id)"
+      [disabled]="disabledItems.includes(s.id)"
+      class="px-3 py-1 border rounded-full text-sm disabled:bg-gray-200"
+      [ngClass]="{
+        'bg-blue-500 text-white': selected.includes(s.id),
+        'hover:bg-gray-100': !selected.includes(s.id)
+      }"
+    >
+      {{ s.name }}
+    </button>
+  </div>
+
+  <div class="flex justify-between mt-4">
+    <button
+      type="button"
+      (click)="prev.emit()"
+      class="px-4 py-2 border rounded"
+    >
+      Anterior
+    </button>
+
+    <ng-container *ngIf="submit.observers.length; else nextBtn">
+      <button
+        type="button"
+        (click)="submit.emit()"
+        [disabled]="selected.length === 0"
+        class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+      >
+        Completar registro 🎉
+      </button>
+    </ng-container>
+    <ng-template #nextBtn>
+      <button
+        type="button"
+        (click)="next.emit()"
+        [disabled]="selected.length === 0"
+        class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+      >
+        Siguiente
+      </button>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+>
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div
+      class="bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-100 sm:px-10 transition-all duration-300 hover:shadow-2xl"
+    >
+      <form [formGroup]="loginForm" class="space-y-6" (ngSubmit)="onSubmit()">
+        <svg
+          class="w-16 h-16 text-blue-500 mx-auto"
+          viewBox="0 0 48 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Nodo central -->
+          <circle cx="24" cy="24" r="4" fill="currentColor" />
+
+          <!-- Curvas de expansión -->
+          <path
+            d="M24 8C31 8 38 15 38 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M24 40C17 40 10 33 10 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+
+          <!-- Detalles de movimiento -->
+          <path
+            d="M24 16C28 16 32 20 32 24"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            opacity="0.6"
+          />
+          <path
+            d="M24 32C20 32 16 28 16 24"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            opacity="0.6"
+          />
+        </svg>
+        <h2 class="mt-4 text-center text-3xl font-bold text-gray-800">Bienvenido de nuevo</h2>
+
+        <!-- Campos del formulario -->
+        <ng-container *ngFor="let field of formFields">
+          <div>
+            <!-- Label y enlace para contraseña olvidada -->
+            <div class="flex items-center justify-between">
+              <label [for]="field.id" class="block text-sm font-medium text-gray-700 mb-1">
+                {{ field.label }}
+              </label>
+            </div>
+
+            <!-- Input con icono de ojo para contraseña -->
+            <div class="mt-1 relative">
+              <input
+                [id]="field.id"
+                [type]="field.type === 'password' && !passwordVisible ? 'password' : 'text'"
+                [formControlName]="field.controlName"
+                class="mt-1 block w-full input-style"
+                [placeholder]="field.placeholder || ''"
+              />
+
+              <!-- Icono de ojo para mostrar/ocultar contraseña -->
+              <div
+                *ngIf="field.id === 'password'"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                <button
+                  type="button"
+                  (click)="togglePassword()"
+                  class="text-gray-500 hover:text-blue-500 focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      [attr.d]="
+                        passwordVisible
+                          ? 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'
+                          : 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+                      "
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Mensajes de validación -->
+            <div
+              *ngIf="
+                loginForm.get(field.controlName)?.invalid &&
+                loginForm.get(field.controlName)?.touched
+              "
+              class="mt-1 space-y-1"
+            >
+              <span
+                *ngIf="loginForm.get(field.controlName)?.errors?.['required']"
+                class="flex items-start text-red-500 text-xs"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Este campo es requerido
+              </span>
+              <span
+                *ngIf="loginForm.get(field.controlName)?.errors?.['minlength']"
+                class="flex items-start text-red-500 text-xs"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4 mr-1 mt-0.5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Debe tener al menos
+                {{loginForm.get(field.controlName)?.errors?.['minlength']?.requiredLength}}
+                caracteres
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Mensaje de error general -->
+        <div *ngIf="errorMessage" class="p-3 bg-red-50 rounded-lg flex items-start">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-red-500 mr-2 mt-0.5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="text-sm text-red-600">{{ errorMessage }}</span>
+        </div>
+
+        <!-- Botón de inicio de sesión -->
+        <div>
+          <button
+            type="submit"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
+            [disabled]="loginForm.invalid"
+            [class.opacity-50]="loginForm.invalid"
+            [class.cursor-not-allowed]="loginForm.invalid"
+          >
+            Iniciar sesión
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-2 -mr-1 h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+        <!-- Enlace a registro -->
+        <div class="mt-6 text-center text-sm">
+          <p class="text-gray-600">
+            ¿No tienes una cuenta?
+            <a
+              routerLink="/registro"
+              class="font-medium text-blue-500 hover:text-blue-600 transition duration-200"
+            >
+              Regístrate ahora
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

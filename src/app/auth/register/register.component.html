@@ -1,0 +1,76 @@
+<div
+  #formContainer
+  class="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+>
+  <div class="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
+    <div
+      class="flex flex-col gap-4 bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-100 sm:px-10 transition-all duration-300 hover:shadow-2xl"
+    >
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <p class="mt-2 text-center text-sm text-gray-600">
+          Paso <span class="font-medium text-blue-500">{{ currentStep }}</span> de
+          <span class="font-medium text-gray-700">{{ totalSteps }}</span>
+        </p>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="">
+        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-blue-500 rounded-full transition-all duration-500"
+            [style.width]="(currentStep / totalSteps) * 100 + '%'"
+          ></div>
+        </div>
+
+        <h2 class="mt-5 mb-5 text-center text-3xl font-extrabold text-gray-800">
+          Únete a nuestra comunidad
+        </h2>
+      </div>
+
+      <ng-container [ngSwitch]="currentStep">
+        <app-step-basic
+          *ngSwitchCase="1"
+          [registerForm]="registerForm"
+          [fields]="formFields"
+          (next)="nextStep()"
+        >
+        </app-step-basic>
+
+        <app-step-skills
+          *ngSwitchCase="2"
+          [title]="'Tus habilidades'"
+          [subtitle]="'Selecciona tecnologías que dominas'"
+          [skills]="allSkills"
+          [selected]="knownSkills"
+          [disabledItems]="[]" 
+          [errorMessage]="errorMessage"
+          (toggle)="toggleSkill($event, knownSkills)"
+          (prev)="prevStep()"
+          (next)="nextStep()"
+        >
+        </app-step-skills>
+
+        <app-step-skills
+          *ngSwitchCase="3"
+          [title]="'Habilidades de interés'"
+          [subtitle]="'Selecciona tecnologías que quieres aprender'"
+          [skills]="allSkills"
+          [selected]="skillsToLearn"
+          [errorMessage]="errorMessage"
+          [disabledItems]="selectedSkillsInStep2"
+          (toggle)="toggleSkill($event, skillsToLearn)"
+          (prev)="prevStep()"
+          (submit)="onSubmit()"
+        >
+        </app-step-skills>
+      </ng-container>
+    </div>
+
+    <div class="mt-6 text-center text-sm text-gray-600">
+      ¿Ya tienes una cuenta?
+      <a href="#" class="font-medium text-blue-500 hover:text-blue-600 transition duration-200">
+        Inicia sesión
+      </a>
+    </div>
+  </div>
+</div>

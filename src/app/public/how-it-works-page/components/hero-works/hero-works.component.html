@@ -1,0 +1,54 @@
+<section class="bg-gradient-to-r  from-blue-50 to-blue-100 w-full overflow-hidden">
+  <div class="container mx-auto px-6 py-20 lg:py-32">
+    <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-24">
+      <!-- Columna izquierda: contenido principal -->
+      <div class="flex-1 space-y-6" data-aos="fade-up" data-aos-duration="300">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
+          Aprende nuevas habilidades<br class="hidden sm:inline" />
+          <span class="text-blue-500">intercambiando conocimientos</span>
+        </h1>
+        <p class="text-gray-600 text-base sm:text-lg lg:text-xl max-w-prose">
+          SkillPing es una plataforma innovadora que conecta personas para intercambiar habilidades
+          y conocimientos sin necesidad de dinero. ¡Conviértete en experto y ayuda a otros a crecer!
+        </p>
+
+        <!-- CTA Button -->
+        <div class="mt-8">
+          <a
+            routerLink="/registro"
+            class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition"
+            aria-label="Regístrate en SkillPing"
+          >
+            ¡Únete ahora!
+          </a>
+        </div>
+
+        <!-- Ratings -->
+        <ul class="flex flex-wrap gap-4 mt-10" data-aos="fade-up" data-aos-duration="400">
+          <li
+            *ngFor="let rating of ratings"
+            class="flex items-center space-x-2 bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm"
+          >
+            <span class="text-blue-500 font-bold">{{ rating.puntuation }}</span>
+            <span class="text-gray-700">{{ rating.title }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Columna derecha: imagen ilustrativa -->
+      <div class="flex-1" data-aos="fade-left" data-aos-duration="300">
+        <figure class="relative rounded-xl overflow-hidden shadow-xl">
+          <img
+            src="assets/imgs/how-it-works-image.webp"
+            srcset="
+              assets/imgs/how-it-works-image.webp 2x,
+              assets/imgs/how-it-works-image.webp    1x
+            "
+            alt="Personas compartiendo conocimientos"
+            class="w-full h-auto object-cover"
+          />
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

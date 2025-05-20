@@ -1,0 +1,34 @@
+<div class="bg-[#f9fafb] w-full flex justify-center items-center">
+  <div class="max-w-7xl w-full flex-col mt-24 bg-white shadow rounded border p-4">
+
+    <app-avatar-selector
+      [avatars]="avatars"
+      [selectedAvatar]="selectedAvatar"
+      (avatarSelected)="toggleAvatar($event)"
+    ></app-avatar-selector>
+
+    <form [formGroup]="formProfile" (ngSubmit)="onSubmit()">
+      <app-profile-form
+        [formGroup]="formProfile"
+        [formFields]="formFields"
+        [countries]="countries"
+        [genderOptions]="genderOptions"
+      ></app-profile-form>
+
+      <app-skills-manager
+        [formGroup]="formProfile"
+        [allSkills]="allSkills"
+        [knownSkills]="KnownSkills"
+        [skillsToLearn]="SkillsToLearn"
+        (addSkill)="addSkill($event)"
+        (removeSkill)="removeSkill($event.skill, $event.list)"
+      ></app-skills-manager>
+
+      <div class="flex justify-end p-4">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

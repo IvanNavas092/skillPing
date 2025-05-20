@@ -1,0 +1,31 @@
+<section class="bg-[#fdfeff] w-full">
+  <div class="max-w-7xl w-full mx-auto px-4 py-20">
+    <div class="flex flex-col gap-3" data-aos="fade-up" data-aos-duration="300">
+      <h1 class="text-4xl font-bold">Explora por categorías</h1>
+      <div class="flex justify-between">
+        <p class="text-gray-500 text-lg">
+          Encuentra habilidades en diferentes disciplinas y niveles de dificultad.
+        </p>
+        <a
+          matTooltip="Accede a Explorar tras registrarte"
+          matTooltipPosition="above"
+          routerLink="/dashboard/explorar"
+          class="text-blue-500 font-semibold text-md hover:underline mr-5"
+          >Explorar</a
+        >
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-5 place-items-center w-full items-stretch"
+      data-aos="fade-up"
+      data-aos-duration="300"
+    >
+      <app-category-card
+        *ngFor="let category of categories"
+        [category]="category"
+        [color]="getColor(category.icon)"
+      ></app-category-card>
+    </div>
+  </div>
+</section>
