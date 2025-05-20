@@ -19,6 +19,7 @@ export interface User {
   rating_count : number // cantidad de ratings
   average_rating : number // media de ratings
   interactions: number;
+  last_login: Date;
 
 
 }

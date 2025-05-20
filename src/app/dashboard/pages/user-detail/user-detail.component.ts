@@ -45,6 +45,7 @@ export class UserDetailComponent implements OnInit {
     }
     else
       console.error('No se ha encontrado el usuario.');
+
   }
 
   getAvatar() {

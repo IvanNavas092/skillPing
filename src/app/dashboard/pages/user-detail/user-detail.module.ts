@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
-
 @NgModule({
   declarations: [
     // components
@@ -24,6 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RouterModule,
     HttpClientModule,
     SharedModule,
+    
   ],
   exports: [
     RatingCardComponent,

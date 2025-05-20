@@ -9,6 +9,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderModule } from './components/header/header.module';
 import { CallToActionComponent } from '../public/home/components/call-to-action/call-to-action.component';
+import { FechaHoraPipe } from './pipes/fecha-hora.pipe';
 
 
 
@@ -17,6 +18,7 @@ import { CallToActionComponent } from '../public/home/components/call-to-action/
     SkillComponent,
     ChangePasswordComponent,
     CallToActionComponent,
+    FechaHoraPipe
 
   ],
   imports: [
@@ -31,6 +33,8 @@ import { CallToActionComponent } from '../public/home/components/call-to-action/
     ChangePasswordComponent,
     CallToActionComponent,
     HeaderModule,
+    FechaHoraPipe
+
   ],
   providers: [
   ]

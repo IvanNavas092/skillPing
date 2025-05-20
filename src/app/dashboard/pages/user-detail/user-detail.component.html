@@ -88,6 +88,11 @@
               <span>📍 {{ user.location || 'Ubicación no especificada' }}</span>
             </div>
           </div>
+
+          <span class="text-gray-500 mt-3">Última conexión:</span>
+
+          <span class="text-gray-700 mt-1">{{ user.last_login ? (user.last_login | fechaHora) : 'Sin conexión' }}</span> 
+
         </div>
       </div>
 
@@ -124,7 +129,7 @@
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Habilidades</h2>
             <div class="flex flex-wrap gap-2">
               <span
-                *ngFor="let skill of user.skills"
+                *ngFor="let skill of user.skills_details"
                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
               >
                 {{ skill.name }}
@@ -137,7 +142,7 @@
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Quiero aprender</h2>
             <div class="flex flex-wrap gap-2">
               <span
-                *ngFor="let interest of user.interests"
+                *ngFor="let interest of user.interests_details"
                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800"
               >
                 {{ interest.name }}
