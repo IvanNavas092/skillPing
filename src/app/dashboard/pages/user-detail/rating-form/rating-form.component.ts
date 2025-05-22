@@ -65,7 +65,10 @@ export class RatingFormComponent {
           icon: 'success',
           title: 'Valoración enviada',
           text: '¡Gracias por tu valoración!',
-          showCancelButton: true,
+          showCancelButton: false,
+          customClass: {
+              confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
+            },
         })
         // Opcional: resetear el formulario
         this.rating = 0;
