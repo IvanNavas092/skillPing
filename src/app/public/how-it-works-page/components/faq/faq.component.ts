@@ -8,13 +8,13 @@ export class FaqComponent {
     faqItems = [
     {
       id: 1,
-      question: '¿Es completamente gratis usar SkillSwap?',
-      answer: 'Sí, SkillSwap es completamente gratuito. No cobramos por registrarte ni por realizar intercambios de habilidades.'
+      question: '¿Es completamente gratis usar SkillPing?',
+      answer: 'Sí, SkillPing es completamente gratuito. No cobramos por registrarte ni por realizar intercambios de habilidades.'
     },
     {
       id: 2,
       question: '¿Cómo me aseguro de que el intercambio sea equitativo?',
-      answer: 'SkillSwap tiene un sistema de valoración donde ambas partes pueden acordar el tiempo y complejidad del intercambio.'
+      answer: 'SkillPing tiene un sistema de valoración donde ambas partes pueden acordar el tiempo y complejidad del intercambio.'
     },
     {
       id: 3,
