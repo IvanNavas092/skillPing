@@ -50,12 +50,32 @@ Everyone wins! 🎉
 - 🔌 **API**: RESTful API (Django)  
 - 🎨 **Styling**: TailwindCSS
 
----
 
 ## 🧑‍💻 How to Start
 
 ```bash
-git clone https://github.com/your-username/SkillPing.git
+git clone [https://github.com/your-username/SkillPing.git](https://github.com/IvanNavas092/skillPing.git)
 cd SkillPing
-# Set up environment variables if necessary
-# Install dependencies and run the server
+```
+Install angular
+```
+npm install -g @angular/cli
+```
+Install node 18.2
+```
+https://nodejs.org/
+```
+Install depedencies
+```
+npm install
+```
+If you encounter dependency or version issues:
+```
+rm -rf node_modules package-lock.json
+npm install
+```
+check your versions
+```
+node -v
+npm -v
+```
