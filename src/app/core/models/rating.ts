@@ -13,5 +13,4 @@ export interface RatingPayload {
   rated_user: number;
   value: number;
   comment: string;
-  created_at?: Date;
 }

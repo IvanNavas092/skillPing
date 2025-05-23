@@ -40,8 +40,10 @@ export class ChatWindowComponent
   // scroll to bottom when messages change
   ngAfterViewChecked() {
     if (this.shouldScroll) {
-      this.scrollToBottom();
-      this.shouldScroll = false;
+      setTimeout(() => {
+        this.scrollToBottom();
+        this.shouldScroll = false;
+      }, 300);
     }
   }
 

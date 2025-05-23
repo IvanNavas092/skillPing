@@ -112,12 +112,15 @@ export class ChatComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         // auto-insertar en la vista
-        this.messages.push({
-          sender: this.currentUser.username,
-          message: text,
-          timestamp: new Date().toISOString(),
-          isMe: true
-        });
+        this.messages = [
+          ...this.messages,
+          {
+            sender: this.currentUser.username,
+            message: text,
+            timestamp: new Date().toISOString(),
+            isMe: true
+          }
+        ];
       });
   }
 
@@ -150,10 +153,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       ch.bind('new-message', (data: Message) => {
         // si estás conversando con quien envía, actualiza
         if (this.selectedUser?.username === data.sender) {
-          this.messages.push({
-            ...data,
-            isMe: false
-          });
+          this.messages = [
+            ...this.messages,
+            {
+              ...data,
+              isMe: false
+            }
+          ];
         }
         this.chatService.refreshUnreadCounts();
       });

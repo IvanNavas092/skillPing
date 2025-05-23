@@ -33,7 +33,7 @@
       <button (click)="backToList()" class="mr-4">←</button>
       <h3 class="font-semibold">Chat con {{ selectedUser?.username }}</h3>
     </div>
-    <div #messagesContainer class="flex-1 overflow-y-auto p-3 h-[70vh] bg-gray-50">
+    <div #messagesContainer class="flex-1 overflow-y-auto p-3 h-[70vh] bg-gray-50 space-y-2">
       <ng-container *ngIf="selectedUser">
         <div *ngFor="let msg of messages" class="flex" [class.justify-end]="msg.isMe">
           <div

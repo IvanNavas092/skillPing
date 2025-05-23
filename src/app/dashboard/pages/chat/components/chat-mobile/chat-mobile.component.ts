@@ -7,6 +7,7 @@ import { AvatarService } from 'src/app/core/services/avatar.service';
 @Component({
   selector: 'app-chat-mobile',
   templateUrl: './chat-mobile.component.html',
+  styleUrls: ['../chat-window/chat-window.component.css']
 })
 export class ChatMobileComponent {
   @Input() users: User[] = [];

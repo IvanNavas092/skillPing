@@ -13,7 +13,7 @@ import { PublicModule } from './public/module/public.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { HTTP_INTERCEPTORS, HttpClientModule, } from '@angular/common/http';
-import { CsrfInterceptor } from './csrf.interceptor';
+import { CsrfInterceptor } from './core/csrf.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import lenguage spanish from pipe
 import { registerLocaleData } from '@angular/common';

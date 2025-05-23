@@ -1,4 +1,3 @@
-// src/app/interceptors/csrf.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
