@@ -54,22 +54,22 @@ Everyone wins! 🎉
 ## 🧑‍💻 How to Start
 
 ```bash
-git clone [https://github.com/your-username/SkillPing.git](https://github.com/IvanNavas092/skillPing.git)
+git clone https://github.com/IvanNavas092/skillPing.git
 cd SkillPing
 ```
-Install angular
+Install Angular CLI (optional, only if you want to use ng directly)
 ```
 npm install -g @angular/cli
 ```
-Install node 18.2
-```
-https://nodejs.org/
-```
-Install depedencies
+3. Install Node.js (version 18 recommended)
+Download and install Node.js 18.x from the official website:
+👉 https://nodejs.org/
+
+Install project dependencies
 ```
 npm install
 ```
-If you encounter dependency or version issues:
+🛠️ If you encounter version or dependency issues:
 ```
 rm -rf node_modules package-lock.json
 npm install
@@ -79,3 +79,7 @@ check your versions
 node -v
 npm -v
 ```
+🚀 Run the development server
+npx ng serve
+or
+ng s
