@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private apiUrl = 'http://localhost:8000/api/';
+  private apiUrl = 'https://skillping-server.onrender.com/api/';
 
   constructor(private http: HttpClient) { }
 

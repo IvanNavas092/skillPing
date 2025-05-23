@@ -9,17 +9,17 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-  // Extrae el valor de la cookie csrftoken
+  // extract the value of the csrftoken cookie
   private getCsrfToken(): string | null {
     const match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Clona la petición añadiendo header y withCredentials
+    // clone the request adding header and withCredentials
     const token = this.getCsrfToken();
     const headers: Record<string,string> = {};
-
+    console.log(token);
     if (token) {
       headers['X-CSRFToken'] = token;
     }

@@ -138,7 +138,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   // websocket listeners
   setupPusherListener() {
     // notificaciones globales
-    const noticeCh = this.pusherService.suscribe(
+    const noticeCh = this.pusherService.subscribe(
       `notifications-${this.currentUser.username}`
     );
     noticeCh.bind('unread-messages', () =>
@@ -147,7 +147,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     // mensajes privados
     this.allUsers.forEach(u => {
-      const ch = this.pusherService.suscribe(
+      const ch = this.pusherService.subscribe(
         this.getChannelName(this.currentUser.username, u.username)
       );
       ch.bind('new-message', (data: Message) => {

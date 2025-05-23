@@ -15,18 +15,17 @@ export class PusherService {
     });
   }
 
-  // suscribe to a channel
-  suscribe(channelName: string) {
+  // subscribe to a channel
+  subscribe(channelName: string) {
     return this.pusher.subscribe(channelName);
   }
 
-  // unsuscribe to a channel
+  // unsubscribe to a channel
   unsubscribe(channelName: string) {
     this.pusher.allChannels().forEach(channel => {
       channel.unbind_all();
       this.pusher.unsubscribe(channelName);
     });
-
   }
 
   // obtain channel existent 

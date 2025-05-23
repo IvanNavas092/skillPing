@@ -11,7 +11,7 @@ import { Message } from '../models/chat-message';
 })
 export class ChatService {
   // base API URL
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = 'https://skillping-server.onrender.com/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
@@ -34,7 +34,7 @@ export class ChatService {
     const user = this.authService.getCurrentUser();
     if (!user || !user.username) return;
 
-    this.currentChannel = this.pusher.suscribe(`notifications-${user.username}`);
+    this.currentChannel = this.pusher.subscribe(`notifications-${user.username}`);
     this.currentChannel.bind('unread-messages', (data: any) => {
       console.log('Mensajes no leídos recibidos:', data);
       if (data.unread_counts !== undefined) {

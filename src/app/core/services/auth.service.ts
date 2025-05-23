@@ -8,7 +8,7 @@ import { User, UserResponse, UserUpdate } from '../models/User';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = 'https://skillping-server.onrender.com/api/';
   private storage = sessionStorage;
   // depends on the sessionStorage 
   private isLoggedInSubject = new BehaviorSubject<boolean>(

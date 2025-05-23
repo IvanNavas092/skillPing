@@ -18,8 +18,4 @@ export class AvatarService {
     const avatar = this.avatars.find(avatar => avatar.id === Number (id));
     return avatar ? avatar.img : '/assets/avatar/default_avatar.webp';
   }
-  
-
-  
-
 }
