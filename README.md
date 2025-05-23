@@ -31,8 +31,11 @@ Everyone wins! 🎉
 
 ## 🖼️ Screenshots
 
-![screencapture-localhost-4200-inicio-2025-05-23-17_28_52](https://github.com/user-attachments/assets/d360c355-f699-45a6-92c5-2669ee958c2e)
-![image](https://github.com/user-attachments/assets/5133abef-8da5-4f4a-906c-628adad25155)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d360c355-f699-45a6-92c5-2669ee958c2e" width="70%">
+  <br><br>
+  <img src="https://github.com/user-attachments/assets/5133abef-8da5-4f4a-906c-628adad25155" width="70%">
+</p>
 
 
 
