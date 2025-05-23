@@ -31,9 +31,9 @@ Everyone wins! 🎉
 
 ## 🖼️ Screenshots
 
-| Home 🏠 | Register 👥 | Explore 💬 |
-|--------|-------------|------------|
-| ![Home1](https://github.com/user-attachments/assets/1410dcfc-d12e-430b-97f4-e2d446b53031)<br>![Home2](https://github.com/user-attachments/assets/7b1c9876-d329-4623-8d38-d3ed1759d5d6) | ![Register1](https://github.com/user-attachments/assets/2836c5d7-8055-4a8d-ad6b-7c482c7424cb)<br>![Register2](https://github.com/user-attachments/assets/52da38eb-254a-427d-a5b5-b86206cd492c) | ![Explore1](https://github.com/user-attachments/assets/f22b9156-ccac-4fc9-a6c0-6d970483fc71)<br>![Explore2](https://github.com/user-attachments/assets/79c38b22-3981-4687-b3d9-ae12c7635ad2) |
+![screencapture-localhost-4200-inicio-2025-05-23-17_28_52](https://github.com/user-attachments/assets/d360c355-f699-45a6-92c5-2669ee958c2e)
+![image](https://github.com/user-attachments/assets/5133abef-8da5-4f4a-906c-628adad25155)
+
 
 
 ---
@@ -43,7 +43,7 @@ Everyone wins! 🎉
 - ⚙️ **Frontend**: Angular  
 - 🧠 **Backend**: Django / Django Rest Framework  
 - 💾 **Database**: SQL  
-- 🧪 **Authentication**: JWT-Token  
+- 🧪 **Authentication**: Django sessions 
 - 🔌 **API**: RESTful API (Django)  
 - 🎨 **Styling**: TailwindCSS
 
