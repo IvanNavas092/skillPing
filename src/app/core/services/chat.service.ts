@@ -11,7 +11,7 @@ import { Message } from '../models/chat-message';
 })
 export class ChatService {
   // base API URL
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = '/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
