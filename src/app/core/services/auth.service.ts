@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { User, UserResponse, UserUpdate } from '../models/User';
@@ -20,19 +20,52 @@ export class AuthService {
     private router: Router
   ) { }
 
+
+
+
+  // read cookie
+  private getCookie(name: string): string {
+    const match = document.cookie.match(
+      new RegExp('(^|; )' + name + '=([^;]+)')
+    );
+    return match ? decodeURIComponent(match[2]) : '';
+  }
+
+
+
+
+
+
+
+
+
+
   // -----------------------------------
   // AUTENTICACIÓN
   // -----------------------------------
 
   login(username: string, password: string): Observable<UserResponse> {
+    // 1) Leer token CSRF de la cookie
+    const csrfToken = this.getCookie('csrftoken');
+
+    // 2) Construir headers con X-CSRFToken
+    const headers = new HttpHeaders({
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json'
+    });
+
+    // 3) Enviar POST con withCredentials y headers
     return this.http.post<UserResponse>(
       `${this.baseUrl}login/`,
       { username, password },
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: headers
+      }
     ).pipe(
       tap(res => {
-        this.storeAuthData(res);
-        this.isLoggedInSubject.next(true);
+        // Almacena datos de usuario en sessionStorage
+        this.storage.setItem('auth-user', JSON.stringify(res.user));
       })
     );
   }
