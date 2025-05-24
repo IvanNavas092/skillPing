@@ -47,7 +47,8 @@ export class AuthService {
   login(username: string, password: string): Observable<UserResponse> {
     // 1) Leer token CSRF de la cookie
     const csrfToken = this.getCookie('csrftoken');
-
+    console.log('csrfToken antes de login:', this.getCookie('csrftoken'));
+    console.log('token' + csrfToken);
     // 2) Construir headers con X-CSRFToken
     const headers = new HttpHeaders({
       'X-CSRFToken': csrfToken,
