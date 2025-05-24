@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/ProyectoTfg_A16_v2"  # ajusta al nombre de tu carpeta dist
+  publish = "dist/ProyectoTfg_A16_v2"
 
 [[redirects]]
   from   = "/api/*"
@@ -8,3 +8,9 @@
   status = 200
   force  = true
   headers = { "Access-Control-Allow-Credentials" = "true" }
+
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+  force  = true
