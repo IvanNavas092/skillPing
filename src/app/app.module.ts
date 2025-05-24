@@ -13,7 +13,7 @@ import { PublicModule } from './public/module/public.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { HTTP_INTERCEPTORS, HttpClientModule, } from '@angular/common/http';
-// import { CsrfInterceptor } from './core/csrf.interceptor';
+import { CsrfInterceptor } from './core/csrf.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import lenguage spanish from pipe
 import { registerLocaleData } from '@angular/common';
@@ -37,11 +37,11 @@ registerLocaleData(localeEs, 'es-ES');
     BrowserAnimationsModule, // for SweetAlert2
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: CsrfInterceptor,
-    //   multi: true
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CsrfInterceptor,
+      multi: true
+    },
     { provide: LOCALE_ID, useValue: 'es-ES' }
   ],
   bootstrap: [AppComponent]

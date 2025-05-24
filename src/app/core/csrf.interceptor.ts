@@ -1,34 +1,46 @@
-// // csrf.interceptor.ts
-// import { Injectable } from '@angular/core';
-// import {
-//   HttpInterceptor,
-//   HttpRequest,
-//   HttpHandler,
-//   HttpEvent
-// } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { AuthService } from './services/auth.service';
+// src/app/interceptors/csrf.interceptor.ts
+import { Injectable } from '@angular/core';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-// @Injectable()
-// export class CsrfInterceptor implements HttpInterceptor {
-//   constructor(private AuthService: AuthService) {}
+@Injectable()
+export class CsrfInterceptor implements HttpInterceptor {
+  private getStoredCsrf(): string {
+    return sessionStorage.getItem('csrfToken') || '';
+  }
 
-//   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-//     const csrfToken = this.AuthService.getToken();
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    const token = this.getStoredCsrf();
 
-//     if (csrfToken) {
-//       console.log('token', csrfToken);
-//       const cloned = req.clone({
-//         setHeaders: {
-//           'X-CSRFToken': csrfToken
-//         },
-//         withCredentials: true
-//       });
-//       return next.handle(cloned);
-//     } else {
-//       // Aún no tienes el token, pero aún así necesitas withCredentials
-//       const fallback = req.clone({ withCredentials: true });
-//       return next.handle(fallback);
-//     }
-//   }
-// }
+    // Siempre enviamos las cookies de sesión
+    let cloneConfig: {
+      withCredentials: boolean;
+      setHeaders?: { [name: string]: string };
+    } = {
+      withCredentials: true
+    };
+
+    // En mutaciones añadimos también el header CSRF
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+      cloneConfig = {
+        withCredentials: true,
+        setHeaders: {
+          'X-CSRFToken': token,
+          // si quieres, también fuerza Content-Type
+          'Content-Type': 'application/json'
+        }
+      };
+    }
+
+    const clonedReq = req.clone(cloneConfig);
+    return next.handle(clonedReq);
+  }
+}

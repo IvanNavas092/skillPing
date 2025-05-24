@@ -56,20 +56,20 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    // 1) read token csrf from sessionStorage
-    const csrfToken = this.getCsrfToken();
+    // // 1) read token csrf from sessionStorage
+    // const csrfToken = this.getCsrfToken();
 
-    // 2) buld headers with X-CSRFToken
-    const headers = new HttpHeaders({
-      'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json'
-    });
+    // // 2) buld headers with X-CSRFToken
+    // const headers = new HttpHeaders({
+    //   'X-CSRFToken': csrfToken,
+    //   'Content-Type': 'application/json'
+    // });
     return this.http.post(
       `${this.baseUrl}logout/`,
       {},
       {
         withCredentials: true,
-        headers: headers
+        // headers: headers
       }
     ).pipe(
       tap(() => {
