@@ -37,11 +37,11 @@ registerLocaleData(localeEs, 'es-ES');
     BrowserAnimationsModule, // for SweetAlert2
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CsrfInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: CsrfInterceptor,
+    //   multi: true
+    // },
     { provide: LOCALE_ID, useValue: 'es-ES' }
   ],
   bootstrap: [AppComponent]
