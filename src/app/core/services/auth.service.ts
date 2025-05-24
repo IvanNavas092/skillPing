@@ -71,10 +71,21 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
+    // 1) Leer token CSRF de la cookie
+    const csrfToken = this.getCookie('csrftoken');
+
+    // 2) Construir headers con X-CSRFToken
+    const headers = new HttpHeaders({
+      'X-CSRFToken': csrfToken,
+      'Content-Type': 'application/json'
+    });
     return this.http.post(
       `${this.baseUrl}logout/`,
       {},
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: headers
+      }
     ).pipe(
       tap(() => {
         this.storage.clear();
