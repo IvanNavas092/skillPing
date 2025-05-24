@@ -17,8 +17,9 @@ export class CsrfInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.getCsrfToken();
-
+    console.log('token', token);
     if (token) {
+      console.log('token', token);
       // Clonar petición y añadir header + withCredentials
       const authReq = req.clone({
         withCredentials: true,
