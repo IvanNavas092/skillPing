@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/ProyectoTfg_A16_v2"
+  publish = "dist/ProyectoTfg_A16_v2" 
 
 [[redirects]]
   from   = "/api/*"
