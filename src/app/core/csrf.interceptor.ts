@@ -1,3 +1,4 @@
+// csrf.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -6,35 +7,27 @@ import {
   HttpEvent
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './services/auth.service';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-
-  private getCsrfToken(): string | null {
-    const match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
-    return match ? decodeURIComponent(match[1]) : null;
-  }
+  constructor(private AuthService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.getCsrfToken();
-    console.log('token', token);
-    if (token) {
-      console.log('token', token);
-      // Clonar petición y añadir header + withCredentials
-      const authReq = req.clone({
-        withCredentials: true,
+    const csrfToken = this.AuthService.getToken();
+
+    if (csrfToken) {
+      const cloned = req.clone({
         setHeaders: {
-          'X-CSRFToken': token
-        }
+          'X-CSRFToken': csrfToken
+        },
+        withCredentials: true
       });
-      return next.handle(authReq);
+      return next.handle(cloned);
+    } else {
+      // Aún no tienes el token, pero aún así necesitas withCredentials
+      const fallback = req.clone({ withCredentials: true });
+      return next.handle(fallback);
     }
-
-    // Si no hay token, al menos aseguramos enviar cookies
-    const reqWithoutToken = req.clone({
-      withCredentials: true
-    });
-
-    return next.handle(reqWithoutToken);
   }
 }
