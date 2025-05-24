@@ -23,21 +23,10 @@ export class AuthService {
 
 
 
-  // read cookie
-  private getCookie(name: string): string {
-    const match = document.cookie.match(
-      new RegExp('(^|; )' + name + '=([^;]+)')
-    );
-    return match ? decodeURIComponent(match[2]) : '';
+  // En vez de getCookie, leemos de sessionStorage
+  private getCsrfToken(): string {
+    return this.storage.getItem('csrfToken') || '';
   }
-
-
-
-
-
-
-
-
 
 
   // -----------------------------------
@@ -46,8 +35,8 @@ export class AuthService {
 
   login(username: string, password: string): Observable<UserResponse> {
     // 1) Leer token CSRF de la cookie
-    const csrfToken = this.getCookie('csrftoken');
-    console.log('csrfToken antes de login:', this.getCookie('csrftoken'));
+    const csrfToken = this.getCsrfToken();
+    console.log('csrfToken antes de login:', this.getCsrfToken());
     console.log('token' + csrfToken);
     // 2) Construir headers con X-CSRFToken
     const headers = new HttpHeaders({
@@ -73,7 +62,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     // 1) Leer token CSRF de la cookie
-    const csrfToken = this.getCookie('csrftoken');
+    const csrfToken = this.getCsrfToken();
 
     // 2) Construir headers con X-CSRFToken
     const headers = new HttpHeaders({
