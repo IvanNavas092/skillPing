@@ -16,15 +16,13 @@ export class AppComponent implements OnInit {
   apiUrl = "https://skillping-server.onrender.com/api/";
 
   ngOnInit(): void {
-    setTimeout(() => {
-      // get token from server
-      this.http.get(`${this.apiUrl}get-csrf-token/`, { withCredentials: true })
-        .subscribe({
-          next: () => console.log('CSRF token set'),
-          error: (err) => console.error('Error setting CSRF token', err)
-        });
-        // init AOS
-        AOS.init();
-    },3000);
+    // get token from server
+    this.http.get(`${this.apiUrl}get-csrf-token/`, { withCredentials: true })
+      .subscribe({
+        next: () => console.log('CSRF token set'),
+        error: (err) => console.error('Error setting CSRF token', err)
+      });
+      // init AOS
+      AOS.init();
   }
 }
