@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { User, UserResponse, UserUpdate } from '../models/User';
 
@@ -34,37 +34,32 @@ export class AuthService {
   // -----------------------------------
 
   login(username: string, password: string): Observable<UserResponse> {
-    // 1) Leer token CSRF de la cookie
-    const csrfToken = this.getCsrfToken();
-    console.log('csrfToken antes de login:', this.getCsrfToken());
-    console.log('token' + csrfToken);
-    // 2) Construir headers con X-CSRFToken
-    const headers = new HttpHeaders({
-      'X-CSRFToken': csrfToken,
-      'Content-Type': 'application/json'
-    });
-
-    // 3) Enviar POST con withCredentials y headers
-    return this.http.post<UserResponse>(
+    return this.http.post<{
+      message: string;
+      user: any;
+      csrfToken: string;
+    }>(
       `${this.baseUrl}login/`,
       { username, password },
-      {
-        withCredentials: true,
-        headers: headers
-      }
+      { withCredentials: true }
     ).pipe(
       tap(res => {
-        // Almacena datos de usuario en sessionStorage
-        this.storage.setItem('auth-user', JSON.stringify(res.user));
-      })
+        // 1) obtain user data and save it in sessionStorage
+        sessionStorage.setItem('auth-user', JSON.stringify(res.user));
+        this.isLoggedInSubject.next(true);
+        // 2) save the token csrf
+        sessionStorage.setItem('csrfToken', res.csrfToken);
+      }),
+      // return only the user
+      map(res => ({ user: res.user, message: res.message } as UserResponse))
     );
   }
 
   logout(): Observable<any> {
-    // 1) Leer token CSRF de la cookie
+    // 1) read token csrf from sessionStorage
     const csrfToken = this.getCsrfToken();
 
-    // 2) Construir headers con X-CSRFToken
+    // 2) buld headers with X-CSRFToken
     const headers = new HttpHeaders({
       'X-CSRFToken': csrfToken,
       'Content-Type': 'application/json'

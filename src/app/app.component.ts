@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
   apiUrl = "https://skillping-server.onrender.com/api/";
 
   ngOnInit(): void {
-    
     AOS.init();
   }
 }
