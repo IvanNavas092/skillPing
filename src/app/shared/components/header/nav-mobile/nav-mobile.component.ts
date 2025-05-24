@@ -31,7 +31,12 @@ export class NavMobileComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe({
+      next: () => {
+        // only suscription
+      },
+      error: err => console.error('Error en logout', err)
+    });
   }
 
   getCurrentUserAvatar() {

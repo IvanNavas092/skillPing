@@ -135,9 +135,9 @@ export class ProfileComponent implements OnInit {
       confirmButtonText: 'Sí, guardar',
       cancelButtonText: 'Cancelar',
       customClass: {
-              confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
-              cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg ml-2'
-            },
+        confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
+        cancelButton: 'bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg ml-2'
+      },
     }).then(result => {
       if (result.isConfirmed) {
         const data = this.formProfile.value;
@@ -157,7 +157,15 @@ export class ProfileComponent implements OnInit {
         this.authService.updateUser(this.user.id, userData).subscribe({
           next: updated => {
             this.updateDataUser(updated);
-            Swal.fire({ title: '¡Perfil actualizado!', icon: 'success', timer: 3000 });
+            Swal.fire({
+              title: '¡Perfil actualizado!',
+              icon: 'success',
+              timer: 3000,
+              confirmButtonText: 'Ok',
+              customClass: {
+                confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg',
+              }
+            });
           },
           error: () => {
             Swal.fire({ title: 'Error al actualizar', icon: 'error' });

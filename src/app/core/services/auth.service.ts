@@ -20,15 +20,6 @@ export class AuthService {
     private router: Router
   ) { }
 
-
-
-
-  // En vez de getCookie, leemos de sessionStorage
-  private getCsrfToken(): string {
-    return this.storage.getItem('csrfToken') || '';
-  }
-
-
   // -----------------------------------
   // AUTENTICACIÓN
   // -----------------------------------
@@ -56,21 +47,10 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    // // 1) read token csrf from sessionStorage
-    // const csrfToken = this.getCsrfToken();
-
-    // // 2) buld headers with X-CSRFToken
-    // const headers = new HttpHeaders({
-    //   'X-CSRFToken': csrfToken,
-    //   'Content-Type': 'application/json'
-    // });
     return this.http.post(
       `${this.baseUrl}logout/`,
       {},
-      {
-        withCredentials: true,
-        // headers: headers
-      }
+      { withCredentials: true }
     ).pipe(
       tap(() => {
         this.storage.clear();
