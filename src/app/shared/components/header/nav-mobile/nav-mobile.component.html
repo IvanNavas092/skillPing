@@ -24,12 +24,13 @@
     <!--  Mobile desplegable -->
     <div>
       <button
+        matTooltip="Accede a Explorar tras registrarte"
+        matTooltipPosition="below"
+        [matTooltipDisabled]="isLoggedIn"
         (click)="toggleSubmenu()"
         class="flex justify-between items-center px-3 py-2 w-48 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md"
       >
-        <span matTooltip="Accede a Explorar tras registrarte" matTooltipPosition="below"
-          >Explorar</span
-        >
+        <span>Explorar</span>
         <svg class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
             stroke-linecap="round"
@@ -40,7 +41,7 @@
         </svg>
       </button>
 
-      <!-- Submenú Mobile -->
+      <!-- Submenu Mobile -->
       <div *ngIf="submenuOpen && isLoggedIn" class="pl-4 space-y-1">
         <a
           *ngFor="let category of categories"
