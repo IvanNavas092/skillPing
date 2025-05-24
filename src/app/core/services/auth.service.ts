@@ -25,9 +25,11 @@ export class AuthService {
 
   setToken(token: string) {
     this.csrfToken = token;
+    console.log('token', token);
   }
 
   getToken(): string | null {
+    console.log('token', this.csrfToken);
     return this.csrfToken;
   }
 

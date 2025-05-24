@@ -17,6 +17,7 @@ export class CsrfInterceptor implements HttpInterceptor {
     const csrfToken = this.AuthService.getToken();
 
     if (csrfToken) {
+      console.log('token', csrfToken);
       const cloned = req.clone({
         setHeaders: {
           'X-CSRFToken': csrfToken
