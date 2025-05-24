@@ -32,7 +32,6 @@ export class AuthService {
     }>(
       `${this.baseUrl}login/`,
       { username, password },
-      { withCredentials: true }
     ).pipe(
       tap(res => {
         // 1) obtain user data and save it in sessionStorage
@@ -50,7 +49,6 @@ export class AuthService {
     return this.http.post(
       `${this.baseUrl}logout/`,
       {},
-      { withCredentials: true }
     ).pipe(
       tap(() => {
         this.storage.clear();
@@ -64,7 +62,6 @@ export class AuthService {
     return this.http.post<User>(
       `${this.baseUrl}users/`,
       user,
-      { withCredentials: true }
     );
   }
 
@@ -74,7 +71,7 @@ export class AuthService {
 
   /** Comprueba si la sesión sigue viva y almacena el usuario */  /** Llama al endpoint y actualiza el estado loggedInSubject */
   checkSession(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}current-user/`, { withCredentials: true }).pipe(
+    return this.http.get<User>(`${this.baseUrl}current-user/`).pipe(
       tap(user => {
         this.storage.setItem('auth-user', JSON.stringify(user));
         this.isLoggedInSubject.next(true);
@@ -89,42 +86,38 @@ export class AuthService {
     );
   }
 
-  /** Devuelve el objeto User almacenado (o {} si no hay) */
+  // return the user object stored (or {} if no one)
   getCurrentUser(): User {
     const user = this.storage.getItem('auth-user');
     return user ? JSON.parse(user) : {} as User;
   }
 
-  /** Devuelve solo el ID (útil para construir URLs) */
+  // return only the user id (useful for building urls)
   getCurrentUserId(): number {
     return this.getCurrentUser().id || 0;
   }
 
-  /** Obtener cualquier usuario por su ID */
+  // obtain any user by id
   fetchUserById(id: number): Observable<User> {
     return this.http.get<User>(
-      `${this.baseUrl}get-user/${id}/`,
-      { withCredentials: true }
+      `${this.baseUrl}get-user/${id}/`
     );
   }
 
-  /** Obtener valoraciones de un usuario */
+  // obtain user ratings
   fetchUserRatings(id: number): Observable<any[]> {
     return this.http.get<any[]>(
-      `${this.baseUrl}user-ratings/${id}/`,
-      { withCredentials: true }
+      `${this.baseUrl}user-ratings/${id}/`
     );
   }
 
   // -----------------------------------
-  // PERFIL
+  // profile
   // -----------------------------------
 
   updateUser(id: number, payload: UserUpdate): Observable<User> {
     return this.http.patch<User>(
-      `${this.baseUrl}update-user/${id}/`,
-      payload,
-      { withCredentials: true }
+      `${this.baseUrl}update-user/${id}/`, payload
     );
   }
 
@@ -134,21 +127,13 @@ export class AuthService {
       {
         old_password: oldPassword,
         new_password: newPassword
-      },
-      { withCredentials: true }
-      // logout
-    ).pipe(
-      tap(() => {
-        this.storage.clear();
-        this.isLoggedInSubject.next(false);
-        this.router.navigate(['/login']);
       })
-    )
-
-
-  }
-
-  private storeAuthData(res: UserResponse) {
-    this.storage.setItem('auth-user', JSON.stringify(res.user));
+      .pipe(
+        tap(() => {
+          this.storage.clear();
+          this.isLoggedInSubject.next(false);
+          this.router.navigate(['/login']);
+        })
+      )
   }
 }

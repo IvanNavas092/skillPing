@@ -66,7 +66,6 @@ export class ChatService {
       this.http.post(
         `${this.baseUrl}chat/get-unread-counts/`,
         { username },
-        { withCredentials: true }
       ).subscribe({
         next: (resp: any) => {
           const bySender: { [s: string]: number } = {};
@@ -93,7 +92,6 @@ export class ChatService {
     this.http.post(
       `${this.baseUrl}chat/get-unread-counts/`,
       { username },
-      { withCredentials: true }
     ).subscribe({
       next: (resp: any) => {
         // save the total unread count
@@ -113,8 +111,7 @@ export class ChatService {
   sendPrivateMessage(sender: string, message: string, receptor: string) {
     return this.http.post(
       `${this.baseUrl}chat/send/`,
-      { sender, receptor, message },
-      { withCredentials: true }
+      { sender, receptor, message }
     );
   }
 
@@ -124,7 +121,6 @@ export class ChatService {
       `${this.baseUrl}chat-history/`,
       {
         params: { user1, user2 },
-        withCredentials: true
       }
     );
   }
@@ -134,7 +130,6 @@ export class ChatService {
     return this.http.post(
       `${this.baseUrl}chat/mark-messages-as-read/`,
       { current_user: currentUser, sender },
-      { withCredentials: true }
     );
   }
 }
