@@ -22,12 +22,11 @@
     >
 
     <!--  Mobile desplegable -->
-    <div
-      matTooltip="Accede a Explorar tras registrarte"
-      matTooltipPosition="below"
-      [matTooltipDisabled]="isLoggedIn"
-    >
-      <button
+    <div>
+      <a
+        matTooltip="Accede a Explorar tras registrarte"
+        matTooltipPosition="below"
+        [matTooltipDisabled]="isLoggedIn"
         (click)="toggleSubmenu()"
         class="flex justify-between items-center px-3 py-2 w-48 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md"
       >
@@ -40,7 +39,7 @@
             d="M19 9l-7 7-7-7"
           />
         </svg>
-      </button>
+      </a>
 
       <!-- Submenu Mobile -->
       <div *ngIf="submenuOpen && isLoggedIn" class="pl-4 space-y-1">
