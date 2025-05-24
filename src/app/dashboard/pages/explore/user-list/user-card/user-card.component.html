@@ -1,19 +1,21 @@
 <div class="flex flex-col sm:flex-row gap-4 mb-4">
-  <!-- Avatar -->
-  <img
-    [src]="getAvatar()"
-    alt="Avatar de {{ user.full_name }}"
-    class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-blue-100 flex-shrink-0"
-  />
+  <div class="flex gap-2">
+    <!-- Avatar -->
+    <img
+      [src]="getAvatar()"
+      alt="Avatar de {{ user.full_name }}"
+      class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-blue-100 flex-shrink-0"
+    />
 
-  <!-- Datos -->
-  <div class="flex-1 min-w-0">
-    <h3 class="text-lg sm:text-xl font-bold text-gray-800 truncate">
-      {{ user.full_name }}
-    </h3>
-    <p class="text-xs sm:text-sm text-blue-500 font-medium">
-      {{ '@' + user.username }}
-    </p>
+    <!-- Datos -->
+    <div class="flex-1 min-w-0">
+      <h3 class="text-lg sm:text-xl font-bold text-gray-800 truncate">
+        {{ user.full_name }}
+      </h3>
+      <p class="text-xs sm:text-sm text-blue-500 font-medium">
+        {{ '@' + user.username }}
+      </p>
+    </div>
     <div class="flex flex-wrap items-center mt-1 text-xs sm:text-sm text-gray-500 gap-2">
       <!-- Rating -->
       <span class="flex items-center gap-1">

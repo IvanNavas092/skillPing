@@ -12,7 +12,7 @@ export class AuthService {
   private storage = sessionStorage;
   // depends on the sessionStorage 
   private isLoggedInSubject = new BehaviorSubject<boolean>(
-    !!this.storage.getItem('csrftoken')
+    !!this.storage.getItem('auth-user')
   );
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
   constructor(
