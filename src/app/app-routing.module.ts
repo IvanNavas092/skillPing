@@ -15,12 +15,12 @@ const routes: Routes = [
       import('./dashboard/module/dashboard.module').then(m => m.DashboardModule)
   },
 
-  { path: 'inicio', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'como-funciona', component: HowItWorksPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: '**', redirectTo: 'inicio', pathMatch: 'full' }
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@ import { Message } from '../models/chat-message';
 })
 export class ChatService {
   // base API URL
-  private baseUrl = 'https://skillping-server.onrender.com/api/';
+  private baseUrl = 'http://localhost:8000/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
