@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'chat', component: ChatComponent },
       { path: 'chat/chat-usuario/:id', component: ChatComponent },
       { path: 'change-password', component: ChangePasswordComponent}, 
-      { path: '', redirectTo: 'inicio', pathMatch: 'full' }
+      { path: '', redirectTo: '', pathMatch: 'full' }
     ]
   }
 ];
