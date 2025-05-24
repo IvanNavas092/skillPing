@@ -12,7 +12,7 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnInit {
   title = 'ProyectoTfg_A16_v2';
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private auth: AuthService) { }
 
   apiUrl = "https://skillping-server.onrender.com/api/";
 

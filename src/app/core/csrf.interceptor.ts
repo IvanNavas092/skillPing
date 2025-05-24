@@ -4,43 +4,37 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
+  HttpClient
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-  private getStoredCsrf(): string {
-    return sessionStorage.getItem('csrfToken') || '';
-  }
+  constructor(private http: HttpClient) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const token = this.getStoredCsrf();
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const mutative = ['POST','PUT','PATCH','DELETE'].includes(req.method);
 
-    // Siempre enviamos las cookies de sesión
-    let cloneConfig: {
-      withCredentials: boolean;
-      setHeaders?: { [name: string]: string };
-    } = {
-      withCredentials: true
-    };
-
-    // En mutaciones añadimos también el header CSRF
-    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
-      cloneConfig = {
-        withCredentials: true,
-        setHeaders: {
-          'X-CSRFToken': token,
-          // si quieres, también fuerza Content-Type
-          'Content-Type': 'application/json'
-        }
-      };
+    if (mutative) {
+      // OBTAIN CSRF TOKEN
+      return this.http
+        .get<{ csrfToken: string }>('/api/get-csrf-token/', { withCredentials: true })
+        .pipe(
+          switchMap(res => {
+            sessionStorage.setItem('csrfToken', res.csrfToken);
+            // 2) SEND AGAIN WITH CSRF TOKEN
+            const clone = req.clone({
+              withCredentials: true,
+              setHeaders: { 'X-CSRFToken': res.csrfToken }
+            });
+            return next.handle(clone);
+          })
+        );
     }
 
-    const clonedReq = req.clone(cloneConfig);
-    return next.handle(clonedReq);
+    // GET u otros: sólo con credentials
+    return next.handle(req.clone({ withCredentials: true }));
   }
 }

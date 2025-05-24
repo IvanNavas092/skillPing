@@ -7,7 +7,7 @@
       class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-blue-100 flex-shrink-0"
     />
 
-    <!-- Datos -->
+    <!-- data -->
     <div class="flex-1 min-w-0">
       <h3 class="text-lg sm:text-xl font-bold text-gray-800 truncate">
         {{ user.full_name }}
@@ -33,21 +33,21 @@
       </svg>
       {{ user.average_rating | number : '1.1-1' }} ({{ user.rating_count }})
     </span>
-    <!-- Location -->
+    <!-- location -->
     <span class="flex items-center gap-1" *ngIf="user.location">
       📍 <span class="truncate">{{ user.location }}</span>
     </span>
   </div>
 </div>
 
-<!-- Descripción -->
+<!-- description -->
 <p class="text-gray-600 mb-4 text-xs sm:text-sm line-clamp-3">
   {{ user.description || 'Este usuario no ha añadido una descripción todavía.' }}
 </p>
 
-<!-- Skills e Intereses -->
+<!-- skills and interests -->
 <div class="space-y-3 text-xs sm:text-sm">
-  <!-- Habilidades -->
+  <!-- skills -->
   <div>
     <h4 class="flex items-center font-semibold text-gray-700 mb-1 gap-2">
       <span class="bg-blue-100 text-blue-600 p-1 rounded">
@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <!-- Intereses -->
+  <!-- interests -->
   <div>
     <h4 class="flex items-center font-semibold text-gray-700 mb-1 gap-2">
       <span class="bg-purple-100 text-purple-600 p-1 rounded">
@@ -99,7 +99,7 @@
   </div>
 </div>
 
-<!-- Botón -->
+<!-- button -->
 <div class="mt-4 pt-4 border-t border-gray-100">
   <button
     (click)="navigateToUserDetail()"

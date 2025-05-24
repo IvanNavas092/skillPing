@@ -69,7 +69,7 @@ export class AuthService {
   // SESIÓN / USUARIO
   // -----------------------------------
 
-  /** Comprueba si la sesión sigue viva y almacena el usuario */  /** Llama al endpoint y actualiza el estado loggedInSubject */
+  /** comprobe if session is alive and store user */ 
   checkSession(): Observable<User> {
     return this.http.get<User>(`${this.baseUrl}current-user/`).pipe(
       tap(user => {

@@ -11,7 +11,7 @@
         [placeholder]="field.placeholder"
       />
 
-      <!-- Select de localidad -->
+      <!--location select  -->
       <select
         *ngIf="field.controlName === 'location'"
         class="w-full border p-2 rounded-md"
@@ -21,7 +21,7 @@
         <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
       </select>
 
-      <!-- Select de género -->
+      <!-- gender select  -->
       <select
         *ngIf="field.controlName === 'gender'"
         class="w-full border p-2 rounded-md"

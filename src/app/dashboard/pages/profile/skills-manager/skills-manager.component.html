@@ -1,15 +1,13 @@
 <div [formGroup]="formGroup" class="grid grid-cols-2 gap-5 p-2 px-7">
-  <!-- HABILIDADES -->
   <div>
     <label class="block text-sm font-semibold mb-1">Habilidades</label>
     <div class="flex items-center gap-2">
-      <!-- SELECT -->
       <select [formControl]="habilidadesControl" class="style-select w-full">
         <option value="" disabled selected>Selecciona una habilidad</option>
         <option *ngFor="let skill of allSkills" [ngValue]="skill">{{ skill.name }}</option>
       </select>
 
-      <!-- BOTÓN AGREGAR -->
+      <!-- button add  -->
       <button
         type="button"
         *ngIf="isSkillSelected('known')"
@@ -19,6 +17,7 @@
         Agregar
       </button>
     </div>
+    <!-- error message -->
     <p *ngIf="errorKnown" class="text-red-500 text-sm mt-1 flex items-center">
       Solo puedes agregar hasta 3 habilidades.
       <svg
@@ -35,7 +34,7 @@
       </svg>
     </p>
 
-    <!-- LISTA DE SKILLS -->
+    <!-- skills lists -->
     <div class="mt-2 flex flex-wrap gap-2">
       <span
         *ngFor="let skill of knownSkills"
@@ -47,17 +46,17 @@
     </div>
   </div>
 
-  <!-- INTERESES -->
+  <!-- interest -->
   <div>
     <label class="block text-sm font-semibold mb-1">Intereses</label>
     <div class="flex items-center gap-2">
-      <!-- SELECT -->
+      <!-- select -->
       <select [formControl]="interesesControl" class="style-select w-full">
         <option value="" disabled selected>Selecciona un interés</option>
         <option *ngFor="let skill of allSkills" [ngValue]="skill">{{ skill.name }}</option>
       </select>
 
-      <!-- BOTÓN AGREGAR -->
+      <!-- add button -->
       <button
         type="button"
         *ngIf="isSkillSelected('toLearn')"
@@ -83,7 +82,7 @@
       </svg>
     </p>
 
-    <!-- LISTA DE INTERESES -->
+    <!-- interests lists -->
     <div class="mt-2 flex flex-wrap gap-2">
       <span
         *ngFor="let skill of skillsToLearn"

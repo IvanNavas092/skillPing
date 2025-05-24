@@ -65,7 +65,7 @@
           <h1 class="text-2xl font-bold text-gray-800">{{ user.full_name }}</h1>
           <p class="text-gray-500 mb-6">{{ '@' + user.username }}</p>
 
-          <!-- Rating and location -->
+          <!-- rating and location -->
           <div class="flex items-center mb-6 gap-4">
             <div class="flex items-center bg-blue-50 px-4 py-2 rounded-full">
               <svg
@@ -98,7 +98,7 @@
 
       <!-- right column -->
       <div class="md:w-2/3 p-8">
-        <!-- Pestañas de navegación -->
+        <!-- menu tabs -->
         <nav class="flex border-b border-gray-200 mb-4">
           <button
             (click)="activetab = 'general'"
@@ -116,7 +116,7 @@
 
         <!-- general tab -->
         <ng-container *ngIf="activetab === 'general'" class="overflow-y-auto">
-          <!-- Descripción -->
+          <!-- description -->
           <div class="mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Sobre mí</h2>
             <p class="text-gray-600 leading-relaxed">
@@ -124,7 +124,7 @@
             </p>
           </div>
 
-          <!-- Habilidades -->
+          <!-- skills -->
           <div class="mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Habilidades</h2>
             <div class="flex flex-wrap gap-2">
@@ -137,7 +137,7 @@
             </div>
           </div>
 
-          <!-- Intereses -->
+          <!-- interests -->
           <div class="mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-3">Quiero aprender</h2>
             <div class="flex flex-wrap gap-2">
