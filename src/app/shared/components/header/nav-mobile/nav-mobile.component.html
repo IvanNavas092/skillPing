@@ -22,11 +22,12 @@
     >
 
     <!--  Mobile desplegable -->
-    <div>
+    <div
+      matTooltip="Accede a Explorar tras registrarte"
+      matTooltipPosition="below"
+      [matTooltipDisabled]="isLoggedIn"
+    >
       <button
-        matTooltip="Accede a Explorar tras registrarte"
-        matTooltipPosition="below"
-        [matTooltipDisabled]="isLoggedIn"
         (click)="toggleSubmenu()"
         class="flex justify-between items-center px-3 py-2 w-48 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md"
       >
