@@ -9,25 +9,31 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-  // extract the value of the csrftoken cookie
+
   private getCsrfToken(): string | null {
     const match = document.cookie.match(/(?:^|; )csrftoken=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // clone the request adding header and withCredentials
     const token = this.getCsrfToken();
-    const headers: Record<string,string> = {};
-    console.log(token);
+
     if (token) {
-      headers['X-CSRFToken'] = token;
+      // Clonar petición y añadir header + withCredentials
+      const authReq = req.clone({
+        withCredentials: true,
+        setHeaders: {
+          'X-CSRFToken': token
+        }
+      });
+      return next.handle(authReq);
     }
 
-    const authReq = req.clone({
-      withCredentials: true,
-      setHeaders: headers
+    // Si no hay token, al menos aseguramos enviar cookies
+    const reqWithoutToken = req.clone({
+      withCredentials: true
     });
-    return next.handle(authReq);
+
+    return next.handle(reqWithoutToken);
   }
 }
