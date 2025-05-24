@@ -15,23 +15,10 @@ export class AuthService {
     !!this.storage.getItem('auth-user')
   );
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
-  private csrfToken: string | null = null;
   constructor(
     private http: HttpClient,
     private router: Router
   ) { }
-
-
-
-  setToken(token: string) {
-    this.csrfToken = token;
-    console.log('token', token);
-  }
-
-  getToken(): string | null {
-    console.log('token', this.csrfToken);
-    return this.csrfToken;
-  }
 
   // -----------------------------------
   // AUTENTICACIÓN
