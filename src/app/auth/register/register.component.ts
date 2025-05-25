@@ -19,14 +19,11 @@ export class RegisterComponent implements OnInit {
 
   @ViewChild('formContainer') formContainer!: ElementRef
 
-  // Formulario principal
   registerForm: FormGroup;
 
-  // Lista de skills disponibles
   allSkills: Skill[] = [];
   allCategories: Category[] = [];
 
-  // Skills seleccionadas
   knownSkills: number[] = [];
   skillsToLearn: number[] = [];
 
@@ -79,9 +76,7 @@ export class RegisterComponent implements OnInit {
     console.log(this.registerForm)
   }
 
-  // Navegación entre pasos
   nextStep() {
-    // al pasar al paso 2, se deshabilitan las habilidades ya conocidas
     if (this.currentStep === 2) {
       this.selectedSkillsInStep2 = [...this.knownSkills]
 
@@ -99,22 +94,22 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // Seleccionar skill (con límite de 3)
+  // skill selection (with limit of 3)
   toggleSkill(skillId: number, list: number[]) {
 
-    // en el paso 3 no dejar seleccionar las habilidades ya conocidas
+    // in step 3 don't let select skills already known
     if (this.currentStep === 3 && this.selectedSkillsInStep2.includes(skillId)) {
       this.errorMessage = 'Esta habilidad ya fue seleccionada en el paso anterior';
       setTimeout(() => this.errorMessage = '', 3000);
 
     }
 
-    const index = list.indexOf(skillId); // Index del skill en el listado
-    // si ya está seleccionada, la quitamos
+    const index = list.indexOf(skillId); // index of skill in list
+    // if already selected, remove
     if (index !== -1) {
       list.splice(index, 1);
     }
-    // si no está seleccionada y hay menos de 3, la agregamos
+    // if not selected and there are less than 3, add
     else if (list.length < 3) {
       list.push(skillId);
     }
@@ -125,7 +120,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  // Verificar si una skill esta seleccionada
+  // check if a skill is selected
   isSkillSelected(skillId: number): boolean {
     if (this.currentStep === 2) {
       return this.knownSkills.includes(skillId);
@@ -138,7 +133,7 @@ export class RegisterComponent implements OnInit {
     return this.currentStep === 3 && this.selectedSkillsInStep2.includes(skillId);
   }
 
-  // Recoger las skills
+  // get skills
   getSkills() {
     this.apiService.getSkills().subscribe((data) => {
       this.allSkills = data;
@@ -146,21 +141,21 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  // Recoger las categorías
+  // get categories
   getCategories() {
     this.apiService.getCategories().subscribe((data) => {
       this.allCategories = data;
     });
   }
 
-  // Volver hacia arriba al pasar de paso
+  // scroll to top when stepping
   scrollToTop() {
     this.formContainer.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
 
 
-  // Envío del formulario
+  // on submit
   onSubmit() {
     if (this.registerForm.valid) {
       const userData = {

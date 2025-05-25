@@ -8,7 +8,6 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
   constructor(private http: HttpClient) {}
@@ -32,7 +31,6 @@ export class CsrfInterceptor implements HttpInterceptor {
           })
         );
     }
-
     return next.handle(req.clone({ withCredentials: true }));
   }
 }

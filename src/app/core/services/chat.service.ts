@@ -1,11 +1,9 @@
-// src/app/services/chat.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { PusherService } from './pusher.service';
 import { Message } from '../models/chat-message';
-
 @Injectable({
   providedIn: 'root'
 })

@@ -1,4 +1,4 @@
-package skillping.tfg;
+package com.skillping.app;
 
 import com.getcapacitor.BridgeActivity;
 

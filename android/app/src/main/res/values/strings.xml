@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ProyectoTfg_A16_v2</string>
-    <string name="title_activity_main">ProyectoTfg_A16_v2</string>
-    <string name="package_name">skillping.tfg</string>
-    <string name="custom_url_scheme">skillping.tfg</string>
+    <string name="app_name">skillping-app</string>
+    <string name="title_activity_main">skillping-app</string>
+    <string name="package_name">com.skillping.app</string>
+    <string name="custom_url_scheme">com.skillping.app</string>
 </resources>
