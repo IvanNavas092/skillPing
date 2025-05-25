@@ -180,6 +180,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     return this.avatarService.getAvatarById(id);
   }
 
+  // resize listener
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isMobile = event.target.innerWidth <= 768;

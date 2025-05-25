@@ -4,13 +4,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { PusherService } from './pusher.service';
 import { Message } from '../models/chat-message';
-import { getApiUrl } from './api-config';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   // base API URL
-  private baseUrl = getApiUrl();
+  private baseUrl = '/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
