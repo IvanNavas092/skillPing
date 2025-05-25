@@ -13,7 +13,7 @@ export class CsrfInterceptor implements HttpInterceptor {
   constructor(private http: HttpClient) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const mutative = ['POST','PUT','PATCH','DELETE'].includes(req.method);
+    const mutative = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method);
 
     if (mutative) {
       // OBTAIN CSRF TOKEN
