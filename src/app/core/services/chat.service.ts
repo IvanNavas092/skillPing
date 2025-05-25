@@ -9,7 +9,7 @@ import { Message } from '../models/chat-message';
 })
 export class ChatService {
   // base API URL
-  private apiUrl = 'localhost:8000/api/';
+  private apiUrl = 'http://localhost:8000/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
