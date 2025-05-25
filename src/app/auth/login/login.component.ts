@@ -26,10 +26,10 @@ export class LoginComponent {
   }
 
 
-  // Envío del formulario
+  // form submit
   onSubmit() {
     if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value; //desestructurar el form
+      const { username, password } = this.loginForm.value; // get values
 
       this.authService.login(username, password).subscribe({
         next: (response) => {

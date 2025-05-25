@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
   notifications: number = 0;
   isMobile!: boolean;
 
-  // Diccionario con las categorías
   categories = [
     { name: "Idiomas", description: "¡Aprende a hablar al máximo, tú puedes!" },
     { name: "Tecnología", description: "¡Perfecto para aprender a programar!" },

@@ -21,7 +21,7 @@ export class AuthService {
   ) { }
 
   // -----------------------------------
-  // AUTENTICACIÓN
+  // autentication
   // -----------------------------------
 
   login(username: string, password: string): Observable<UserResponse> {
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   // -----------------------------------
-  // SESIÓN / USUARIO
+  // session / user
   // -----------------------------------
 
   /** comprobe if session is alive and store user */ 
@@ -77,7 +77,7 @@ export class AuthService {
         this.isLoggedInSubject.next(true);
       }),
       catchError(err => {
-        // Si da error, dejamos el estado en false
+        // if error, leave state as false
         this.storage.removeItem('auth-user');
         this.isLoggedInSubject.next(false);
         console.log('Debes inciar sesión');

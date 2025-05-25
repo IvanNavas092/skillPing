@@ -19,17 +19,21 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './chat.component.html',
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  // estado compartido
+  // pusher
+  pusher!: Pusher;
+  // search
   search = '';
+  // users
   allUsers: User[] = [];
   usersFiltered: User[] = [];
   selectedUser: User | null = null;
+  currentUser = this.authService.getCurrentUser();
+  userSelectedFromButton!: User | undefined;
+  // messages
   messages: Message[] = [];
   unreadBySender: { [key: string]: number } = {};
-  currentUser = this.authService.getCurrentUser();
-  pusher!: Pusher;
+  // mobile
   isMobile = window.innerWidth <= 1024;
-  userSelectedFromButton!: User | undefined;
 
 
   constructor(
@@ -43,7 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUsers();
-    // suscripción a recuentos no leídos
+    // subscription to unread counts
     this.chatService.unReadBySender$.subscribe(data => {
       this.unreadBySender = data;
     });
@@ -55,22 +59,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.pusher) this.pusher.disconnect();
   }
 
-  // obtiene y filtra usuarios
+  // get users an filter
   getUsers() {
     this.apiService.getUsers().subscribe(data => {
       this.allUsers = data.filter(u =>
         u.id !== this.currentUser.id &&
         u.username !== 'admin'
       );
-      // obtiene por url el id del usuario
+      // otain by url the id of user
       const paramId = this.activatedRoute.snapshot.paramMap.get('id');
       if (paramId !== null) {
+        // find user by id
         this.userSelectedFromButton = this.allUsers.find(u => u.id === Number(paramId));
-        console.log(this.userSelectedFromButton);
-        console.log(this.allUsers);
         if (this.userSelectedFromButton) {
+          // if user is selected, select it
           this.onUserSelected(this.userSelectedFromButton);
-          console.log(this.userSelectedFromButton);
         }
       }
       this.usersFiltered = [...this.allUsers];
@@ -78,21 +81,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Search desde el sidebar
+  // search from sidebar
   onSearch(term: string) {
     this.search = term;
-    const q = term.toLowerCase().trim();
-    this.usersFiltered = q
+    const query = term.toLowerCase().trim();
+    this.usersFiltered = query
       ? this.allUsers.filter(u =>
-        u.username.toLowerCase().includes(q)
+        u.username.toLowerCase().includes(query)
       )
       : [...this.allUsers];
   }
 
-  // Cuando seleccionan un usuario
+  // when selecting a user
   onUserSelected(user: User) {
     this.selectedUser = user;
-    // marcar leído y cargar historial
+    // mark read and load history
     this.chatService
       .markAsRead(this.currentUser.username, user.username)
       .subscribe(() => {
@@ -101,9 +104,10 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
-  // recibe el mensaje del ChatWindow y lo envía
+  // receives message from ChatWindow and sends it
   onSendMessage(text: string) {
     if (!text || !this.selectedUser) return;
+    // send message
     this.chatService
       .sendPrivateMessage(
         this.currentUser.username,
@@ -111,7 +115,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.selectedUser.username
       )
       .subscribe(() => {
-        // auto-insertar en la vista
+        // auto-insert in view (for ngOnchanges)
         this.messages = [
           ...this.messages,
           {
@@ -124,7 +128,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
 
-  // carga el historial y lo marca con isMe
+  // load history and mark with isRead = isMe
   loadHistory(u1: string, u2: string) {
     this.chatService.getChatHistory(u1, u2)
       .subscribe((data: Message[]) => {
@@ -145,13 +149,13 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.chatService.refreshUnreadCounts()
     );
 
-    // mensajes privados
+    // messages between users
     this.allUsers.forEach(u => {
       const ch = this.pusherService.subscribe(
         this.getChannelName(this.currentUser.username, u.username)
       );
       ch.bind('new-message', (data: Message) => {
-        // si estás conversando con quien envía, actualiza
+        // if you are talking with who sends (sender), update
         if (this.selectedUser?.username === data.sender) {
           this.messages = [
             ...this.messages,
@@ -166,7 +170,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  // helper para canal
+  // helper for channel name
   getChannelName(a: string, b: string) {
     return `room-chat-${[a, b].sort().join('_')}`;
   }
