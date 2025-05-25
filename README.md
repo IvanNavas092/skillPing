@@ -31,9 +31,12 @@ Everyone wins! 🎉
 
 ## 🖼️ Screenshots
 
-| Home 🏠 | Register 👥 | Explore 💬 |
-|--------|-------------|------------|
-| ![Home1](https://github.com/user-attachments/assets/1410dcfc-d12e-430b-97f4-e2d446b53031)<br>![Home2](https://github.com/user-attachments/assets/7b1c9876-d329-4623-8d38-d3ed1759d5d6) | ![Register1](https://github.com/user-attachments/assets/2836c5d7-8055-4a8d-ad6b-7c482c7424cb)<br>![Register2](https://github.com/user-attachments/assets/52da38eb-254a-427d-a5b5-b86206cd492c) | ![Explore1](https://github.com/user-attachments/assets/f22b9156-ccac-4fc9-a6c0-6d970483fc71)<br>![Explore2](https://github.com/user-attachments/assets/79c38b22-3981-4687-b3d9-ae12c7635ad2) |
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d360c355-f699-45a6-92c5-2669ee958c2e" width="70%">
+  <br><br>
+  <img src="https://github.com/user-attachments/assets/5133abef-8da5-4f4a-906c-628adad25155" width="70%">
+</p>
+
 
 
 ---
@@ -43,16 +46,40 @@ Everyone wins! 🎉
 - ⚙️ **Frontend**: Angular  
 - 🧠 **Backend**: Django / Django Rest Framework  
 - 💾 **Database**: SQL  
-- 🧪 **Authentication**: JWT-Token  
+- 🧪 **Authentication**: Django sessions 
 - 🔌 **API**: RESTful API (Django)  
 - 🎨 **Styling**: TailwindCSS
 
----
 
 ## 🧑‍💻 How to Start
 
 ```bash
-git clone https://github.com/your-username/SkillPing.git
+git clone https://github.com/IvanNavas092/skillPing.git
 cd SkillPing
-# Set up environment variables if necessary
-# Install dependencies and run the server
+```
+Install Angular CLI (optional, only if you want to use ng directly)
+```
+npm install -g @angular/cli
+```
+3. Install Node.js (version 18 recommended)
+Download and install Node.js 18.x from the official website:
+👉 https://nodejs.org/
+
+Install project dependencies
+```
+npm install
+```
+🛠️ If you encounter version or dependency issues:
+```
+rm -rf node_modules package-lock.json
+npm install
+```
+check your versions
+```
+node -v
+npm -v
+```
+🚀 Run the development server
+npx ng serve
+or
+ng s
