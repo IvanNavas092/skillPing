@@ -1,7 +1,7 @@
 <!-- Main Menu -->
 <ul class="hidden lg:flex lg:gap-x-12 bg-white">
   <li><a routerLink="/" class="font-semibold text-gray-900 hover:text-blue-500">Inicio</a></li>
-  <!-- Menú desplegable "Explorar" -->
+  <!-- submenu "Explorar" -->
   <li class="relative group">
     <a
       matTooltip="Accede a Explorar tras registrarte"
@@ -23,7 +23,7 @@
       </svg>
     </a>
 
-    <!-- Submenú Desktop -->
+    <!-- submenu Desktop -->
     <div
       *ngIf="isLoggedIn"
       class="absolute left-1/2 -translate-x-1/2 z-10 mt-4 w-[500px] bg-white rounded-lg shadow-2xl px-6 py-5 opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible"
@@ -59,7 +59,7 @@
         </a>
       </div>
 
-      <!-- Enlace inferior -->
+      <!-- all categories link -->
       <div class="mt-4">
         <a
           routerLink="dashboard/explorar"

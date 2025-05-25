@@ -1,6 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import * as AOS from 'aos';
+import { AuthService } from './core/services/auth.service';
 
 
 @Component({
@@ -11,11 +12,15 @@ import * as AOS from 'aos';
 export class AppComponent implements OnInit {
   title = 'ProyectoTfg_A16_v2';
 
-  constructor(private http: HttpClient) { }
+  constructor(private auth: AuthService) { }
 
   apiUrl = "https://skillping-server.onrender.com/api/";
 
   ngOnInit(): void {
+    this.auth.checkSession().subscribe({
+      next: () => {},
+      error: () => {}
+    });
     AOS.init();
   }
 }

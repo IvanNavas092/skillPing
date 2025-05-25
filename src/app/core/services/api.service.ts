@@ -15,48 +15,42 @@ export class ApiService {
   getCategories(): Observable<Category[]> {
     // /categories/
     return this.http.get<Category[]>(
-      `${this.apiUrl}categories/`,
-      { withCredentials: true }
+      `${this.apiUrl}categories/`
     );
   }
 
   getSkills(): Observable<Skill[]> {
     // /skills/
     return this.http.get<Skill[]>(
-      `${this.apiUrl}skills/`,
-      { withCredentials: true }
+      `${this.apiUrl}skills/`
     );
   }
 
   getUsers(): Observable<User[]> {
     // /users/
     return this.http.get<User[]>(
-      `${this.apiUrl}users/`,
-      { withCredentials: true }
+      `${this.apiUrl}users/`
     );
   }
 
   getUsersByFilterCategorie(categoryActive: string | null): Observable<User[]> {
     // /users-by-category/{categoryActive}/
     return this.http.get<User[]>(
-      `${this.apiUrl}users-by-category/${categoryActive}/`,
-      { withCredentials: true }
+      `${this.apiUrl}users-by-category/${categoryActive}/`
     );
   }
 
   getCountries(): Observable<string[]> {
     // /get-countries/
     return this.http.get<string[]>(
-      `${this.apiUrl}get-countries/`,
-      { withCredentials: true }
+      `${this.apiUrl}get-countries/`
     );
   }
 
   getRatingsByUser(id: number): Observable<Rating[]> {
     // /user-ratings/{id}/
     return this.http.get<Rating[]>(
-      `${this.apiUrl}user-ratings/${id}/`,
-      { withCredentials: true }
+      `${this.apiUrl}user-ratings/${id}/`
     );
   }
 
@@ -71,7 +65,6 @@ export class ApiService {
     return this.http.post<RatingPayload>(
       `${this.apiUrl}ratings/`,
       dataRating,
-      { withCredentials: true }
     );
   }
 }

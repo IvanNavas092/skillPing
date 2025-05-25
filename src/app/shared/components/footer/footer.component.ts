@@ -26,4 +26,8 @@ export class FooterComponent {
     this.router.navigate(['/'], { fragment: 'results-rating' });
   }
 
+  goToFaq() {
+    this.router.navigate(['/como-funciona'], { fragment: 'faq' });
+  }
+
 }

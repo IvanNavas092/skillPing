@@ -3,43 +3,34 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent
+  HttpEvent,
+  HttpClient
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { switchMap } from 'rxjs/operators';
 @Injectable()
 export class CsrfInterceptor implements HttpInterceptor {
-  // get stored csrf token
-  private getStoredCsrf(): string {
-    return sessionStorage.getItem('csrfToken') || '';
-  }
-  // intercept requests http
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const token = this.getStoredCsrf();
+  constructor(private http: HttpClient) {}
 
-    // always send cookies
-    let cloneConfig: {
-      withCredentials: boolean;
-      setHeaders?: { [name: string]: string };
-    } = {
-      withCredentials: true
-    };
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const mutative = ['POST','PUT','PATCH','DELETE'].includes(req.method);
 
-    // add headers for POST, PUT, PATCH, DELETE
-    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
-      cloneConfig = {
-        withCredentials: true,
-        setHeaders: {
-          'X-CSRFToken': token,
-          'Content-Type': 'application/json'
-        }
-      };
+    if (mutative) {
+      // OBTAIN CSRF TOKEN
+      return this.http
+        .get<{ csrfToken: string }>('/api/get-csrf-token/', { withCredentials: true })
+        .pipe(
+          switchMap(res => {
+            sessionStorage.setItem('csrfToken', res.csrfToken);
+            // 2) SEND AGAIN WITH CSRF TOKEN
+            const clone = req.clone({
+              withCredentials: true,
+              setHeaders: { 'X-CSRFToken': res.csrfToken }
+            });
+            return next.handle(clone);
+          })
+        );
     }
-
-    const clonedReq = req.clone(cloneConfig);
-    return next.handle(clonedReq);
+    return next.handle(req.clone({ withCredentials: true }));
   }
 }
