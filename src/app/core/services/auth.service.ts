@@ -8,7 +8,7 @@ import { User, UserResponse, UserUpdate } from '../models/User';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = '/api/';
+  private apiUrl = 'http://localhost:8000/api/';
   private storage = sessionStorage;
   // depends on the sessionStorage 
   private isLoggedInSubject = new BehaviorSubject<boolean>(
@@ -30,7 +30,7 @@ export class AuthService {
       user: any;
       csrfToken: string;
     }>(
-      `${this.baseUrl}login/`,
+      `${this.apiUrl}login/`,
       { username, password },
     ).pipe(
       tap(res => {
@@ -47,7 +47,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     return this.http.post(
-      `${this.baseUrl}logout/`,
+      `${this.apiUrl}logout/`,
       {},
     ).pipe(
       tap(() => {
@@ -60,7 +60,7 @@ export class AuthService {
 
   register(user: User): Observable<User> {
     return this.http.post<User>(
-      `${this.baseUrl}users/`,
+      `${this.apiUrl}users/`,
       user,
     );
   }
@@ -71,7 +71,7 @@ export class AuthService {
 
   /** comprobe if session is alive and store user */ 
   checkSession(): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}current-user/`).pipe(
+    return this.http.get<User>(`${this.apiUrl}current-user/`).pipe(
       tap(user => {
         this.storage.setItem('auth-user', JSON.stringify(user));
         this.isLoggedInSubject.next(true);
@@ -100,14 +100,14 @@ export class AuthService {
   // obtain any user by id
   fetchUserById(id: number): Observable<User> {
     return this.http.get<User>(
-      `${this.baseUrl}get-user/${id}/`
+      `${this.apiUrl}get-user/${id}/`
     );
   }
 
   // obtain user ratings
   fetchUserRatings(id: number): Observable<any[]> {
     return this.http.get<any[]>(
-      `${this.baseUrl}user-ratings/${id}/`
+      `${this.apiUrl}user-ratings/${id}/`
     );
   }
 
@@ -117,13 +117,13 @@ export class AuthService {
 
   updateUser(id: number, payload: UserUpdate): Observable<User> {
     return this.http.patch<User>(
-      `${this.baseUrl}update-user/${id}/`, payload
+      `${this.apiUrl}update-user/${id}/`, payload
     );
   }
 
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.http.put(
-      `${this.baseUrl}change-password/`,
+      `${this.apiUrl}change-password/`,
       {
         old_password: oldPassword,
         new_password: newPassword

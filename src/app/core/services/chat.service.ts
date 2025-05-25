@@ -9,7 +9,7 @@ import { Message } from '../models/chat-message';
 })
 export class ChatService {
   // base API URL
-  private baseUrl = '/api/';
+  private apiUrl = 'localhost:8000/api/';
 
   // reactive state
   private unreadCountTotalSubject = new BehaviorSubject<number>(0);
@@ -62,7 +62,7 @@ export class ChatService {
         */
 
       this.http.post(
-        `${this.baseUrl}chat/get-unread-counts/`,
+        `${this.apiUrl}chat/get-unread-counts/`,
         { username },
       ).subscribe({
         next: (resp: any) => {
@@ -88,7 +88,7 @@ export class ChatService {
     // obtain current user > username
     const username = this.authService.getCurrentUser().username;
     this.http.post(
-      `${this.baseUrl}chat/get-unread-counts/`,
+      `${this.apiUrl}chat/get-unread-counts/`,
       { username },
     ).subscribe({
       next: (resp: any) => {
@@ -108,7 +108,7 @@ export class ChatService {
   /** send private message */
   sendPrivateMessage(sender: string, message: string, receptor: string) {
     return this.http.post(
-      `${this.baseUrl}chat/send/`,
+      `${this.apiUrl}chat/send/`,
       { sender, receptor, message }
     );
   }
@@ -116,7 +116,7 @@ export class ChatService {
   /** obtain chat history between two users */
   getChatHistory(user1: string, user2: string): Observable<Message[]> {
     return this.http.get<Message[]>(
-      `${this.baseUrl}chat-history/`,
+      `${this.apiUrl}chat-history/`,
       {
         params: { user1, user2 },
       }
@@ -126,7 +126,7 @@ export class ChatService {
   /** mark messages as read between currentUser and sender */
   markAsRead(currentUser: string, sender: string) {
     return this.http.post(
-      `${this.baseUrl}chat/mark-messages-as-read/`,
+      `${this.apiUrl}chat/mark-messages-as-read/`,
       { current_user: currentUser, sender },
     );
   }
