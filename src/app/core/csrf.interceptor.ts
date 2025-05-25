@@ -1,4 +1,3 @@
-// src/app/interceptors/csrf.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -34,7 +33,6 @@ export class CsrfInterceptor implements HttpInterceptor {
         );
     }
 
-    // GET u otros: sólo con credentials
     return next.handle(req.clone({ withCredentials: true }));
   }
 }
