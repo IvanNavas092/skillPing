@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Country } from 'src/app/core/models/Country';
 
 @Component({
   selector: 'app-profile-form',
@@ -8,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class ProfileFormComponent {
   @Input() formGroup!: FormGroup;
   @Input() formFields: any[] = [];
-  @Input() countries: string[] = [];
+  @Input() countries: Country[] = [];
   @Input() genderOptions: any[] = [];
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Avatar } from 'src/app/core/models/avatar';
+import { Country } from 'src/app/core/models/Country';
 import { Skill } from 'src/app/core/models/skill';
 import { User } from 'src/app/core/models/User';
 import { ApiService } from 'src/app/core/services/api.service';
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
   avatars: Avatar[] = [];
   user!: User;
   formProfile!: FormGroup;
-  countries: string[] = [];
+  countries: Country[] = [];
   genderOptions = [
     { value: 'M', label: 'Masculino' },
     { value: 'F', label: 'Femenino' },
@@ -80,7 +81,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getCountriesOptions() {
-    this.apiService.getCountries().subscribe((data) => {
+    this.apiService.getCountries().subscribe((data: Country[]) => {
       this.countries = data;
     });
   }

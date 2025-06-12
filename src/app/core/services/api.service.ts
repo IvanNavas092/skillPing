@@ -5,6 +5,7 @@ import { Skill } from '../models/skill';
 import { User } from '../models/User';
 import { Rating, RatingPayload } from '../models/rating';
 import { Observable } from 'rxjs';
+import { Country } from '../models/Country';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -40,9 +41,8 @@ export class ApiService {
     );
   }
 
-  getCountries(): Observable<string[]> {
-    // /get-countries/
-    return this.http.get<string[]>(
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(
       `${this.apiUrl}get-countries/`
     );
   }

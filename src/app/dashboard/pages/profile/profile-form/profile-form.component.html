@@ -18,7 +18,7 @@
         [formControlName]="field.controlName"
       >
         <option value="" disabled>{{ field.placeholder }}</option>
-        <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+        <option *ngFor="let c of countries" [value]="c">{{ c.pais }}</option>
       </select>
 
       <!-- gender select  -->
