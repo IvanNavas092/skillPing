@@ -10,7 +10,7 @@ import { HowItWorksPageComponent } from './public/how-it-works-page/how-it-works
 const routes: Routes = [
   {
     path: 'dashboard',
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: () =>
       import('./dashboard/module/dashboard.module').then(m => m.DashboardModule)
   },
