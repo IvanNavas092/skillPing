@@ -33,8 +33,12 @@ Everyone wins! 🎉
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/d360c355-f699-45a6-92c5-2669ee958c2e" width="70%">
+    <br><br>
+  <img width="1887" height="920" alt="image" src="https://github.com/user-attachments/assets/60fa5461-61f9-4d3b-a43a-dff4f7b077b2" />
+
   <br><br>
   <img src="https://github.com/user-attachments/assets/5133abef-8da5-4f4a-906c-628adad25155" width="70%">
+  
 </p>
 
 
